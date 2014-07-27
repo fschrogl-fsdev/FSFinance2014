@@ -1,0 +1,25 @@
+ -----
+ Introduction
+ -----
+ Fritz Schrogl (fs)
+ -----
+ 2014-07-21
+ -----
+
+Introduction
+
+ FSFinance Webapp is an web application written in Java. Its core features are
+ inspired by Android applications like 'Financius' and 'Ausgaben Manager'.
+ 
+* Features for v0.0.1
+
+ * Supports multiple users
+ 
+ * Supports multiple bank accounts per user
+ 
+ * Transactions can be labeled (multiple labels per transaction possible)
+ 
+ * Import/Export accounts and transactions from/to CSV
+  
+ * Report: Summary of all transactions by week/month/year
+ 

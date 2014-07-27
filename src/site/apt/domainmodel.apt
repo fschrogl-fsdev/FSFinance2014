@@ -1,0 +1,14 @@
+ -----
+ Domainmodel
+ -----
+ Fritz Schrogl (fs)
+ -----
+ 2014-07-27
+ -----
+
+Domainmodel
+
+ The application's domain model. It reflects the current feature set
+provided by the application.
+
+[images/domainmodel.png]
