@@ -30,6 +30,7 @@
 
 	<!-- Sub-Projects -->
 	<modules>
+	  <module>fsfinance-persistence</module>
 	</modules>
 
 	<!-- Project Deployment -->
