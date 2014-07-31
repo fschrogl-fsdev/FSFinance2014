@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
+	<persistence-unit name="fsfinance" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<properties>
+			<!-- ======================================================= -->
+			<!-- Generic JPA Configuration -->
+			<!-- ======================================================= -->
+
+			<!-- Connection Properties -->
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:pgsql://localhost:5432/fsfinance" />
+			<property name="javax.persistence.jdbc.user" value="fsfinance" />
+			<property name="javax.persistence.jdbc.password" value="" />
+
+			<!-- Schema Creation -->
+			<!-- Values: none (default)|create|drop-and-create|drop -->
+			<property name="javax.persistence.schema-generation.database.action" value="create" />
+
+			<!-- Values: metadata (default)|script|metadata-then-script|script-then-metadata -->
+			<property name="javax.persistence.schema-generation.create-source" value="metadata" />
+			<!-- <property name="javax.persistence.schema-generation.create-script-source" value="META-INF/sql/create-tables.sql" 
+				/> -->
+			<!-- <property name="javax.persistence.sql-load-script-source" value="META-INF/sql/load-testdata.sql" /> -->
+
+
+			<!-- ======================================================= -->
+			<!-- Specific Persistence Provider Configuration (Hibernate) -->
+			<!-- ======================================================= -->
+
+			<!-- Database dialect to use -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect" />
+			<property name="hibernate.id.new_generator_mappings" value="true"/>
+			<property name="hibernate.order_updates" value="true"/>
+			<property name="hibernate.current_session_context_class" value="thread"/>
+		</properties>
+	</persistence-unit>
+
+</persistence>
