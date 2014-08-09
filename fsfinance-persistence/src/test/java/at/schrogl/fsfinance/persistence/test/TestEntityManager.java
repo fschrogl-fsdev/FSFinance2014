@@ -2,36 +2,39 @@ package at.schrogl.fsfinance.persistence.test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import org.junit.Test;
+
+import at.schrogl.fsfinance.entities.Account;
+import at.schrogl.fsfinance.entities.User;
 
 public class TestEntityManager {
 
 	@Test
 	public void test() {
-		try {
-			/*
-			Configuration hbCfg = new Configuration().configure();
-			SessionFactory sf = hbCfg.buildSessionFactory(new
-					StandardServiceRegistryBuilder().build());
-			Session hbSession = sf.getCurrentSession();
-			hbSession.close();
-			sf.close();
-			*/
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("fsfinance");
+		EntityManager em = emf.createEntityManager();
 
-			EntityManagerFactory emf =
-					Persistence.createEntityManagerFactory("fsfinance");
-			EntityManager em = emf.createEntityManager();
-			em.close();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		
+		User user = new User();
+		user.setUsername("maerowinger");
+		user.setPassword("sha1:lkjasdfijlk");
+		user.setSalt("asdf");
 
-		} catch (Throwable ex) {
-			System.err.println(ex);
-			ex.printStackTrace();
-		}
-
-		// SchemaExport hbm2ddl = new SchemaExport(hbCfg);
-		// hbm2ddl.create(true, false);
+		Account account = new Account();
+		account.setName("1st-account");
+		account.setUser(user);
+		
+		em.persist(user);
+		em.persist(account);
+		tx.commit();
+		
+		em.close();
+		emf.close();
 	}
 
 }

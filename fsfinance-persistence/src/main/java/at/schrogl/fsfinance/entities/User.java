@@ -15,25 +15,31 @@
 package at.schrogl.fsfinance.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * This entity represents an user.
+ * This entity class represents an user.
  * 
  * @author Fritz Schrogl
+ * @since 0.0.1
  */
 @Entity
-@Table(name = "Users")
+@Table(name = "USERS")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	// Columns
 	private Long id;
 	private String username;
 	private String password;
@@ -42,12 +48,31 @@ public class User implements Serializable {
 	private String surname;
 	private String email;
 
+	// Associations
+	private Set<Account> accounts = new HashSet<Account>();
+	private Set<Label> labels = new HashSet<Label>();
+
+	// =================================================================
+	// Helper methods
+	// =================================================================
+
+	public void addAccount(Account account) {
+		account.setUser(this);
+		accounts.add(account);
+	}
+
+	public void addLabel(Label label) {
+		label.setUser(this);
+		labels.add(label);
+	}
+
 	// =================================================================
 	// Getter + Setter
 	// =================================================================
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID")
 	public Long getId() {
 		return id;
 	}
@@ -56,7 +81,7 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
-	@Column(length = 50, unique = true, nullable = false)
+	@Column(name = "USERNAME", length = 50, unique = true, nullable = false)
 	public String getUsername() {
 		return username;
 	}
@@ -65,7 +90,7 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	@Column(length = 255, nullable = false)
+	@Column(name = "PASSWORD", length = 255, nullable = false)
 	public String getPassword() {
 		return password;
 	}
@@ -74,7 +99,7 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	@Column(length = 255)
+	@Column(name = "SALT", length = 255, nullable = false, updatable = false)
 	public String getSalt() {
 		return salt;
 	}
@@ -83,7 +108,7 @@ public class User implements Serializable {
 		this.salt = salt;
 	}
 
-	@Column(length = 255)
+	@Column(name = "FORENAME", length = 255)
 	public String getForename() {
 		return forename;
 	}
@@ -92,7 +117,7 @@ public class User implements Serializable {
 		this.forename = forename;
 	}
 
-	@Column(length = 255)
+	@Column(name = "SURNAME", length = 255)
 	public String getSurname() {
 		return surname;
 	}
@@ -101,13 +126,31 @@ public class User implements Serializable {
 		this.surname = surname;
 	}
 
-	@Column(length = 255)
+	@Column(name = "EMAIL", length = 255)
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+	public Set<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(Set<Account> accounts) {
+		this.accounts = accounts;
+	}
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+	public Set<Label> getLabels() {
+		return labels;
+	}
+
+	public void setLabels(Set<Label> labels) {
+		this.labels = labels;
 	}
 
 }

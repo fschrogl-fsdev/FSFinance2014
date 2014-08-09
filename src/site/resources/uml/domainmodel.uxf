@@ -7,14 +7,14 @@ fontfamily=SansSerif //possible: SansSerif,Serif,Monospaced
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 </help_text>
-  <zoom_level>12</zoom_level>
+  <zoom_level>16</zoom_level>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>252</x>
-      <y>288</y>
-      <w>252</w>
-      <h>144</h>
+      <x>160</x>
+      <y>208</y>
+      <w>336</w>
+      <h>192</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Entity&gt;&gt;
 User
@@ -31,10 +31,10 @@ email: STRING</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>252</x>
-      <y>504</y>
-      <w>252</w>
-      <h>108</h>
+      <x>160</x>
+      <y>496</y>
+      <w>336</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Entity&gt;&gt;
 Account
@@ -49,23 +49,23 @@ color: STRING
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>336</x>
-      <y>396</y>
-      <w>60</w>
-      <h>132</h>
+      <x>272</x>
+      <y>352</y>
+      <w>80</w>
+      <h>176</h>
     </coordinates>
-    <panel_attributes>lt=-
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=  1
 m2=  *</panel_attributes>
-    <additional_attributes>36;36;36;108</additional_attributes>
+    <additional_attributes>48;48;48;144</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>600</x>
-      <y>504</y>
-      <w>252</w>
-      <h>108</h>
+      <x>624</x>
+      <y>496</y>
+      <w>336</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Entity&gt;&gt;
 Transaction
@@ -81,23 +81,23 @@ note: STRING
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>468</x>
+      <x>448</x>
       <y>528</y>
-      <w>156</w>
-      <h>60</h>
+      <w>208</w>
+      <h>80</h>
     </coordinates>
-    <panel_attributes>lt=-
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=  1
 m2=  *</panel_attributes>
-    <additional_attributes>36;36;132;36</additional_attributes>
+    <additional_attributes>48;48;176;48</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>600</x>
-      <y>312</y>
-      <w>252</w>
-      <h>108</h>
+      <x>624</x>
+      <y>240</y>
+      <w>336</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Entity&gt;&gt;
 Label
@@ -105,7 +105,7 @@ Label
 id: LONG {pk}
 name: STRING {not null}
 description: STRING
-color: INT
+color: STRING
 
 
 </panel_attributes>
@@ -114,14 +114,40 @@ color: INT
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>696</x>
-      <y>384</y>
-      <w>60</w>
-      <h>144</h>
+      <x>752</x>
+      <y>336</y>
+      <w>80</w>
+      <h>192</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=  *
-m2=  *</panel_attributes>
-    <additional_attributes>36;120;36;36</additional_attributes>
+m2=  1</panel_attributes>
+    <additional_attributes>48;160;48;48</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>448</x>
+      <y>272</y>
+      <w>208</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1= 1
+m2= *</panel_attributes>
+    <additional_attributes>48;48;176;48</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>864</x>
+      <y>288</y>
+      <w>176</w>
+      <h>176</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2= *</panel_attributes>
+    <additional_attributes>96;48;144;48;144;144;48;144;48;96</additional_attributes>
   </element>
 </diagram>

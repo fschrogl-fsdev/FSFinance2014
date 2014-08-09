@@ -1,23 +1,8 @@
-/* This file is part of FSFinance.
- * 
- * FSFinance is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * FSFinance is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with FSFinance. If not, see <http://www.gnu.org/licenses/>. */
 package at.schrogl.fsfinance.entities;
 
 import java.io.Serializable;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,14 +14,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * This entity class represents an account.
+ * This entity class represents a label
  * 
  * @author Fritz Schrogl
  * @since 0.0.1
  */
 @Entity
-@Table(name = "ACCOUNTS")
-public class Account implements Serializable {
+@Table(name = "LABELS")
+public class Label implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -49,16 +34,33 @@ public class Account implements Serializable {
 	// Associations
 	private User user;
 	private Set<Transaction> transactions;
+	private Label parent;
+	private Set<Label> childs;
 
 	// =================================================================
 	// Helper Methods
 	// =================================================================
-
+	
 	public void addTransaction(Transaction transaction) {
-		transaction.setAccount(this);
 		transactions.add(transaction);
+		transaction.setLabel(this);
 	}
-
+	
+	public void removeTransaction(Transaction transaction) {
+		transactions.remove(transaction);
+		transaction.setLabel(null);
+	}
+	
+	public void addChild(Label label) {
+		childs.add(label);
+		label.setParent(this);;
+	}
+	
+	public void removeChild(Label label) {
+		childs.remove(label);
+		label.setParent(null);
+	}
+	
 	// =================================================================
 	// Getter + Setter
 	// =================================================================
@@ -101,6 +103,15 @@ public class Account implements Serializable {
 		this.color = color;
 	}
 
+	@OneToMany(mappedBy = "label")
+	public Set<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(Set<Transaction> transactions) {
+		this.transactions = transactions;
+	}
+
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "ID_USER", nullable = false)
 	public User getUser() {
@@ -111,13 +122,23 @@ public class Account implements Serializable {
 		this.user = user;
 	}
 
-	@OneToMany(mappedBy = "account", cascade = CascadeType.REMOVE)
-	public Set<Transaction> getTransactions() {
-		return transactions;
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "ID_LABEL", nullable = true)
+	public Label getParent() {
+		return parent;
 	}
 
-	public void setTransactions(Set<Transaction> transactions) {
-		this.transactions = transactions;
+	public void setParent(Label parent) {
+		this.parent = parent;
+	}
+
+	@OneToMany(mappedBy = "parent")
+	public Set<Label> getChilds() {
+		return childs;
+	}
+
+	public void setChilds(Set<Label> childs) {
+		this.childs = childs;
 	}
 
 }
