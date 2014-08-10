@@ -12,7 +12,7 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with FSFinance. If not, see <http://www.gnu.org/licenses/>. */
-package at.schrogl.fsfinance.entities;
+package at.schrogl.fsfinance.persistence.entities;
 
 import java.io.Serializable;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package at.schrogl.fsfinance.entities;
+package at.schrogl.fsfinance.persistence.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

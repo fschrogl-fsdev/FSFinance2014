@@ -2,14 +2,18 @@ package at.schrogl.fsfinance.persistence.test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import org.junit.Test;
 
-import at.schrogl.fsfinance.entities.Account;
-import at.schrogl.fsfinance.entities.User;
-
+/**
+ * Unit testcase for the EntityManager. The sole purpose of this test class is
+ * to check if the EntityManager can be instantiated successfully.
+ * 
+ * @author Fritz Schrogl
+ * @since 0.0.1
+ * 
+ */
 public class TestEntityManager {
 
 	@Test
@@ -17,22 +21,6 @@ public class TestEntityManager {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("fsfinance");
 		EntityManager em = emf.createEntityManager();
 
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-		
-		User user = new User();
-		user.setUsername("maerowinger");
-		user.setPassword("sha1:lkjasdfijlk");
-		user.setSalt("asdf");
-
-		Account account = new Account();
-		account.setName("1st-account");
-		account.setUser(user);
-		
-		em.persist(user);
-		em.persist(account);
-		tx.commit();
-		
 		em.close();
 		emf.close();
 	}

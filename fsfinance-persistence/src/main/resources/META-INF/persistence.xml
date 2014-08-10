@@ -5,10 +5,10 @@
 	<persistence-unit name="fsfinance" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		
-		<class>at.schrogl.fsfinance.entities.User</class>
-		<class>at.schrogl.fsfinance.entities.Account</class>
-		<class>at.schrogl.fsfinance.entities.Transaction</class>
-		<class>at.schrogl.fsfinance.entities.Label</class>
+		<class>at.schrogl.fsfinance.persistence.entities.User</class>
+		<class>at.schrogl.fsfinance.persistence.entities.Account</class>
+		<class>at.schrogl.fsfinance.persistence.entities.Transaction</class>
+		<class>at.schrogl.fsfinance.persistence.entities.Label</class>
 		
 		<properties>
 			<!-- ======================================================= -->
@@ -26,8 +26,7 @@
 			<property name="javax.persistence.schema-generation.database.action" value="none" />
 
 			<!-- Values: metadata (default)|script|metadata-then-script|script-then-metadata -->
-			<property name="javax.persistence.schema-generation.create-source" value="script" />
-			<property name="javax.persistence.schema-generation.create-script-source" value="META-INF/sql/create-tables.sql" />
+			<property name="javax.persistence.schema-generation.create-source" value="metadata" />
 
 			<!-- ======================================================= -->
 			<!-- Specific Persistence Provider Configuration (Hibernate) -->

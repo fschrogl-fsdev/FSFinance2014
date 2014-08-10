@@ -42,10 +42,10 @@
 		<property name="hibernate.use_sql_comments">true</property>
 
 		<!-- Entity Mappings -->
-		<mapping class="at.schrogl.fsfinance.entities.User" />
-		<mapping class="at.schrogl.fsfinance.entities.Account" />
-		<mapping class="at.schrogl.fsfinance.entities.Transaction" />
-		<mapping class="at.schrogl.fsfinance.entities.Label" />
+		<mapping class="at.schrogl.fsfinance.persistence.entities.User" />
+		<mapping class="at.schrogl.fsfinance.persistence.entities.Account" />
+		<mapping class="at.schrogl.fsfinance.persistence.entities.Transaction" />
+		<mapping class="at.schrogl.fsfinance.persistence.entities.Label" />
 	</session-factory>
 
 </hibernate-configuration>

@@ -12,7 +12,7 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with FSFinance. If not, see <http://www.gnu.org/licenses/>. */
-package at.schrogl.fsfinance.entities;
+package at.schrogl.fsfinance.persistence.entities;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -24,8 +24,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import at.schrogl.fsfinance.persistence.daos.UserDao;
 
 /**
  * This entity class represents an user.
@@ -35,6 +39,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "USERS")
+@NamedQueries({
+		@NamedQuery(name = UserDao.NQ_ListAll, query = "FROM User u"),
+		@NamedQuery(name = UserDao.NQ_ByUsername, query = "FROM User u WHERE u.username = :username"),
+		@NamedQuery(name = UserDao.NQ_ByEmail, query = "FROM User u WHERE u.email = :email")
+})
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -55,6 +64,11 @@ public class User implements Serializable {
 	// =================================================================
 	// Helper methods
 	// =================================================================
+
+	@Override
+	public String toString() {
+		return id + "/" + username;
+	}
 
 	public void addAccount(Account account) {
 		account.setUser(this);
