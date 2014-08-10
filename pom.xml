@@ -14,23 +14,24 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>FSFinance POM</name>
-	
+
 	<description>
 	FSFinance Webapp is an web application written in Java. Its core features are
     inspired by Android applications like 'Financius' and 'Ausgaben Manager'.
 	</description>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.7</java.version>
 		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
 		<maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
 		<maven-project-info-reports-plugin.version>2.7</maven-project-info-reports-plugin.version>
+		<maven-license-plugin.version>2.6</maven-license-plugin.version>
 	</properties>
 
 	<!-- Sub-Projects -->
 	<modules>
-	  <module>fsfinance-persistence</module>
+		<module>fsfinance-persistence</module>
 	</modules>
 
 	<!-- Project Deployment -->
@@ -53,6 +54,7 @@
 
 	<build>
 		<plugins>
+			<!-- Compiler Plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -61,6 +63,32 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 				</configuration>
+			</plugin>
+
+			<!-- License Header Plugin -->
+			<plugin>
+				<groupId>com.mycila</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>${maven-license-plugin.version}</version>
+				<configuration>
+					<header>${project.basedir}/HEADING</header>
+					<keywords>
+						<keyword>GNU General Public License</keyword>
+					</keywords>
+					<skipExistingHeaders>true</skipExistingHeaders>
+					<strictCheck>true</strictCheck>
+					<includes>
+						<include>src/main/java/**/*.java</include>
+						<include>src/test/java/**/*.java</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

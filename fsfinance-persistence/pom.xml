@@ -15,6 +15,7 @@
 
 	<artifactId>fsfinance-persistence</artifactId>
 	<packaging>jar</packaging>
+	<description>The persistence layer of FSFinance. Includes Entities, DAOs, Unit tests.</description>
 
 	<!-- ====================================================================== -->
 	<!-- PROFILE: hbmtools -->
