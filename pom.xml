@@ -28,12 +28,19 @@
 		<maven-project-info-reports-plugin.version>2.7</maven-project-info-reports-plugin.version>
 		<maven-license-plugin.version>2.6</maven-license-plugin.version>
 		<maven-release-plugin.version>2.5</maven-release-plugin.version>
+		<maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
 	</properties>
 
 	<!-- Sub-Projects -->
 	<modules>
 		<module>fsfinance-persistence</module>
 	</modules>
+
+	<!-- Source Control Management -->
+	<scm>
+		<developerConnection>scm:git:https://git.schrogl.at/gitblit/r/private/FSFinance-WebApp.git</developerConnection>
+		<url>https://git.schrogl.at/gitblit/r/private/FSFinance-WebApp.git</url>
+	</scm>
 
 	<!-- Project Deployment -->
 	<distributionManagement>
@@ -42,13 +49,12 @@
 			<name>ATOM Nexus Release</name>
 			<url>https://git.schrogl.at/nexus/content/repositories/releases/</url>
 		</repository>
+		<site>
+			<id>atom-apache</id>
+			<name>ATOM Javadoc Release</name>
+			<url>file://srv/http/git.schrogl.at/sites/fsfinance/</url>
+		</site>
 	</distributionManagement>
-
-	<!-- Source Control Management -->
-	<scm>
-		<developerConnection>scm:git:https://git.schrogl.at/gitblit/r/private/FSFinance-WebApp.git</developerConnection>
-		<url>https://git.schrogl.at/gitblit/r/private/FSFinance-WebApp.git</url>
-	</scm>
 
 	<!-- ====================================================================== -->
 	<!-- BUILD CONFIGURATION -->
@@ -92,18 +98,35 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<!-- Release Plugin -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>${maven-release-plugin.version}</version>
-				<configuration>
-					<tagNameFormat>v@{project.version}</tagNameFormat>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
+
+	<!-- ====================================================================== -->
+	<!-- RELEASE/DEPLOYMENT CONFIGURATION -->
+	<!-- ====================================================================== -->
+
+	<profiles>
+		<profile>
+			<id>jenkins-release</id>
+			<build>
+				<plugins>
+					<!-- Release Plugin -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-release-plugin</artifactId>
+						<version>${maven-release-plugin.version}</version>
+						<configuration>
+							<tagNameFormat>v@{project.version}</tagNameFormat>
+							<username>${scm.username}</username>
+							<password>${scm.password}</password>
+							<preparationGoals>license:format</preparationGoals>
+						</configuration>
+					</plugin>
+				</plugins>
+				<defaultGoal>clean release:perform</defaultGoal>
+			</build>
+		</profile>
+	</profiles>
 
 	<!-- ====================================================================== -->
 	<!-- SITE CONFIGURATION -->
@@ -112,11 +135,14 @@
 	<!-- Site Configuration -->
 	<reporting>
 		<plugins>
+			<!-- Site Plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>${maven-javadoc-plugin.version}</version>
 			</plugin>
+
+			<!-- Report Plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
@@ -128,7 +154,6 @@
 					<reportSet>
 						<reports>
 							<report>index</report>
-							<report>plugin-management</report>
 							<report>plugins</report>
 							<report>license</report>
 							<report>project-team</report>
@@ -137,6 +162,18 @@
 						</reports>
 					</reportSet>
 				</reportSets>
+			</plugin>
+
+			<!-- Javadoc Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin.version}</version>
+				<configuration>
+					<linksource>true</linksource>
+					<quiet>true</quiet>
+					<aggregate>true</aggregate>
+				</configuration>
 			</plugin>
 		</plugins>
 	</reporting>
