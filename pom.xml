@@ -29,6 +29,8 @@
 		<maven-license-plugin.version>2.6</maven-license-plugin.version>
 		<maven-release-plugin.version>2.5</maven-release-plugin.version>
 		<maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
+		<maven-deploy-plugin.version>2.8.1</maven-deploy-plugin.version>
+		<maven-source-plugin.version>2.3</maven-source-plugin.version>
 	</properties>
 
 	<!-- Sub-Projects -->
@@ -52,7 +54,7 @@
 		<site>
 			<id>atom-apache</id>
 			<name>ATOM Javadoc Release</name>
-			<url>file://srv/http/git.schrogl.at/sites/fsfinance/</url>
+			<url>file:///srv/http/git.schrogl.at/sites/fsfinance/${project.version}/</url>
 		</site>
 	</distributionManagement>
 
@@ -98,6 +100,30 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- Javadoc Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin.version}</version>
+				<configuration>
+					<quiet>true</quiet>
+				</configuration>
+			</plugin>
+
+			<!-- Deploy Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>${maven-deploy-plugin.version}</version>
+			</plugin>
+
+			<!-- Source Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven-source-plugin.version}</version>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -119,11 +145,9 @@
 							<tagNameFormat>v@{project.version}</tagNameFormat>
 							<username>${scm.username}</username>
 							<password>${scm.password}</password>
-							<preparationGoals>license:format</preparationGoals>
 						</configuration>
 					</plugin>
 				</plugins>
-				<defaultGoal>clean release:perform</defaultGoal>
 			</build>
 		</profile>
 	</profiles>
@@ -170,9 +194,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>${maven-javadoc-plugin.version}</version>
 				<configuration>
-					<linksource>true</linksource>
 					<quiet>true</quiet>
-					<aggregate>true</aggregate>
 				</configuration>
 			</plugin>
 		</plugins>
