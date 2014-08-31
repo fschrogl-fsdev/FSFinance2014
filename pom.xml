@@ -36,6 +36,7 @@
 	<!-- Sub-Projects -->
 	<modules>
 		<module>fsfinance-persistence</module>
+		<module>fsfinance-gui-jsf</module>
 	</modules>
 
 	<!-- Source Control Management -->
