@@ -24,14 +24,15 @@ import at.schrogl.fsfinance.persistence.entities.User;
  * DAO class for entity {@link User}
  * 
  * @author Fritz Schrogl
- * @since 0.0.1
+ * @since 0.1
  * 
  */
 public class UserDao extends AbstractBaseDao<User> {
 
 	// Names of NamedQueries
-	public static final String NQ_ByUsername = "user_ByUsername";
-	public static final String NQ_ByEmail = "user_ByEmail";
+	public static final String NQ_ListAll = "user.listAll";
+	public static final String NQ_ByUsername = "user.ByUsername";
+	public static final String NQ_ByEmail = "user.ByEmail";
 
 	@Override
 	public User getById(Long id) {
@@ -53,11 +54,11 @@ public class UserDao extends AbstractBaseDao<User> {
 				.getSingleResult();
 	}
 
-	public List<User> getByEMail(String email) {
+	public User getByEMail(String email) {
 		checkEntityManagerNotNull();
 		return em.createNamedQuery(NQ_ByEmail, User.class)
 				.setParameter("email", email)
-				.getResultList();
+				.getSingleResult();
 	}
 
 }

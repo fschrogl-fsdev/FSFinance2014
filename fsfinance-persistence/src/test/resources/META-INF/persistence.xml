@@ -22,11 +22,12 @@
 			<property name="javax.persistence.jdbc.password" value="" />
 
 			<!-- Schema Creation -->
-			<!-- Values: none (default)|create|drop-and-create|drop -->
+			<!-- Values ACTION: none (default)|create|drop-and-create|drop -->
+			<!-- Values SOURCE: metadata (default)|script|metadata-then-script|script-then-metadata -->
 			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
-
-			<!-- Values: metadata (default)|script|metadata-then-script|script-then-metadata -->
 			<property name="javax.persistence.schema-generation.create-source" value="metadata" />
+
+			<!-- Fill the database with test data -->
 			<property name="javax.persistence.sql-load-script-source" value="META-INF/sql/load-testdata.sql" />
 
 			<!-- ======================================================= -->

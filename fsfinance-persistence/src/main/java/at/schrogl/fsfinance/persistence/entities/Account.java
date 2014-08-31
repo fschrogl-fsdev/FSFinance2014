@@ -1,16 +1,16 @@
 /**
  * This file is part of FSFinance.
- *
+ * 
  * FSFinance is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * FSFinance is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with FSFinance. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,17 +27,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
+
+import at.schrogl.fsfinance.persistence.daos.AccountDao;
 
 /**
  * This entity class represents an account.
  * 
  * @author Fritz Schrogl
- * @since 0.0.1
+ * @since 0.1
  */
 @Entity
 @Table(name = "ACCOUNTS")
+@NamedQueries({
+		@NamedQuery(name = AccountDao.NQ_ListAll, query = "FROM Account a"),
+		@NamedQuery(name = AccountDao.NQ_ByName, query = "FROM Account a WHERE a.name = :name")
+})
 public class Account implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -76,7 +85,7 @@ public class Account implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "NAME", length = 255, nullable = false)
+	@Column(name = "NAME", length = 255, unique = true, nullable = false)
 	public String getName() {
 		return name;
 	}
@@ -113,7 +122,8 @@ public class Account implements Serializable {
 		this.user = user;
 	}
 
-	@OneToMany(mappedBy = "account", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "account", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OrderBy("DATE")
 	public Set<Transaction> getTransactions() {
 		return transactions;
 	}

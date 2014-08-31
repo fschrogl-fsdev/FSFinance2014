@@ -1,7 +1,7 @@
 ﻿-- Project:	FSFinance Persistence
 -- Info:	Creates the database, tables, sequences, etc.
 -- DBMS:	PostgreSQL 9.1+
--- Version:	0.0.1
+-- Version:	0.1
 
 /*
  * Create TABLES, SEQUENCES, etc.
@@ -18,14 +18,14 @@ CREATE TABLE users (
 	salt 		VARCHAR(255) NOT NULL,
 	forename 	VARCHAR(255),
 	surname 	VARCHAR(255),
-	email 		VARCHAR(255)
+	email 		VARCHAR(255) NOT NULL UNIQUE
 );
 
 -- Table ACCOUNTS
 DROP TABLE IF EXISTS accounts CASCADE;
 CREATE TABLE accounts (
 	id		BIGINT PRIMARY KEY,
-	name		VARCHAR(255) NOT NULL,
+	name		VARCHAR(255) NOT NULL UNIQUE,
 	description	VARCHAR(255),
 	color		CHAR(7),
 	id_user		BIGINT NOT NULL
@@ -49,8 +49,15 @@ CREATE TABLE labels (
 	name		VARCHAR(255) NOT NULL,
 	description	VARCHAR(255),
 	color		CHAR(7),
-	id_label	BIGINT,
 	id_user		BIGINT NOT NULL
+);
+
+-- Join-Table: LABELS_LABELS
+DROP TABLE IF EXISTS labels_labels CASCADE;
+CREATE TABLE labels_labels (
+	id_label_parent	BIGINT NOT NULL,
+	id_label_child	BIGINT PRIMARY KEY,
+	UNIQUE (id_label_parent, id_label_child)
 );
 
 /*
@@ -58,12 +65,15 @@ CREATE TABLE labels (
  */
 
 ALTER TABLE accounts
-  ADD CONSTRAINT accounts_id_user_fkey FOREIGN KEY (id_user) REFERENCES users;
+  ADD CONSTRAINT accounts_id_user_fkey FOREIGN KEY (id_user) REFERENCES users ON DELETE CASCADE;
 
 ALTER TABLE transactions 
-  ADD CONSTRAINT transactions_id_account_fkey FOREIGN KEY (id_account) REFERENCES accounts,
+  ADD CONSTRAINT transactions_id_account_fkey FOREIGN KEY (id_account) REFERENCES accounts ON DELETE CASCADE,
   ADD CONSTRAINT transactions_id_label_fkey FOREIGN KEY (id_label) REFERENCES labels;
   
 ALTER TABLE labels
-  ADD CONSTRAINT labels_id_label_fkey FOREIGN KEY (id_label) REFERENCES labels,
-  ADD CONSTRAINT labels_id_user_fkey FOREIGN KEY (id_user) REFERENCES labels;
+  ADD CONSTRAINT labels_id_user_fkey FOREIGN KEY (id_user) REFERENCES users ON DELETE CASCADE;
+
+ALTER TABLE labels_labels
+  ADD CONSTRAINT labels_labels_id_label_parent_fkey FOREIGN KEY (id_label_parent) REFERENCES labels ON DELETE CASCADE,
+  ADD CONSTRAINT labels_labels_id_label_child_fkey FOREIGN KEY (id_label_child) REFERENCES labels ON DELETE CASCADE;

@@ -1,16 +1,16 @@
 /**
  * This file is part of FSFinance.
- *
+ * 
  * FSFinance is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * FSFinance is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with FSFinance. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,21 +25,18 @@ import javax.persistence.EntityManager;
  * Common base class for all DAOs. Provides some basic data access.
  * 
  * @author Fritz Schrogl
- * @since 0.0.1
+ * @since 0.1
  * 
  * @param <T>
  *            Entity class, the DAO is acting on
  */
 public abstract class AbstractBaseDao<T> {
 
-	/** Unique name/id for the named query "listAll (rows)" */
-	public static final String NQ_ListAll = "entity_ListAll";
-
 	protected EntityManager em;
 
 	/**
 	 * Sanity method. Checks if {@link AbstractBaseDao#em} is set and throws a
-	 * NPE if not.
+	 * <code>NullPointerException</code> if not.
 	 * 
 	 * @throws NullPointerException
 	 *             If the entity manager for the DAO is not set
@@ -58,24 +55,24 @@ public abstract class AbstractBaseDao<T> {
 
 	public abstract List<T> listAll();
 
-	public void saveOrUpdate(T entity) {
+	public void persist(T entity) {
 		checkEntityManagerNotNull();
 		em.persist(entity);
 	}
 
-	public void saveOrUpdate(Collection<T> entities) {
+	public void persist(Collection<T> entities) {
 		checkEntityManagerNotNull();
 		for (T entity : entities) {
 			em.persist(entity);
 		}
 	}
 
-	public void delete(T entity) {
+	public void remove(T entity) {
 		checkEntityManagerNotNull();
 		em.remove(entity);
 	}
 
-	public void delete(Collection<T> entities) {
+	public void remove(Collection<T> entities) {
 		checkEntityManagerNotNull();
 		for (T entity : entities) {
 			em.remove(entity);

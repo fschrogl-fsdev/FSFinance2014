@@ -1,16 +1,16 @@
 /**
  * This file is part of FSFinance.
- *
+ * 
  * FSFinance is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * FSFinance is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with FSFinance. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -37,7 +37,7 @@ import at.schrogl.fsfinance.persistence.daos.UserDao;
  * This entity class represents an user.
  * 
  * @author Fritz Schrogl
- * @since 0.0.1
+ * @since 0.1
  */
 @Entity
 @Table(name = "USERS")
@@ -142,7 +142,7 @@ public class User implements Serializable {
 		this.surname = surname;
 	}
 
-	@Column(name = "EMAIL", length = 255)
+	@Column(name = "EMAIL", length = 255, nullable = false, unique = true)
 	public String getEmail() {
 		return email;
 	}
@@ -151,7 +151,7 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	public Set<Account> getAccounts() {
 		return accounts;
 	}
@@ -160,7 +160,7 @@ public class User implements Serializable {
 		this.accounts = accounts;
 	}
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	public Set<Label> getLabels() {
 		return labels;
 	}
