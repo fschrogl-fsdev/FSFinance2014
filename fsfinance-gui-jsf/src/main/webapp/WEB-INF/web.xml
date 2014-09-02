@@ -3,7 +3,7 @@
 	xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_0.xsd"
 	id="FSFinance" version="3.0">
 
-	<!-- General description of your web application -->
+	<!-- General description -->
 	<display-name>FSFinance</display-name>
 	<description>
 		A little Web-Application to keep track of daily expenses.
@@ -43,7 +43,12 @@
 	<!-- Servlet Mappings -->
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.html</url-pattern>
+		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+
+	<!-- Application's entry point -->
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
 
 </web-app>

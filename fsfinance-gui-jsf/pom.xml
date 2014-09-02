@@ -43,6 +43,13 @@
 		</dependency>
 
 		<dependency>
+			<!-- Tomcat doesn't ship with JSTL -->
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
