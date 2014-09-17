@@ -45,8 +45,8 @@ import at.schrogl.fsfinance.persistence.daos.LabelDao;
 @Entity
 @Table(name = "LABELS")
 @NamedQueries({
-		@NamedQuery(name = LabelDao.NQ_ListAll, query = "FROM Label l"),
-		@NamedQuery(name = LabelDao.NQ_ByName, query = "FROM Label l WHERE l.name = :name")
+		@NamedQuery(name = LabelDao.NQ_ListAll, query = "SELECT l FROM Label l"),
+		@NamedQuery(name = LabelDao.NQ_ByName, query = "SELECT l FROM Label l WHERE l.name = :name")
 })
 public class Label implements Serializable {
 

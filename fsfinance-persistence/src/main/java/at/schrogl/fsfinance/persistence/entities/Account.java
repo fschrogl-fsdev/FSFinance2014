@@ -44,8 +44,8 @@ import at.schrogl.fsfinance.persistence.daos.AccountDao;
 @Entity
 @Table(name = "ACCOUNTS")
 @NamedQueries({
-		@NamedQuery(name = AccountDao.NQ_ListAll, query = "FROM Account a"),
-		@NamedQuery(name = AccountDao.NQ_ByName, query = "FROM Account a WHERE a.name = :name")
+		@NamedQuery(name = AccountDao.NQ_ListAll, query = "SELECT a FROM Account a"),
+		@NamedQuery(name = AccountDao.NQ_ByName, query = "SELECT a FROM Account a WHERE a.name = :name")
 })
 public class Account implements Serializable {
 

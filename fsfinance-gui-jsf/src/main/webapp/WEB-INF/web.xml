@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee"
-	xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_0.xsd"
-	id="FSFinance" version="3.0">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/webapp_3_0.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="FSFinance" version="3.0">
 
 	<!-- General description -->
 	<display-name>FSFinance</display-name>
@@ -12,24 +11,26 @@
 
 	<!-- Context Parameters -->
 	<context-param>
+		<description>Don't render XML comments</description>
 		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
 		<param-value>true</param-value>
-		<description>Don't render XML comments</description>
-
+	</context-param>
+	<context-param>
+		<description>Use NULL values for empty input fields</description>
 		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
 		<param-value>false</param-value>
-		<description>Use NULL values for empty input fields</description>
-
+	</context-param>
+	<context-param>
+		<description>Project state: Development|UnitTest|SytemTest|Production</description>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
-		<description>Project state: Development|UnitTest|SytemTest|Production</description>
-
+	</context-param>
+	<context-param>
+		<description>
+			Resources that must not be (directly) accessable. Default: .class .jsp .jspx .properties .xhtml
+		</description>
 		<param-name>javax.faces.RESOURCE_EXCLUDES</param-name>
 		<param-value>.class .jsp .jspx .properties .xhtml</param-value>
-		<description>
-			Resources that must not be (directly) accessable.
-			Default: .class .jsp .jspx .properties .xhtml
-		</description>
 	</context-param>
 
 
@@ -37,6 +38,7 @@
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 

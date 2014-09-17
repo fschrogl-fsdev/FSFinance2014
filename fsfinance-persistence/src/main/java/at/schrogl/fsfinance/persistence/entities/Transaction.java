@@ -44,8 +44,8 @@ import at.schrogl.fsfinance.persistence.daos.TransactionDao;
 @Entity
 @Table(name = "TRANSACTIONS")
 @NamedQueries({
-		@NamedQuery(name = TransactionDao.NQ_ListAll, query = "FROM Transaction t"),
-		@NamedQuery(name = TransactionDao.NQ_ByDate, query = "FROM Transaction t WHERE t.date = :date")
+		@NamedQuery(name = TransactionDao.NQ_ListAll, query = "SELECT t FROM Transaction t"),
+		@NamedQuery(name = TransactionDao.NQ_ByDate, query = "SELECT t FROM Transaction t WHERE t.date = :date")
 })
 public class Transaction implements Serializable {
 

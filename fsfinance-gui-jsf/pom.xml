@@ -12,6 +12,7 @@
 	<properties>
 		<maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
 		<apache-myfaces.version>2.2.4</apache-myfaces.version>
+		<jstl.version>1.2</jstl.version>
 		<logback.version>1.1.2</logback.version>
 	</properties>
 
@@ -46,7 +47,7 @@
 			<!-- Tomcat doesn't ship with JSTL -->
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.2</version>
+			<version>${jstl.version}</version>
 		</dependency>
 
 		<dependency>

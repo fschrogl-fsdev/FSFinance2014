@@ -42,9 +42,9 @@ import at.schrogl.fsfinance.persistence.daos.UserDao;
 @Entity
 @Table(name = "USERS")
 @NamedQueries({
-		@NamedQuery(name = UserDao.NQ_ListAll, query = "FROM User u"),
-		@NamedQuery(name = UserDao.NQ_ByUsername, query = "FROM User u WHERE u.username = :username"),
-		@NamedQuery(name = UserDao.NQ_ByEmail, query = "FROM User u WHERE u.email = :email")
+		@NamedQuery(name = UserDao.NQ_ListAll, query = "SELECT u FROM User u"),
+		@NamedQuery(name = UserDao.NQ_ByUsername, query = "SELECT u FROM User u WHERE u.username = :username"),
+		@NamedQuery(name = UserDao.NQ_ByEmail, query = "SELECT u FROM User u WHERE u.email = :email")
 })
 public class User implements Serializable {
 
