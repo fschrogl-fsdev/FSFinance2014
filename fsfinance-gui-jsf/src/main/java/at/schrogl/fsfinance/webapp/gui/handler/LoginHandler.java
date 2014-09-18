@@ -20,7 +20,7 @@ public class LoginHandler implements Serializable {
 	// ==============================================================
 
 	public void doLogin(ActionEvent event) {
-
+		System.out.println(event.getComponent().getClientId());
 	}
 
 	// ==============================================================

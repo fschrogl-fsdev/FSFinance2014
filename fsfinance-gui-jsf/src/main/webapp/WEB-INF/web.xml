@@ -9,6 +9,12 @@
 	</description>
 
 
+	<session-config>
+		<!-- Session timeout in minutes -->
+		<session-timeout>10</session-timeout>
+	</session-config>
+
+
 	<!-- Context Parameters -->
 	<context-param>
 		<description>Don't render XML comments</description>
@@ -26,11 +32,21 @@
 		<param-value>Development</param-value>
 	</context-param>
 	<context-param>
+		<description>Enables JSF/MyFaces Debugging Popup in Pages</description>
+		<param-name>javax.faces.FACELETS_DEVELOPMENT</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
 		<description>
 			Resources that must not be (directly) accessable. Default: .class .jsp .jspx .properties .xhtml
 		</description>
 		<param-name>javax.faces.RESOURCE_EXCLUDES</param-name>
 		<param-value>.class .jsp .jspx .properties .xhtml</param-value>
+	</context-param>
+	<context-param>
+		<description>State saving method: server|client</description>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>server</param-value>
 	</context-param>
 
 
@@ -48,9 +64,10 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
+
 	<!-- Application's entry point -->
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
 
 </web-app>
