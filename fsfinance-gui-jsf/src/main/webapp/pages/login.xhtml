@@ -1,30 +1,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html">
 
-<ui:composition template="/templates/baseTemplate.xhtml">
-<head>
-<ui:define name="title">FSFinance - Login</ui:define>
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+  <ui:composition template="/templates/baseTemplate.xhtml">
+	<head>
+	  <ui:define name="title">Login // #{msg.application_name}</ui:define>
+	</head>
 
-<ui:define name="content">
-  <h:form>
-    <h:panelGrid columns="2">
-	  <h:outputLabel for="username" value="#{msg.label_user_name}" />
-	  <h:inputText id="username" value="#{loginHandler.username}" />
-	  <h:outputLabel for="password" value="#{msg.label_user_password}" />
-	  <h:inputSecret id="password" value="#{loginHandler.password}" />
-      <h:commandButton id="login-submit" value="Login" actionListener="#{loginHandler.doLogin}" />
-      <h:commandButton id="login-cancel" value="Cancel" action="/index.xhtml" />
-	</h:panelGrid>
-  </h:form>
-</ui:define>
-</ui:composition>
+	<body>
+	  <ui:define name="content">
+		<h:form>
+		  <h:panelGrid columns="2">
+			<h:outputLabel for="username" value="#{msg.label_username}" />
+			<h:inputText id="username" value="#{loginHandler.username}" />
+			<h:outputLabel for="password" value="#{msg.label_userpassword}" />
+			<h:inputSecret id="password" value="#{loginHandler.password}" />
+			<h:commandButton id="btn-ok" value="#{msg.btn_login}" actionListener="#{loginHandler.doLogin}" />
+			<h:commandButton id="btn-cancel" value="#{msg.btn_cancel}" action="/index.xhtml" />
+		  </h:panelGrid>
+		</h:form>
+	  </ui:define>
+	</body>
 
+  </ui:composition>
 </html>

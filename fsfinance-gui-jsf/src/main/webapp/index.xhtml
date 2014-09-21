@@ -1,26 +1,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-<ui:composition template="/templates/baseTemplate.xhtml">
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core">
 
-<head>
-<ui:define name="title">FSFinance - Home</ui:define>
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+  <ui:composition template="/templates/baseTemplate.xhtml">
+	<head>
+	  <ui:define name="title">Home // #{msg.application_name}</ui:define>
+	</head>
 
-<ui:define name="content">
-  <h:form>
-    <h:panelGrid columns="1">
-      <h:commandLink value="Go to login" action="pages/login" />
-      <h:commandLink value="Go to Register" action="pages/register" />
-    </h:panelGrid>
-  </h:form>
-</ui:define>
+	<body>
+	  <ui:define name="content">
+		<h:form>
+		  <h:panelGrid columns="1">
+			<h:commandLink value=">> login" action="pages/login.xhtml" />
+			<h:commandLink value=">> Register" action="pages/register.xhtml" />
+		  </h:panelGrid>
+		</h:form>
+	  </ui:define>
+	</body>
 
-</ui:composition>
+  </ui:composition>
 </html>

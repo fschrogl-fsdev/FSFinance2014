@@ -1,34 +1,41 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core">
 
-<head>
-<title><ui:insert name="title">FSFinance</ui:insert></title>
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+  <head>
+	<title><ui:insert name="title">#{msg.application_name}</ui:insert></title>
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
 
-<body>
-<ui:debug hotkey="x" rendered="#{initParam['javax.faces.FACELETS_DEVELOPMENT']}"/>
-<div id="header">
-  <ui:insert name="header">
-    <a href="#{request.contextPath}">FSFinance</a>
-	<hr />
-  </ui:insert>
-</div>
+  <body>
+	<ui:debug hotkey="x" rendered="#{initParam['javax.faces.FACELETS_DEVELOPMENT']}"/>
 
-<div id="content">
-  <ui:insert name="content">
-    <i>Content here.</i>
-  </ui:insert>
-</div>
+	<div id="header">
+	  <ui:insert name="header">
+		<div style="width: 50%; float: left;">
+		  <a href="#{request.contextPath}">#{msg.application_name}</a>  
+		</div>
+		<div style="width: 50%; float: right; text-align: right;">Login/Logout</div>
+		<div style="clear: both;" />
+		<hr />
+	  </ui:insert>
+	</div>
 
-<div id="footer">
-  <ui:insert name="footer"></ui:insert>
-</div>
-</body>
+	<div id="content">
+	  <ui:insert name="content"></ui:insert>
+	</div>
+
+	<div id="footer" style="text-align: right;">
+	  <ui:insert name="footer">
+		<hr />
+		<small>v#{msg.application_version}</small>
+	  </ui:insert>
+	</div>
+
+  </body>
 </html>
