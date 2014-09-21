@@ -23,7 +23,7 @@
 	  <h:outputLabel for="passwordRepeat" value="Password (repeat):" />
 	  <h:inputSecret id="passwordRepeat" value="#{loginHandler.password}" />
       <h:commandButton id="register-submit" value="Register" actionListener="#{loginHandler.doLogin}" />
-      <h:commandButton id="register-cancel" value="Cancel" action="login" />
+      <h:commandButton id="register-cancel" value="Cancel" action="/index.xhtml" />
 	</h:panelGrid>
   </h:form>
 </ui:define>

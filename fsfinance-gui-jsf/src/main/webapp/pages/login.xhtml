@@ -16,12 +16,12 @@
 <ui:define name="content">
   <h:form>
     <h:panelGrid columns="2">
-	  <h:outputLabel for="username" value="Username:" />
+	  <h:outputLabel for="username" value="#{msg.label_user_name}" />
 	  <h:inputText id="username" value="#{loginHandler.username}" />
-	  <h:outputLabel for="password" value="Password:" />
+	  <h:outputLabel for="password" value="#{msg.label_user_password}" />
 	  <h:inputSecret id="password" value="#{loginHandler.password}" />
       <h:commandButton id="login-submit" value="Login" actionListener="#{loginHandler.doLogin}" />
-      <h:commandLink id="login-toRegister" value="Register Account" action="register" />
+      <h:commandButton id="login-cancel" value="Cancel" action="/index.xhtml" />
 	</h:panelGrid>
   </h:form>
 </ui:define>

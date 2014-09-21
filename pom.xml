@@ -36,6 +36,7 @@
 	<!-- Sub-Projects -->
 	<modules>
 		<module>fsfinance-persistence</module>
+		<module>fsfinance-business</module>
 		<module>fsfinance-gui-jsf</module>
 	</modules>
 
@@ -152,6 +153,70 @@
 			</build>
 		</profile>
 	</profiles>
+
+	<!-- ====================================================================== -->
+	<!-- DEPENDENCY MANAGEMENT -->
+	<!-- ====================================================================== -->
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Model -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>4.3.5.Final</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>4.3.5.Final</version>
+			</dependency>
+			<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>9.3-1101-jdbc41</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- View -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>jstl</artifactId>
+				<version>1.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.myfaces.core</groupId>
+				<artifactId>myfaces-api</artifactId>
+				<version>2.2.4</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.myfaces.core</groupId>
+				<artifactId>myfaces-impl</artifactId>
+				<version>2.2.4</version>
+			</dependency>
+
+			<!-- Support -->
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>1.1.2</version>
+			</dependency>
+
+			<!-- Testing -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.11</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.hsqldb</groupId>
+				<artifactId>hsqldb</artifactId>
+				<version>2.3.2</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<!-- ====================================================================== -->
 	<!-- SITE CONFIGURATION -->

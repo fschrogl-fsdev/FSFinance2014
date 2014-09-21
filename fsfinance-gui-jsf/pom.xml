@@ -11,9 +11,6 @@
 
 	<properties>
 		<maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
-		<apache-myfaces.version>2.2.4</apache-myfaces.version>
-		<jstl.version>1.2</jstl.version>
-		<logback.version>1.1.2</logback.version>
 	</properties>
 
 	<artifactId>fsfinance-gui-jsf</artifactId>
@@ -31,29 +28,27 @@
 			<artifactId>fsfinance-persistence</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>at.schrogl.fsfinance</groupId>
+			<artifactId>fsfinance-business</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.myfaces.core</groupId>
 			<artifactId>myfaces-api</artifactId>
-			<version>${apache-myfaces.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.myfaces.core</groupId>
 			<artifactId>myfaces-impl</artifactId>
-			<version>${apache-myfaces.version}</version>
 		</dependency>
-
 		<dependency>
 			<!-- Tomcat doesn't ship with JSTL -->
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>${jstl.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>${logback.version}</version>
 		</dependency>
 	</dependencies>
 
