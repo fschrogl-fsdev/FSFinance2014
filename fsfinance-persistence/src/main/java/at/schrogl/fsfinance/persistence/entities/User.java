@@ -30,6 +30,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 
 import at.schrogl.fsfinance.persistence.daos.UserDao;
 
@@ -97,6 +100,8 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
+	@NotNull
+	@Length(min = 3, max = 50)
 	@Column(name = "USERNAME", length = 50, unique = true, nullable = false)
 	public String getUsername() {
 		return username;
@@ -106,6 +111,7 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
+	@NotNull
 	@Column(name = "PASSWORD", length = 255, nullable = false)
 	public String getPassword() {
 		return password;
@@ -115,6 +121,7 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
+	@NotNull
 	@Column(name = "SALT", length = 255, nullable = false, updatable = false)
 	public String getSalt() {
 		return salt;
@@ -124,6 +131,7 @@ public class User implements Serializable {
 		this.salt = salt;
 	}
 
+	@Length(max = 255)
 	@Column(name = "FORENAME", length = 255)
 	public String getForename() {
 		return forename;
@@ -133,6 +141,7 @@ public class User implements Serializable {
 		this.forename = forename;
 	}
 
+	@Length(max = 255)
 	@Column(name = "SURNAME", length = 255)
 	public String getSurname() {
 		return surname;
@@ -142,6 +151,8 @@ public class User implements Serializable {
 		this.surname = surname;
 	}
 
+	@NotNull
+	@Length(max = 255)
 	@Column(name = "EMAIL", length = 255, nullable = false, unique = true)
 	public String getEmail() {
 		return email;

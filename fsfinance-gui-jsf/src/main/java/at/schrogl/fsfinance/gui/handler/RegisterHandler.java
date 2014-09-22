@@ -24,17 +24,20 @@ import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
+
 import at.schrogl.fsfinance.business.UserManagementBean;
 import at.schrogl.fsfinance.persistence.entities.User;
 
 @ManagedBean
 @ViewScoped
-public class LoginHandler implements Serializable {
+public class RegisterHandler implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private User user = new User();
 	private String passwordPlain;
+	private String passwordPlainRepeated;
 
 	@ManagedProperty(value = "#{userManagementBean}")
 	private UserManagementBean userManagement;
@@ -43,9 +46,10 @@ public class LoginHandler implements Serializable {
 	// Action Methods
 	// ==============================================================
 
-	public void doLogin(ActionEvent event) {
+	public void doRegister(ActionEvent event) {
 		System.out.println(event.getComponent().getClientId());
-		System.out.println(userManagement);
+		System.out.println(user);
+		System.out.println(passwordPlain + "//" + passwordPlainRepeated);
 	}
 
 	// ==============================================================
@@ -61,12 +65,21 @@ public class LoginHandler implements Serializable {
 	}
 	
 	@NotNull
+	@Length(min = 8, max = 24)
 	public String getPasswordPlain() {
 		return passwordPlain;
 	}
 	
 	public void setPasswordPlain(String passwordPlain) {
 		this.passwordPlain = passwordPlain;
+	}
+
+	public String getPasswordPlainRepeated() {
+		return passwordPlainRepeated;
+	}
+	
+	public void setPasswordPlainRepeated(String passwordPlainRepeated) {
+		this.passwordPlainRepeated = passwordPlainRepeated;
 	}
 
 	public UserManagementBean getUserManagement() {

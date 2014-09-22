@@ -15,14 +15,20 @@
 	  <ui:define name="content">
 		<h:form>
 		  <h:panelGrid columns="2">
-			<h:outputLabel for="username" value="#{msg.label_username}" />
-			<h:inputText id="username" value="#{loginHandler.username}" />
-			<h:outputLabel for="password" value="#{msg.label_userpassword}" />
-			<h:inputSecret id="password" value="#{loginHandler.password}" />
+			<h:outputLabel for="username" value="#{msg.label_username} [*]" />
+			<h:inputText id="username" value="#{registerHandler.user.username}" />
+			<h:outputLabel for="password" value="#{msg.label_userpassword} [*]" />
+			<h:inputSecret id="password" value="#{registerHandler.passwordPlain}" />
 			<h:outputLabel for="passwordRepeat" value="#{msg.label_userpassword_repeat}" />
-			<h:inputSecret id="passwordRepeat" value="#{loginHandler.password}" />
-			<h:commandButton id="btn-ok" value="#{msg.btn_register}" actionListener="#{loginHandler.doLogin}" />
-			<h:commandButton id="btn-cancel" value="#{msg.btn_cancel}" action="/index.xhtml" />
+			<h:inputSecret id="passwordRepeat" value="#{registerHandler.passwordPlainRepeated}" />
+			<h:outputLabel for="forename" value="#{msg.label_userforename}" />
+			<h:inputText id="forename" value="#{registerHandler.user.forename}" />
+			<h:outputLabel for="surname" value="#{msg.label_usersurname}" />
+			<h:inputText id="surname" value="#{registerHandler.user.surname}" />
+			<h:outputLabel for="email" value="#{msg.label_usermail} [*]" />
+			<h:inputText id="email" value="#{registerHandler.user.email}" />
+			<h:commandButton id="btn-ok" value="#{msg.btn_register}" actionListener="#{registerHandler.doRegister}" />
+			<h:commandButton id="btn-cancel" value="#{msg.btn_cancel}" action="/index.xhtml" immediate="true" />
 		  </h:panelGrid>
 		</h:form>
 	  </ui:define>
