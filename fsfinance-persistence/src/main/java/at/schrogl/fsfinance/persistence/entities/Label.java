@@ -33,6 +33,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 
 import at.schrogl.fsfinance.persistence.daos.LabelDao;
 
@@ -103,6 +106,8 @@ public class Label implements Serializable {
 		this.id = id;
 	}
 
+	@NotNull
+	@Length(min = 1, max = 255)
 	@Column(name = "NAME", length = 255, nullable = false)
 	public String getName() {
 		return name;
@@ -112,6 +117,7 @@ public class Label implements Serializable {
 		this.name = name;
 	}
 
+	@Length(max = 255)
 	@Column(name = "DESCRIPTION", length = 255)
 	public String getDescription() {
 		return description;

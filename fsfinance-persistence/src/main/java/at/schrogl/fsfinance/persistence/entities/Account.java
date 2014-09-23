@@ -32,6 +32,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 
 import at.schrogl.fsfinance.persistence.daos.AccountDao;
 
@@ -85,6 +88,8 @@ public class Account implements Serializable {
 		this.id = id;
 	}
 
+	@NotNull
+	@Length(min = 1, max = 255)
 	@Column(name = "NAME", length = 255, unique = true, nullable = false)
 	public String getName() {
 		return name;
@@ -94,6 +99,7 @@ public class Account implements Serializable {
 		this.name = name;
 	}
 
+	@Length(max = 255)
 	@Column(name = "DESCRIPTION", length = 255)
 	public String getDescription() {
 		return description;

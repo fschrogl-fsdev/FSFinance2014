@@ -32,6 +32,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 
 import at.schrogl.fsfinance.persistence.daos.TransactionDao;
 
@@ -76,6 +80,7 @@ public class Transaction implements Serializable {
 		this.id = id;
 	}
 
+	@NotNull
 	@Column(name = "DATE", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDate() {
@@ -86,6 +91,8 @@ public class Transaction implements Serializable {
 		this.date = date;
 	}
 
+	@NotNull
+	@Digits(integer = 15, fraction = 4)
 	@Column(name = "AMOUNT", nullable = false, precision = 19, scale = 4)
 	public BigDecimal getAmount() {
 		return amount;
@@ -95,6 +102,7 @@ public class Transaction implements Serializable {
 		this.amount = amount;
 	}
 
+	@Length(max = 255)
 	@Column(name = "NOTE", length = 255)
 	public String getNote() {
 		return note;
