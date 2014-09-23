@@ -25,7 +25,7 @@ import javax.persistence.EntityManager;
  * Common base class for all DAOs. Provides some basic data access.
  * 
  * @author Fritz Schrogl
- * @since 0.1
+ * @since 0.1.0
  * 
  * @param <T>
  *            Entity class, the DAO is acting on

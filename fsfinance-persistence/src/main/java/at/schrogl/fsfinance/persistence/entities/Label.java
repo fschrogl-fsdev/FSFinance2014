@@ -43,7 +43,7 @@ import at.schrogl.fsfinance.persistence.daos.LabelDao;
  * This entity class represents a label
  * 
  * @author Fritz Schrogl
- * @since 0.1
+ * @since 0.1.0
  */
 @Entity
 @Table(name = "LABELS")

@@ -24,7 +24,7 @@ import at.schrogl.fsfinance.persistence.entities.User;
  * DAO class for entity {@link User}
  * 
  * @author Fritz Schrogl
- * @since 0.1
+ * @since 0.1.0
  * 
  */
 public class UserDao extends AbstractBaseDao<User> {

@@ -27,7 +27,7 @@ import at.schrogl.fsfinance.persistence.entities.Transaction;
  * DAO class for entity {@link Transaction}
  * 
  * @author Fritz Schrogl
- * @since 0.1
+ * @since 0.1.0
  * 
  */
 public class TransactionDao extends AbstractBaseDao<Transaction> {

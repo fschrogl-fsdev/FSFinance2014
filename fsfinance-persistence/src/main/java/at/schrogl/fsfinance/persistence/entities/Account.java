@@ -42,7 +42,7 @@ import at.schrogl.fsfinance.persistence.daos.AccountDao;
  * This entity class represents an account.
  * 
  * @author Fritz Schrogl
- * @since 0.1
+ * @since 0.1.0
  */
 @Entity
 @Table(name = "ACCOUNTS")

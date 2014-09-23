@@ -32,6 +32,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
 import at.schrogl.fsfinance.persistence.daos.UserDao;
@@ -40,7 +41,7 @@ import at.schrogl.fsfinance.persistence.daos.UserDao;
  * This entity class represents an user.
  * 
  * @author Fritz Schrogl
- * @since 0.1
+ * @since 0.1.0
  */
 @Entity
 @Table(name = "USERS")
@@ -153,6 +154,7 @@ public class User implements Serializable {
 
 	@NotNull
 	@Length(max = 255)
+	@Email
 	@Column(name = "EMAIL", length = 255, nullable = false, unique = true)
 	public String getEmail() {
 		return email;

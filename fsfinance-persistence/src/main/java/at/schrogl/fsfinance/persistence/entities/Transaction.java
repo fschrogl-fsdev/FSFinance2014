@@ -43,7 +43,7 @@ import at.schrogl.fsfinance.persistence.daos.TransactionDao;
  * This entity class represents a transaction
  * 
  * @author Fritz Schrogl
- * @since 0.1
+ * @since 0.1.0
  */
 @Entity
 @Table(name = "TRANSACTIONS")

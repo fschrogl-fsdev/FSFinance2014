@@ -24,7 +24,7 @@ import at.schrogl.fsfinance.persistence.entities.Label;
  * DAO class for entity {@link Label}
  * 
  * @author Fritz Schrogl
- * @since 0.1
+ * @since 0.1.0
  * 
  */
 public class LabelDao extends AbstractBaseDao<Label> {
