@@ -8,8 +8,15 @@
           http://www.springframework.org/schema/security
           http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<http auto-config="true">
-		<intercept-url pattern="/**" access="ROLE_USER" />
+	<http auto-config="true" use-expressions="false">
+		<intercept-url pattern="/**/restricted/admin/**" access="ROLE_ADMIN" />
+		<intercept-url pattern="/**/restricted/**" access="ROLE_USER" />
+		<form-login login-page="/pages/login.xhtml"
+					login-processing-url="/static/user_login"
+					username-parameter="username"
+					password-parameter="password"
+					authentication-failure-url="/pages/login.xhtml?login_error" />
+		<logout logout-url="/static/user_logout"/>
 	</http>
 	
 	<authentication-manager>

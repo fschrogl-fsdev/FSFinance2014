@@ -20,15 +20,14 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.event.ActionEvent;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.validation.constraints.NotNull;
 
 import at.schrogl.fsfinance.business.UserManagementBean;
 import at.schrogl.fsfinance.persistence.entities.User;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class LoginHandler implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -43,9 +42,9 @@ public class LoginHandler implements Serializable {
 	// Action Methods
 	// ==============================================================
 
-	public void doLogin(ActionEvent event) {
-		System.out.println(event.getComponent().getClientId());
+	public String doLogin() {
 		System.out.println(userManagement);
+		return "";
 	}
 
 	// ==============================================================

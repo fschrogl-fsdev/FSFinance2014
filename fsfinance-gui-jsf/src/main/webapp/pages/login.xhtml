@@ -5,7 +5,7 @@
 	  xmlns:ui="http://java.sun.com/jsf/facelets"
 	  xmlns:h="http://java.sun.com/jsf/html">
 
-  <ui:composition template="/templates/baseTemplate.xhtml">
+  <ui:composition template="/pages/templates/baseTemplate.xhtml">
 	<head>
 	  <ui:define name="title">Login // #{msg.application_name}</ui:define>
 	</head>
@@ -18,8 +18,7 @@
 			<h:inputText id="username" value="#{loginHandler.user.username}" />
 			<h:outputLabel for="password" value="#{msg.label_userpassword}" />
 			<h:inputSecret id="password" value="#{loginHandler.passwordPlain}" />
-			<h:commandButton id="btn-ok" value="#{msg.btn_login}" actionListener="#{loginHandler.doLogin}" />
-			<h:commandButton id="btn-cancel" value="#{msg.btn_cancel}" action="/index.xhtml" immediate="true" />
+			<h:commandButton id="btn-ok" value="#{msg.btn_login}" action="restricted/home"  />
 		  </h:panelGrid>
 		</h:form>
 	  </ui:define>
