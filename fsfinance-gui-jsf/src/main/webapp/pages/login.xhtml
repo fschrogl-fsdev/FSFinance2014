@@ -12,13 +12,17 @@
 
 	<body>
 	  <ui:define name="content">
-		<h:form>
+	  	<h:outputLabel style="color: red;" rendered="#{loginHandler.loginFailure}" value="#{msg.msg_err_auth}" />
+		<h:form prependId="false">
 		  <h:panelGrid columns="2">
 			<h:outputLabel for="username" value="#{msg.label_username}" />
-			<h:inputText id="username" value="#{loginHandler.user.username}" />
+			<h:inputText id="username" value="#{loginHandler.username}" />
 			<h:outputLabel for="password" value="#{msg.label_userpassword}" />
-			<h:inputSecret id="password" value="#{loginHandler.passwordPlain}" />
-			<h:commandButton id="btn-ok" value="#{msg.btn_login}" action="restricted/home"  />
+			<h:inputSecret id="password" value="#{loginHandler.password}" />
+			<h:outputLabel for="rememberMe" value="#{msg.btn_check_rememberMe}">
+				<h:selectBooleanCheckbox id="rememberMe" value="#{loginHandler.rememberMe}" />
+			</h:outputLabel>
+			<h:commandButton id="btn-ok" value="#{msg.btn_login}" actionListener="#{loginHandler.doLogin}" />
 		  </h:panelGrid>
 		</h:form>
 	  </ui:define>

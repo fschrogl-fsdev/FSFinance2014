@@ -8,21 +8,29 @@
           http://www.springframework.org/schema/security
           http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<http auto-config="true" use-expressions="false">
+	<http>
+		<!-- Protected URLs -->
 		<intercept-url pattern="/**/restricted/admin/**" access="ROLE_ADMIN" />
 		<intercept-url pattern="/**/restricted/**" access="ROLE_USER" />
+		
+		<!-- Configure Login Form -->
 		<form-login login-page="/pages/login.xhtml"
-					login-processing-url="/static/user_login"
+					default-target-url="/pages/restricted/home.xhtml"
+					login-processing-url="/security/login"
+					authentication-failure-url="/pages/login.xhtml?login_error"
+					always-use-default-target="false"
 					username-parameter="username"
-					password-parameter="password"
-					authentication-failure-url="/pages/login.xhtml?login_error" />
-		<logout logout-url="/static/user_logout"/>
+					password-parameter="password" />
+					
+		<!-- Configure Logout URL -->
+		<logout logout-url="/security/logout"/>
 	</http>
 	
 	<authentication-manager>
 		<authentication-provider>
 			<user-service>
 				<user name="user" password="12init34" authorities="ROLE_USER" />
+				<user name="admin" password="12init34" authorities="ROLE_ADMIN,ROLE_USER" />
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>

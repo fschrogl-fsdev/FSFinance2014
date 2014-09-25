@@ -16,64 +16,100 @@
  */
 package at.schrogl.fsfinance.gui.handler;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.validation.constraints.NotNull;
 
-import at.schrogl.fsfinance.business.UserManagementBean;
-import at.schrogl.fsfinance.persistence.entities.User;
+import org.hibernate.validator.constraints.Length;
+
+import at.schrogl.fsfinance.gui.Constants;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class LoginHandler implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private User user = new User();
-	private String passwordPlain;
-
-	@ManagedProperty(value = "#{userManagementBean}")
-	private UserManagementBean userManagement;
+	private String username;
+	private String password;
+	private Boolean rememberMe;
 
 	// ==============================================================
 	// Action Methods
 	// ==============================================================
 
-	public String doLogin() {
-		System.out.println(userManagement);
-		return "";
+	/**
+	 * This method is invoked after successful input validation. Since Spring Security
+	 * is used for authentication and authorization this method's only purpose is to
+	 * forward the user's credentials to a Spring Security Servlet.
+	 * 
+	 * @param event Event that triggered the method's invocation
+	 */
+	public void doLogin(ActionEvent event) throws IOException, ServletException {
+		/*
+		 * We don't want the request parameters (username, password, etc.) to be lost,
+		 * hence we dispatch/forward the request ourself and don't send a redirect
+		 * back to the client.
+		 * 
+		 * Info: For this to work Spring Security's Filter Chain must be configured
+		 * to also accept FORWARD requests (besides default REQUEST requests for logout).
+		 */
+		ExternalContext extCtx = FacesContext.getCurrentInstance().getExternalContext();
+		ServletRequest request = (ServletRequest) extCtx.getRequest();
+		ServletResponse response = (ServletResponse) extCtx.getResponse();
+		request.getRequestDispatcher(Constants.LOGIN_URL).forward(request, response);
+		FacesContext.getCurrentInstance().responseComplete();
+	}
+	
+	/**
+	 * Checks the HTTP request for failure parameters from Spring Security, to determine if
+	 * a previous login attempt failed.
+	 * 
+	 * @return <code>true</code> if a failure parameters is found, otherwise <code>false</code>
+	 */
+	public boolean isLoginFailure() {
+		return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+				.containsKey(Constants.LOGIN_ERROR_PARAM);
 	}
 
 	// ==============================================================
 	// Getter and Setter
 	// ==============================================================
 
-	public User getUser() {
-		return user;
+	@NotNull
+	@Length(min = 3, max = 50)
+	public String getUsername() {
+		return username;
 	}
 	
-	public void setUser(User user) {
-		this.user = user;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	@NotNull
-	public String getPasswordPlain() {
-		return passwordPlain;
+	public String getPassword() {
+		return password;
 	}
 	
-	public void setPasswordPlain(String passwordPlain) {
-		this.passwordPlain = passwordPlain;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-
-	public UserManagementBean getUserManagement() {
-		return userManagement;
+	
+	public Boolean getRememberMe() {
+		return rememberMe;
 	}
-
-	public void setUserManagement(UserManagementBean userManagement) {
-		this.userManagement = userManagement;
+	
+	public void setRememberMe(Boolean rememberMe) {
+		this.rememberMe = rememberMe;
 	}
 
 }

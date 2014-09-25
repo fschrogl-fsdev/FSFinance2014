@@ -49,13 +49,21 @@
 			<artifactId>spring-security-config</artifactId>
 		</dependency>
 		<dependency>
-			<!-- Tomcat doesn't ship with JSTL -->
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+		
+		<!-- Tomcat doesn't ship with JSTL -->
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>
+		
+		<!-- Tomcat v7 comes with Servlet API 3.0; Tomcat v8 comes with Servlet v3.1 -->
 		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
