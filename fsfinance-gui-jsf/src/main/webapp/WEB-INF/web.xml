@@ -1,100 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:web="http://java.sun.com/xml/ns/javaee/webapp_3_0.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	id="FSFinance"
-	version="3.0">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xmlns="http://java.sun.com/xml/ns/javaee"
+		 xmlns:web="http://java.sun.com/xml/ns/javaee/webapp_3_0.xsd"
+		 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+		 id="FSFinance"
+		 version="3.0">
 
-	<!-- General description -->
-	<display-name>FSFinance</display-name>
+  <!-- General description -->
+  <display-name>FSFinance</display-name>
+  <description>
+	A little Web-Application to keep track of daily expenses.
+  </description>
+
+
+  <session-config>
+	<!-- Session timeout in minutes -->
+	<session-timeout>10</session-timeout>
+  </session-config>
+
+
+  <!-- Context Parameters -->
+  <context-param>
+	<description>Don't render XML comments</description>
+	<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+	<param-value>true</param-value>
+  </context-param>
+  <context-param>
+	<description>Use NULL values for empty input fields (mandatory for JSR-303 Bean Validation)</description>
+	<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+	<param-value>true</param-value>
+  </context-param>
+  <context-param>
+	<description>Project state: Development|UnitTest|SytemTest|Production</description>
+	<param-name>javax.faces.PROJECT_STAGE</param-name>
+	<param-value>Development</param-value>
+  </context-param>
+  <context-param>
+	<description>Enables JSF/MyFaces Debugging Popup in Pages</description>
+	<param-name>javax.faces.FACELETS_DEVELOPMENT</param-name>
+	<param-value>true</param-value>
+  </context-param>
+  <context-param>
 	<description>
-		A little Web-Application to keep track of daily expenses.
+	  Resources that must not be (directly) accessable. Default: .class .jsp .jspx .properties .xhtml
 	</description>
+	<param-name>javax.faces.RESOURCE_EXCLUDES</param-name>
+	<param-value>.class .jsp .jspx .properties .xhtml</param-value>
+  </context-param>
+  <context-param>
+	<description>State saving method: server|client</description>
+	<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+	<param-value>server</param-value>
+  </context-param>
 
 
-	<session-config>
-		<!-- Session timeout in minutes -->
-		<session-timeout>10</session-timeout>
-	</session-config>
+  <!-- JNDI References -->
+  <resource-ref>
+	<description>DatSource Reference (Database)</description>
+	<res-ref-name>jdbc/FSFinanceDB</res-ref-name>
+	<res-type>javax.sql.DataSource</res-type>
+	<res-auth>Container</res-auth>
+  </resource-ref>
 
 
-	<!-- Context Parameters -->
-	<context-param>
-		<description>Don't render XML comments</description>
-		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	<context-param>
-		<description>Use NULL values for empty input fields</description>
-		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	<context-param>
-		<description>Project state: Development|UnitTest|SytemTest|Production</description>
-		<param-name>javax.faces.PROJECT_STAGE</param-name>
-		<param-value>Development</param-value>
-	</context-param>
-	<context-param>
-		<description>Enables JSF/MyFaces Debugging Popup in Pages</description>
-		<param-name>javax.faces.FACELETS_DEVELOPMENT</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	<context-param>
-		<description>
-			Resources that must not be (directly) accessable. Default: .class .jsp .jspx .properties .xhtml
-		</description>
-		<param-name>javax.faces.RESOURCE_EXCLUDES</param-name>
-		<param-value>.class .jsp .jspx .properties .xhtml</param-value>
-	</context-param>
-	<context-param>
-		<description>State saving method: server|client</description>
-		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-		<param-value>server</param-value>
-	</context-param>
-
-	<!-- Register Context-Listener for Spring Security -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring-security.xml</param-value>
-	</context-param>
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-
-	<!-- Register Filter for Spring Security -->
-	<filter>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>
-	<filter-mapping>
-		<!-- The Filter Chain must accept FORWARD requests (for login) and REQUEST requests (for logout) -->
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/*</url-pattern>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>REQUEST</dispatcher>
-	</filter-mapping>
+  <!-- Register WebContext-Listener for Spring -->
+  <context-param>
+	<!-- Defaults to /WEB-INF/applicationContext.xml -->
+	<param-name>contextConfigLocation</param-name>
+	<param-value>/WEB-INF/spring/applicationContext.xml</param-value>
+  </context-param>
+  <listener>
+	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
 
 
-	<!-- Servlet Definitions (optional since v3.0) -->
-	<servlet>
-		<servlet-name>Faces Servlet</servlet-name>
-		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
+  <!-- Register Filter for Spring Security -->
+  <filter>
+	<filter-name>springSecurityFilterChain</filter-name>
+	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+	<!-- The Filter Chain must accept FORWARD requests (for login) and REQUEST requests (for logout) -->
+	<filter-name>springSecurityFilterChain</filter-name>
+	<url-pattern>/*</url-pattern>
+	<dispatcher>FORWARD</dispatcher>
+	<dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
 
 
-	<!-- Servlet Mappings -->
-	<servlet-mapping>
-		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.xhtml</url-pattern>
-	</servlet-mapping>
+  <!-- Servlet Definitions (optional since v3.0) -->
+  <servlet>
+	<servlet-name>Faces Servlet</servlet-name>
+	<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+	<load-on-startup>1</load-on-startup>
+  </servlet>
 
 
-	<!-- Application's entry point -->
-	<welcome-file-list>
-		<welcome-file>index.xhtml</welcome-file>
-	</welcome-file-list>
+  <!-- Servlet Mappings -->
+  <servlet-mapping>
+	<servlet-name>Faces Servlet</servlet-name>
+	<url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
+
+
+  <!-- Application's entry point -->
+  <welcome-file-list>
+	<welcome-file>index.xhtml</welcome-file>
+  </welcome-file-list>
 
 </web-app>
