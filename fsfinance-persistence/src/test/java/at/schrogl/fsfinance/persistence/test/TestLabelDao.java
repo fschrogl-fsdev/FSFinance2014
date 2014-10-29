@@ -16,23 +16,20 @@
  */
 package at.schrogl.fsfinance.persistence.test;
 
+import at.schrogl.fsfinance.persistence.daos.LabelDao;
+import at.schrogl.fsfinance.persistence.entities.Label;
+import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import at.schrogl.fsfinance.persistence.daos.LabelDao;
-import at.schrogl.fsfinance.persistence.entities.Label;
 
 /**
  * Unit testcase for {@link LabelDao}
  * 
  * @author Fritz Schrogl
- * @since 0.1
+ * @since 0.1.0
  * 
  */
 public class TestLabelDao extends AbstractTestDao {

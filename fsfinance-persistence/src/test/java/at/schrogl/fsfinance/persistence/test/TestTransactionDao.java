@@ -16,23 +16,20 @@
  */
 package at.schrogl.fsfinance.persistence.test;
 
+import at.schrogl.fsfinance.persistence.daos.TransactionDao;
+import at.schrogl.fsfinance.persistence.entities.Transaction;
+import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import at.schrogl.fsfinance.persistence.daos.TransactionDao;
-import at.schrogl.fsfinance.persistence.entities.Transaction;
 
 /**
  * Unit testcase for {@link TransactionDao}
  * 
  * @author Fritz Schrogl
- * @since 0.1
+ * @since 0.1.0
  * 
  */
 public class TestTransactionDao extends AbstractTestDao {

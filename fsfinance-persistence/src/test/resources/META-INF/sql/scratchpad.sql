@@ -1,4 +1,4 @@
-﻿--
+--
 -- FSFinance SQL Scratchpad
 --
 

@@ -1,4 +1,4 @@
-﻿-- Project:	FSFinance Persistence
+-- Project:	FSFinance Persistence
 -- Info:	Creates the database, tables, sequences, etc.
 -- DBMS:	PostgreSQL 9.1+
 -- Version:	0.1

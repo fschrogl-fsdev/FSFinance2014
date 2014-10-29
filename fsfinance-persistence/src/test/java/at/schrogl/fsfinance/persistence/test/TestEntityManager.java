@@ -19,7 +19,6 @@ package at.schrogl.fsfinance.persistence.test;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
 import org.junit.Test;
 
 /**
@@ -27,7 +26,7 @@ import org.junit.Test;
  * to check if the EntityManager can be instantiated successfully.
  * 
  * @author Fritz Schrogl
- * @since 0.0.1
+ * @since 0.1.0
  * 
  */
 public class TestEntityManager {

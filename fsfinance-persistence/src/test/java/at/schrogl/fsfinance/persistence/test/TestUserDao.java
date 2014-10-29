@@ -16,22 +16,19 @@
  */
 package at.schrogl.fsfinance.persistence.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.List;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import at.schrogl.fsfinance.persistence.daos.UserDao;
 import at.schrogl.fsfinance.persistence.entities.User;
+import java.util.List;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * Unit testcase for {@link UserDao}.
  * 
  * @author Fritz Schrogl
- * @since 0.1
+ * @since 0.1.0
  * 
  */
 public class TestUserDao extends AbstractTestDao {
