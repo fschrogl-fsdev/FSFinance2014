@@ -37,7 +37,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import at.schrogl.fsfinance.persistence.daos.TransactionDao;
+import at.schrogl.fsfinance.persistence.daos.impl.TransactionDao;
 
 /**
  * This entity class represents a transaction

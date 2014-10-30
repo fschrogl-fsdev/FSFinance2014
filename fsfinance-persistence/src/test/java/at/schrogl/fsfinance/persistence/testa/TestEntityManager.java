@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with FSFinance. If not, see <http://www.gnu.org/licenses/>.
  */
-package at.schrogl.fsfinance.persistence.test;
+package at.schrogl.fsfinance.persistence.testa;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

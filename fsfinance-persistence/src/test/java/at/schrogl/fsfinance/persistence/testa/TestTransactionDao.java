@@ -14,14 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with FSFinance. If not, see <http://www.gnu.org/licenses/>.
  */
-package at.schrogl.fsfinance.persistence.test;
+package at.schrogl.fsfinance.persistence.testa;
 
-import at.schrogl.fsfinance.persistence.daos.TransactionDao;
+import at.schrogl.fsfinance.persistence.daos.impl.TransactionDao;
 import at.schrogl.fsfinance.persistence.entities.Transaction;
+
 import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 

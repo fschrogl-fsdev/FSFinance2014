@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with FSFinance. If not, see <http://www.gnu.org/licenses/>.
  */
-package at.schrogl.fsfinance.persistence.daos;
+package at.schrogl.fsfinance.persistence.daos.impl;
 
 import java.util.List;
 

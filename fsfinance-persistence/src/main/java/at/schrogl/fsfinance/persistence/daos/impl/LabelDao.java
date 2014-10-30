@@ -14,45 +14,42 @@
  * You should have received a copy of the GNU General Public License
  * along with FSFinance. If not, see <http://www.gnu.org/licenses/>.
  */
-package at.schrogl.fsfinance.persistence.daos;
+package at.schrogl.fsfinance.persistence.daos.impl;
 
-import java.util.Date;
 import java.util.List;
 
-import javax.persistence.TemporalType;
-
-import at.schrogl.fsfinance.persistence.entities.Transaction;
+import at.schrogl.fsfinance.persistence.entities.Label;
 
 /**
- * DAO class for entity {@link Transaction}
+ * DAO class for entity {@link Label}
  * 
  * @author Fritz Schrogl
  * @since 0.1.0
  * 
  */
-public class TransactionDao extends AbstractBaseDao<Transaction> {
+public class LabelDao extends AbstractBaseDao<Label> {
 
 	// Names of NamedQueries
-	public static final String NQ_ListAll = "transaction.listAll";
-	public static final String NQ_ByDate = "transaction.ByDate";
+	public static final String NQ_ListAll = "label.listAll";
+	public static final String NQ_ByName = "label.ByName";
 
 	@Override
-	public Transaction getById(Long id) {
+	public Label getById(Long id) {
 		checkEntityManagerNotNull();
-		return em.find(Transaction.class, id);
+		return em.find(Label.class, id);
 	}
 
 	@Override
-	public List<Transaction> listAll() {
+	public List<Label> listAll() {
 		checkEntityManagerNotNull();
-		return em.createNamedQuery(NQ_ListAll, Transaction.class)
+		return em.createNamedQuery(NQ_ListAll, Label.class)
 				.getResultList();
 	}
 
-	public List<Transaction> getByDate(Date date) {
+	public List<Label> getByName(String name) {
 		checkEntityManagerNotNull();
-		return em.createNamedQuery(NQ_ByDate, Transaction.class)
-				.setParameter("date", date, TemporalType.TIMESTAMP)
+		return em.createNamedQuery(NQ_ByName, Label.class)
+				.setParameter("name", name)
 				.getResultList();
 	}
 

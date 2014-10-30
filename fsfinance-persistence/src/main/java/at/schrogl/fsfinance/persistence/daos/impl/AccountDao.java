@@ -14,43 +14,43 @@
  * You should have received a copy of the GNU General Public License
  * along with FSFinance. If not, see <http://www.gnu.org/licenses/>.
  */
-package at.schrogl.fsfinance.persistence.daos;
+package at.schrogl.fsfinance.persistence.daos.impl;
 
 import java.util.List;
 
-import at.schrogl.fsfinance.persistence.entities.Label;
+import at.schrogl.fsfinance.persistence.entities.Account;
 
 /**
- * DAO class for entity {@link Label}
+ * DAO class for entity {@link Account}
  * 
  * @author Fritz Schrogl
  * @since 0.1.0
  * 
  */
-public class LabelDao extends AbstractBaseDao<Label> {
+public class AccountDao extends AbstractBaseDao<Account> {
 
 	// Names of NamedQueries
-	public static final String NQ_ListAll = "label.listAll";
-	public static final String NQ_ByName = "label.ByName";
+	public static final String NQ_ListAll = "account.listAll";
+	public static final String NQ_ByName = "account.ByName";
 
 	@Override
-	public Label getById(Long id) {
+	public Account getById(Long id) {
 		checkEntityManagerNotNull();
-		return em.find(Label.class, id);
+		return em.find(Account.class, id);
 	}
 
 	@Override
-	public List<Label> listAll() {
+	public List<Account> listAll() {
 		checkEntityManagerNotNull();
-		return em.createNamedQuery(NQ_ListAll, Label.class)
+		return em.createNamedQuery(NQ_ListAll, Account.class)
 				.getResultList();
 	}
 
-	public List<Label> getByName(String name) {
+	public Account getByName(String name) {
 		checkEntityManagerNotNull();
-		return em.createNamedQuery(NQ_ByName, Label.class)
+		return em.createNamedQuery(NQ_ByName, Account.class)
 				.setParameter("name", name)
-				.getResultList();
+				.getSingleResult();
 	}
 
 }

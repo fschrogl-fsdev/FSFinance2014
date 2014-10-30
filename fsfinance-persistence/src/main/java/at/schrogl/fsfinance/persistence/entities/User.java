@@ -35,7 +35,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
-import at.schrogl.fsfinance.persistence.daos.UserDao;
+import at.schrogl.fsfinance.persistence.daos.impl.UserDao;
 
 /**
  * This entity class represents an user.
@@ -132,7 +132,7 @@ public class User implements Serializable {
 		this.salt = salt;
 	}
 
-	@Length(max = 255)
+	@Length(min = 2, max = 255)
 	@Column(name = "FORENAME", length = 255)
 	public String getForename() {
 		return forename;
@@ -142,7 +142,7 @@ public class User implements Serializable {
 		this.forename = forename;
 	}
 
-	@Length(max = 255)
+	@Length(min = 2, max = 255)
 	@Column(name = "SURNAME", length = 255)
 	public String getSurname() {
 		return surname;

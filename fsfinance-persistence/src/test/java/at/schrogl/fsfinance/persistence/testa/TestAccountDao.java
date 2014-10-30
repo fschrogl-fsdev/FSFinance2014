@@ -14,27 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with FSFinance. If not, see <http://www.gnu.org/licenses/>.
  */
-package at.schrogl.fsfinance.persistence.test;
+package at.schrogl.fsfinance.persistence.testa;
 
-import at.schrogl.fsfinance.persistence.daos.LabelDao;
-import at.schrogl.fsfinance.persistence.entities.Label;
+import at.schrogl.fsfinance.persistence.daos.impl.AccountDao;
+import at.schrogl.fsfinance.persistence.entities.Account;
+
 import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Unit testcase for {@link LabelDao}
+ * Unit testcase for {@link AccountDao}
  * 
  * @author Fritz Schrogl
  * @since 0.1.0
  * 
  */
-public class TestLabelDao extends AbstractTestDao {
+public class TestAccountDao extends AbstractTestDao {
 
-	private static LabelDao labelDao;
+	private static AccountDao accountDao;
 
 	// =================================================================
 	// Setup + Teardown
@@ -42,8 +44,8 @@ public class TestLabelDao extends AbstractTestDao {
 
 	@BeforeClass
 	public static void setupDao() {
-		labelDao = new LabelDao();
-		labelDao.setEntityManager(em);
+		accountDao = new AccountDao();
+		accountDao.setEntityManager(em);
 	}
 
 	// =================================================================
@@ -52,17 +54,17 @@ public class TestLabelDao extends AbstractTestDao {
 
 	@Test
 	public void testGetByName() {
-		Label expected = labelDao.getById(1L);
+		Account expected = accountDao.getById(1L);
 		assertNotNull(expected);
 
-		List<Label> actuals = labelDao.getByName(expected.getName());
-		assertTrue(actuals.contains(expected));
+		Account actual = accountDao.getByName(expected.getName());
+		assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testListAll() {
-		List<Label> allLabels = labelDao.listAll();
-		assertEquals(2, allLabels.size());
+		List<Account> allAccounts = accountDao.listAll();
+		assertEquals(2, allAccounts.size());
 	}
 
 }

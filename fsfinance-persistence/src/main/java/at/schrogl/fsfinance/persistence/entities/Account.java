@@ -36,7 +36,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import at.schrogl.fsfinance.persistence.daos.AccountDao;
+import at.schrogl.fsfinance.persistence.daos.impl.AccountDao;
 
 /**
  * This entity class represents an account.

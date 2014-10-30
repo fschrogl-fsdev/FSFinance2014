@@ -37,7 +37,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import at.schrogl.fsfinance.persistence.daos.LabelDao;
+import at.schrogl.fsfinance.persistence.daos.impl.LabelDao;
 
 /**
  * This entity class represents a label
