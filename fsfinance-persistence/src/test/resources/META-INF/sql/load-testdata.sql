@@ -1,5 +1,6 @@
 INSERT INTO users (id, username, password, salt, forename, surname, email) VALUES (1, 'user1', 'password', 'salt', 'joe1', 'doe', 'joe1@doe.com');
 INSERT INTO users (id, username, password, salt, forename, surname, email) VALUES (2, 'user2', 'password', 'salt', 'joe2', 'doe', 'joe2@doe.com');
+INSERT INTO users (id, username, password, salt, forename, surname, email) VALUES (3, 'user3', 'password', 'salt', 'joe3', null, 'joe3@doe.com');
 
 INSERT INTO accounts (id, name, description, color, id_user) VALUES (1, 'account1', 'description of ac.1', '#abcdef', 1);
 INSERT INTO accounts (id, name, description, color, id_user) VALUES (2, 'account2', 'description of ac.2', '#abcdef', 2);

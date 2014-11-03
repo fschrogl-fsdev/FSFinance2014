@@ -1,3 +1,19 @@
+/**
+ * This file is part of FSFinance.
+ *
+ * FSFinance is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * FSFinance is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with FSFinance. If not, see <http://www.gnu.org/licenses/>.
+ */
 package at.schrogl.fsfinance.persistence.test;
 
 import static org.junit.Assert.assertEquals;
@@ -34,7 +50,7 @@ public class UserDaoTest {
 	public void tearDown() {
 		pmInit.stopTransaction();
 	}
-	
+
 	@Test
 	public void testFindByUsername() {
 		List<User> allUsers = dao.findAll();
@@ -64,35 +80,35 @@ public class UserDaoTest {
 	}
 
 	@Test
-	public void testFindByForenameOrSurname() {
+	public void testFindByForenameOrSurnameAllIgnoreCase() {
 		List<User> allUsers = dao.findAll();
 		assertFalse("No users in database!", allUsers.isEmpty());
 
-		List<User> actualUsers = dao.findByForenameOrSurname("joe1", null);
-		assertEquals(1, actualUsers.size());
+		List<User> actualUsers = dao.findByForenameOrSurnameAllIgnoreCase("joe1", null);
+		assertEquals(2, actualUsers.size());
 
-		actualUsers = dao.findByForenameOrSurname(null, "doe");
+		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase(null, "doe");
 		assertEquals(2, actualUsers.size());
 	}
 
 	@Test
-	public void testFindByForenameOrSurname_Pageable() {
+	public void testFindByForenameOrSurnameAllIgnoreCase_PageableSort() {
 		List<User> allUsers = dao.findAll();
 		assertFalse("No users in database!", allUsers.isEmpty());
 
-		Page<User> actualUsers = dao.findByForenameOrSurname(null, "doe", new PageRequest(1, 1));
+		Page<User> actualUsers = dao.findByForenameOrSurnameAllIgnoreCase("joe1", "doe", new PageRequest(0, 1));
 		assertEquals(1, actualUsers.getContent().size());
 	}
 
 	@Test
-	public void testFindByForenameAndSurname() {
+	public void testFindByForenameAndSurnameAllIgnoreCase() {
 		List<User> allUsers = dao.findAll();
 		assertFalse("No users in database!", allUsers.isEmpty());
 
-		List<User> actualUsers = dao.findByForenameAndSurname("joe1", "doe");
+		List<User> actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("joe1", "doe");
 		assertEquals(1, actualUsers.size());
 
-		actualUsers = dao.findByForenameAndSurname(null, "doe");
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase(null, "doe");
 		assertEquals(0, actualUsers.size());
 	}
 

@@ -26,16 +26,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
-
-import at.schrogl.fsfinance.persistence.daos.impl.UserDao;
 
 /**
  * This entity class represents an user.
@@ -45,11 +41,6 @@ import at.schrogl.fsfinance.persistence.daos.impl.UserDao;
  */
 @Entity
 @Table(name = "USERS")
-@NamedQueries({
-		@NamedQuery(name = UserDao.NQ_ListAll, query = "SELECT u FROM User u"),
-		@NamedQuery(name = UserDao.NQ_ByUsername, query = "SELECT u FROM User u WHERE u.username = :username"),
-		@NamedQuery(name = UserDao.NQ_ByEmail, query = "SELECT u FROM User u WHERE u.email = :email")
-})
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
