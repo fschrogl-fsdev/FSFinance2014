@@ -6,7 +6,8 @@ INSERT INTO accounts (id, name, description, color, id_user) VALUES (1, 'account
 INSERT INTO accounts (id, name, description, color, id_user) VALUES (2, 'account2', 'description of ac.2', '#abcdef', 2);
 
 INSERT INTO labels (id, name, description, color, id_user) VALUES (1, 'label1', 'description of lbl.1', '#abcdef', 1);
-INSERT INTO labels (id, name, description, color, id_user) VALUES (2, 'label2', 'description of lbl.2', '#abcdef', 1);
+INSERT INTO labels (id, name, description, color, id_user) VALUES (2, 'label1', 'description of lbl.1 (copy)', '#abcdef', 1);
+INSERT INTO labels (id, name, description, color, id_user) VALUES (3, 'label2', 'description of lbl.2', '#abcdef', 2);
 
 INSERT INTO transactions (id, date, amount, note, id_label, id_account) VALUES (1, '2014-08-31 12:00:00', 12.54, 'note tx.1', 1, 1);
 INSERT INTO transactions (id, date, amount, note, id_label, id_account) VALUES (2, '2014-08-31 12:00:00', 112.04, 'note tx.1', 2, 1);

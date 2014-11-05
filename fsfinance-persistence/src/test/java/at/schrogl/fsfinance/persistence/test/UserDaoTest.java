@@ -17,9 +17,9 @@
 package at.schrogl.fsfinance.persistence.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
@@ -36,6 +36,7 @@ import at.schrogl.fsfinance.persistence.test.rules.PersistenceInitRule;
 public class UserDaoTest {
 
 	private IUserDao dao;
+	private List<User> allUsers;
 
 	@ClassRule
 	public static PersistenceInitRule<IUserDao> pmInit = new PersistenceInitRule<>();
@@ -44,72 +45,159 @@ public class UserDaoTest {
 	public void setup() {
 		dao = pmInit.getDaoProxy(IUserDao.class);
 		pmInit.startTransaction();
+
+		this.allUsers = dao.findAll();
+		assertEquals("Wrong number of users in database!", 3, this.allUsers.size());
 	}
 
 	@After
 	public void tearDown() {
 		pmInit.stopTransaction();
+		this.allUsers = Collections.emptyList();
 	}
 
 	@Test
 	public void testFindByUsername() {
-		List<User> allUsers = dao.findAll();
-		assertFalse("No users in database!", allUsers.isEmpty());
-
+		// Query every user explicitly
 		for (User expectedUser : allUsers) {
 			User actualUser = dao.findByUsername(expectedUser.getUsername());
-			assertEquals("Expected user: " + expectedUser + "; Actual user: " + actualUser, expectedUser, actualUser);
+			assertEquals("assert_1", expectedUser, actualUser);
 		}
 
-		User actualUser = dao.findByUsername("X");
-		assertNull("Expected user: null; Actual user: " + actualUser, actualUser);
+		// Empty username is not permitted and should always return no user
+		assertEquals("assert_2", null, dao.findByUsername(null));
+
+		// Query is assumed to be case sensitive
+		User actualUser = allUsers.get(0);
+		String usernameUpperCase = actualUser.getUsername().toUpperCase();
+		assertNull("assert_3", dao.findByUsername(usernameUpperCase));
 	}
 
 	@Test
 	public void testFindByEmail() {
-		List<User> allUsers = dao.findAll();
-		assertFalse("No users in database!", allUsers.isEmpty());
-
+		// Query every user explicitly
 		for (User expectedUser : allUsers) {
 			User actualUser = dao.findByEmail(expectedUser.getEmail());
-			assertEquals("Expected user: " + expectedUser + "; Actual user: " + actualUser, expectedUser, actualUser);
+			assertEquals("assert_1", expectedUser, actualUser);
 		}
 
-		User actualUser = dao.findByEmail("X");
-		assertNull("Expected user: null; Actual user: " + actualUser, actualUser);
+		// Empty email is not permitted and should always return no user
+		assertEquals("assert_2", null, dao.findByEmail(null));
+
+		// Query is assumed to be case sensitive
+		User actualUser = allUsers.get(0);
+		String emailUpperCase = actualUser.getEmail().toUpperCase();
+		assertNull("assert_3" + actualUser, dao.findByEmail(emailUpperCase));
 	}
 
 	@Test
 	public void testFindByForenameOrSurnameAllIgnoreCase() {
-		List<User> allUsers = dao.findAll();
-		assertFalse("No users in database!", allUsers.isEmpty());
+		List<User> actualUsers = null;
 
-		List<User> actualUsers = dao.findByForenameOrSurnameAllIgnoreCase("joe1", null);
-		assertEquals(2, actualUsers.size());
+		// All users with forename 'joe1' *or* surname is null
+		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase("joe1", null);
+		assertEquals("assert_1", 2, actualUsers.size());
 
+		// All users with forename is null *or* surname 'doe'
 		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase(null, "doe");
-		assertEquals(2, actualUsers.size());
+		assertEquals("assert_2", 2, actualUsers.size());
+
+		// All users with forname '' *or* surname ''
+		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase("", "");
+		assertEquals("assert_3", 0, actualUsers.size());
+
+		// Query should be case insensitive
+		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase("JoE1", null);
+		assertEquals("assert_4", 2, actualUsers.size());
+
+		// Query should be case insensitive
+		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase(null, "DoE");
+		assertEquals("assert_5", 2, actualUsers.size());
 	}
 
 	@Test
-	public void testFindByForenameOrSurnameAllIgnoreCase_PageableSort() {
-		List<User> allUsers = dao.findAll();
-		assertFalse("No users in database!", allUsers.isEmpty());
+	public void testFindByForenameOrSurnameAllIgnoreCase_Pageable() {
+		Page<User> actualUsers = null;
 
-		Page<User> actualUsers = dao.findByForenameOrSurnameAllIgnoreCase("joe1", "doe", new PageRequest(0, 1));
-		assertEquals(1, actualUsers.getContent().size());
+		// All users with forename 'joe1' *or* surname is null
+		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase("joe1", null, new PageRequest(0, 2));
+		assertEquals("assert_1a", 2, actualUsers.getTotalElements());
+		assertEquals("assert_1b", 1, actualUsers.getTotalPages());
+
+		// All users with forename is null *or* surname 'doe'
+		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase(null, "doe", new PageRequest(0, 2));
+		assertEquals("assert_2a", 2, actualUsers.getTotalElements());
+		assertEquals("assert_2b", 1, actualUsers.getTotalPages());
+
+		// All users with forname '' *or* surname ''
+		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase("", "", new PageRequest(0, 1));
+		assertEquals("assert_3a", 0, actualUsers.getTotalElements());
+		assertEquals("assert_3b", 0, actualUsers.getTotalPages());
+
+		// Query should be case insensitive
+		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase("JoE1", null, new PageRequest(0, 1));
+		assertEquals("assert_4a", 2, actualUsers.getTotalElements());
+		assertEquals("assert_4b", 2, actualUsers.getTotalPages());
+
+		// Query should be case insensitive
+		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase(null, "DoE", new PageRequest(0, 1));
+		assertEquals("assert_5a", 2, actualUsers.getTotalElements());
+		assertEquals("assert_5b", 2, actualUsers.getTotalPages());
 	}
 
 	@Test
 	public void testFindByForenameAndSurnameAllIgnoreCase() {
-		List<User> allUsers = dao.findAll();
-		assertFalse("No users in database!", allUsers.isEmpty());
+		List<User> actualUsers = null;
 
-		List<User> actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("joe1", "doe");
-		assertEquals(1, actualUsers.size());
+		// All users with forename 'joe3' *and* surname is null
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("joe3", null);
+		assertEquals("assert_1", 1, actualUsers.size());
 
-		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase(null, "doe");
-		assertEquals(0, actualUsers.size());
+		// All users with forename 'joe2' *and* surname is 'doe'
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("joe2", "doe");
+		assertEquals("assert_2", 1, actualUsers.size());
+
+		// All users with forename 'joe1' *and* surname is null
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("joe1", null);
+		assertEquals("assert_3", 0, actualUsers.size());
+
+		// Query should be case insensitive
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("JoE3", null);
+		assertEquals("assert_4", 1, actualUsers.size());
+
+		// Query should be case insensitive
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("JoE2", "DOE");
+		assertEquals("assert_5", 1, actualUsers.size());
+	}
+
+	@Test
+	public void testFindByForenameAndSurnameAllIgnoreCase_Pageable() {
+		Page<User> actualUsers = null;
+
+		// All users with forename 'joe3' *and* surname is null
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("joe3", null, new PageRequest(0, 2));
+		assertEquals("assert_1a", 1, actualUsers.getTotalElements());
+		assertEquals("assert_1b", 1, actualUsers.getTotalPages());
+
+		// All users with forename 'joe2' *and* surname is 'doe'
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("joe2", "doe", new PageRequest(0, 10));
+		assertEquals("assert_2a", 1, actualUsers.getTotalElements());
+		assertEquals("assert_2b", 1, actualUsers.getTotalPages());
+
+		// All users with forename 'joe1' *and* surname is null
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("joe1", null, null);
+		assertEquals("assert_3a", 0, actualUsers.getTotalElements());
+		assertEquals("assert_3b", 1, actualUsers.getTotalPages());
+
+		// Query should be case insensitive
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("JoE3", null, null);
+		assertEquals("assert_4a", 1, actualUsers.getTotalElements());
+		assertEquals("assert_4b", 1, actualUsers.getTotalPages());
+
+		// Query should be case insensitive
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("JoE2", "DOE", null);
+		assertEquals("assert_5a", 1, actualUsers.getTotalElements());
+		assertEquals("assert_5b", 1, actualUsers.getTotalPages());
 	}
 
 }

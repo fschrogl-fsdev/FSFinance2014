@@ -28,16 +28,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
-
-import at.schrogl.fsfinance.persistence.daos.impl.LabelDao;
 
 /**
  * This entity class represents a label
@@ -47,10 +43,6 @@ import at.schrogl.fsfinance.persistence.daos.impl.LabelDao;
  */
 @Entity
 @Table(name = "LABELS")
-@NamedQueries({
-		@NamedQuery(name = LabelDao.NQ_ListAll, query = "SELECT l FROM Label l"),
-		@NamedQuery(name = LabelDao.NQ_ByName, query = "SELECT l FROM Label l WHERE l.name = :name")
-})
 public class Label implements Serializable {
 
 	private static final long serialVersionUID = 1L;

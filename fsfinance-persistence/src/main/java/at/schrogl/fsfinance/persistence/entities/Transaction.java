@@ -27,8 +27,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,8 +34,6 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
-
-import at.schrogl.fsfinance.persistence.daos.impl.TransactionDao;
 
 /**
  * This entity class represents a transaction
@@ -47,10 +43,6 @@ import at.schrogl.fsfinance.persistence.daos.impl.TransactionDao;
  */
 @Entity
 @Table(name = "TRANSACTIONS")
-@NamedQueries({
-		@NamedQuery(name = TransactionDao.NQ_ListAll, query = "SELECT t FROM Transaction t"),
-		@NamedQuery(name = TransactionDao.NQ_ByDate, query = "SELECT t FROM Transaction t WHERE t.date = :date")
-})
 public class Transaction implements Serializable {
 
 	private final static long serialVersionUID = 1L;

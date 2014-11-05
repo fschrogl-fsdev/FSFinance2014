@@ -14,30 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with FSFinance. If not, see <http://www.gnu.org/licenses/>.
  */
-package at.schrogl.fsfinance.persistence.testa;
+package at.schrogl.fsfinance.persistence.daos;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import org.junit.Test;
+import java.util.List;
 
-/**
- * Unit testcase for the EntityManager. The sole purpose of this test class is
- * to check if the EntityManager can be instantiated successfully.
- * 
- * @author Fritz Schrogl
- * @since 0.1.0
- * 
- */
-public class TestEntityManager {
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-	@Test
-	public void test() {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("fsfinance");
-		EntityManager em = emf.createEntityManager();
+import at.schrogl.fsfinance.persistence.entities.Account;
 
-		em.close();
-		emf.close();
-	}
+public interface IAccountDao extends JpaRepository<Account, Long> {
 
+	public Account findByName(String name);
+	
+	public List<Account> findByLikeDescription(String description);
+	
+	public Page<Account> findByLikeDescription(String description, Pageable pageable);
+	
 }
