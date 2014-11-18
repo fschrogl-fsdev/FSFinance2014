@@ -44,7 +44,7 @@
 	<!-- Entity Mappings -->
 	<mapping class="at.schrogl.fsfinance.persistence.entities.User" />
 	<mapping class="at.schrogl.fsfinance.persistence.entities.Account" />
-	<mapping class="at.schrogl.fsfinance.persistence.entities.Transaction" />
+	<mapping class="at.schrogl.fsfinance.persistence.entities.Booking" />
 	<mapping class="at.schrogl.fsfinance.persistence.entities.Label" />
   </session-factory>
 

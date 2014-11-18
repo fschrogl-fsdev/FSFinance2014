@@ -72,7 +72,7 @@ public class LabelDaoTest {
 	}
 
 	@Test
-	public void testFindByDescription() {
+	public void testFindByDescriptionIgnoreCase() {
 		// Query using full description
 		List<Label> actualLabels = dao.findByDescriptionIgnoreCase(allLabels.get(0).getDescription());
 		assertEquals("assert_1", 1, actualLabels.size());
@@ -87,7 +87,7 @@ public class LabelDaoTest {
 	}
 
 	@Test
-	public void testFindByDescriptionLike() {
+	public void testFindByDescriptionLikeIgnoreCase() {
 		// Query using full description
 		List<Label> actualLabels = dao.findByDescriptionLikeIgnoreCase(allLabels.get(0).getDescription());
 		assertEquals("assert_1", 1, actualLabels.size());

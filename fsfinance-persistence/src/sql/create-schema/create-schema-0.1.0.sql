@@ -1,7 +1,7 @@
 -- Project:	FSFinance Persistence
 -- Info:	Creates the database, tables, sequences, etc.
 -- DBMS:	PostgreSQL 9.1+
--- Version:	0.1
+-- Version:	0.1.0
 
 /*
  * Create TABLES, SEQUENCES, etc.
@@ -31,9 +31,9 @@ CREATE TABLE accounts (
 	id_user		BIGINT NOT NULL
 );
 
--- Table TRANSACTIONS
-DROP TABLE IF EXISTS transactions CASCADE;
-CREATE TABLE transactions (
+-- Table BOOKINGS
+DROP TABLE IF EXISTS bookings CASCADE;
+CREATE TABLE bookings (
 	id		BIGINT PRIMARY KEY,
 	amount		NUMERIC(19,4) NOT NULL,
 	date		TIMESTAMP NOT NULL,
@@ -67,9 +67,9 @@ CREATE TABLE labels_labels (
 ALTER TABLE accounts
   ADD CONSTRAINT accounts_id_user_fkey FOREIGN KEY (id_user) REFERENCES users ON DELETE CASCADE;
 
-ALTER TABLE transactions 
-  ADD CONSTRAINT transactions_id_account_fkey FOREIGN KEY (id_account) REFERENCES accounts ON DELETE CASCADE,
-  ADD CONSTRAINT transactions_id_label_fkey FOREIGN KEY (id_label) REFERENCES labels;
+ALTER TABLE bookings 
+  ADD CONSTRAINT bookings_id_account_fkey FOREIGN KEY (id_account) REFERENCES accounts ON DELETE CASCADE,
+  ADD CONSTRAINT bookings_id_label_fkey FOREIGN KEY (id_label) REFERENCES labels;
   
 ALTER TABLE labels
   ADD CONSTRAINT labels_id_user_fkey FOREIGN KEY (id_user) REFERENCES users ON DELETE CASCADE;

@@ -36,14 +36,14 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 /**
- * This entity class represents a transaction
+ * This entity class represents a booking (financial transaction)
  * 
  * @author Fritz Schrogl
  * @since 0.1.0
  */
 @Entity
-@Table(name = "TRANSACTIONS")
-public class Transaction implements Serializable {
+@Table(name = "BOOKINGS")
+public class Booking implements Serializable {
 
 	private final static long serialVersionUID = 1L;
 

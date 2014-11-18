@@ -54,15 +54,15 @@ public class Account implements Serializable {
 
 	// Associations
 	private User user;
-	private Set<Transaction> transactions;
+	private Set<Booking> bookings;
 
 	// =================================================================
 	// Helper Methods
 	// =================================================================
 
-	public void addTransaction(Transaction transaction) {
-		transaction.setAccount(this);
-		transactions.add(transaction);
+	public void addBookings(Booking booking) {
+		booking.setAccount(this);
+		bookings.add(booking);
 	}
 
 	// =================================================================
@@ -122,12 +122,12 @@ public class Account implements Serializable {
 
 	@OneToMany(mappedBy = "account", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	@OrderBy("DATE")
-	public Set<Transaction> getTransactions() {
-		return transactions;
+	public Set<Booking> getBookings() {
+		return bookings;
 	}
 
-	public void setTransactions(Set<Transaction> transactions) {
-		this.transactions = transactions;
+	public void setBookings(Set<Booking> bookings) {
+		this.bookings = bookings;
 	}
 
 }

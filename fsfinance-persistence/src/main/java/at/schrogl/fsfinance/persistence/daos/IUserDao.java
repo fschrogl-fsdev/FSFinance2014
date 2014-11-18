@@ -92,5 +92,5 @@ public interface IUserDao extends JpaRepository<User, Long> {
 	 * but with <b>and</b> instead of <b>or</b>.
 	 */
 	public Page<User> findByForenameAndSurnameAllIgnoreCase(String forename, String surname, Pageable pageable);
-	
+
 }

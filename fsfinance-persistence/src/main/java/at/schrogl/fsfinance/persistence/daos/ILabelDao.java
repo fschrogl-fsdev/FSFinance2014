@@ -27,15 +27,15 @@ import at.schrogl.fsfinance.persistence.entities.Label;
 public interface ILabelDao extends JpaRepository<Label, Long> {
 
 	public List<Label> findByName(String name);
-	
+
 	public Page<Label> findByName(String name, Pageable pageable);
-	
+
 	public List<Label> findByDescriptionIgnoreCase(String description);
-	
+
 	public Page<Label> findByDescriptionIgnoreCase(String description, Pageable pageable);
-	
+
 	public List<Label> findByDescriptionLikeIgnoreCase(String description);
-	
+
 	public Page<Label> findByDescriptionLikeIgnoreCase(String description, Pageable pageable);
-	
+
 }

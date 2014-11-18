@@ -9,7 +9,7 @@
 
 	<class>at.schrogl.fsfinance.persistence.entities.User</class>
 	<class>at.schrogl.fsfinance.persistence.entities.Account</class>
-	<class>at.schrogl.fsfinance.persistence.entities.Transaction</class>
+	<class>at.schrogl.fsfinance.persistence.entities.Booking</class>
 	<class>at.schrogl.fsfinance.persistence.entities.Label</class>
 
 	<properties>

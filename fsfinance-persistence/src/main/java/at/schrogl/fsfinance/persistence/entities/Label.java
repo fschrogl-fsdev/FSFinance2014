@@ -29,6 +29,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -55,7 +56,7 @@ public class Label implements Serializable {
 
 	// Associations
 	private User user;
-	private Set<Transaction> transactions;
+	private Set<Booking> bookings;
 	private Label parent;
 	private Set<Label> childs;
 
@@ -63,14 +64,14 @@ public class Label implements Serializable {
 	// Helper Methods
 	// =================================================================
 
-	public void addTransaction(Transaction transaction) {
-		transactions.add(transaction);
-		transaction.setLabel(this);
+	public void addBooking(Booking booking) {
+		bookings.add(booking);
+		booking.setLabel(this);
 	}
 
-	public void removeTransaction(Transaction transaction) {
-		transactions.remove(transaction);
-		transaction.setLabel(null);
+	public void removeBooking(Booking booking) {
+		bookings.remove(booking);
+		booking.setLabel(null);
 	}
 
 	public void addChild(Label label) {
@@ -129,12 +130,13 @@ public class Label implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "label", cascade = CascadeType.REFRESH)
-	public Set<Transaction> getTransactions() {
-		return transactions;
+	@OrderBy("DATE")
+	public Set<Booking> getBookings() {
+		return bookings;
 	}
 
-	public void setTransactions(Set<Transaction> transactions) {
-		this.transactions = transactions;
+	public void setBookings(Set<Booking> bookings) {
+		this.bookings = bookings;
 	}
 
 	@ManyToOne(optional = false)

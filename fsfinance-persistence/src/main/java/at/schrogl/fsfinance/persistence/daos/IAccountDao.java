@@ -27,9 +27,9 @@ import at.schrogl.fsfinance.persistence.entities.Account;
 public interface IAccountDao extends JpaRepository<Account, Long> {
 
 	public Account findByName(String name);
-	
-	public List<Account> findByLikeDescription(String description);
-	
-	public Page<Account> findByLikeDescription(String description, Pageable pageable);
-	
+
+	public List<Account> findByDescriptionLikeIgnoreCase(String description);
+
+	public Page<Account> findByDescriptionLikeIgnoreCase(String description, Pageable pageable);
+
 }
