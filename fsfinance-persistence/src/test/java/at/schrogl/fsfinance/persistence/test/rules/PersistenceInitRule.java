@@ -46,7 +46,7 @@ public class PersistenceInitRule<I> extends ExternalResource {
 
 	@Override
 	protected void before() throws Throwable {
-		entityManagerFactory = Persistence.createEntityManagerFactory("fsfinance");
+		entityManagerFactory = Persistence.createEntityManagerFactory("fsfinance-test");
 		entityManager = entityManagerFactory.createEntityManager();
 		repoFactory = new JpaRepositoryFactory(entityManager);
 	}
