@@ -16,17 +16,21 @@
  */
 package at.schrogl.fsfinance.persistence.daos;
 
+import at.schrogl.fsfinance.persistence.entities.Booking;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import at.schrogl.fsfinance.persistence.entities.Booking;
-
-public interface IBookingDao extends JpaRepository<Booking, Long> {
+/**
+ * Spring Data JPA-enabled repository for {@link Booking} entities.
+ * <p>
+ * @author Fritz Schrogl
+ * @since 0.1.0
+ */
+public interface BookingDao extends JpaRepository<Booking, Long> {
 
 	public List<Booking> findByDate(Date date);
 

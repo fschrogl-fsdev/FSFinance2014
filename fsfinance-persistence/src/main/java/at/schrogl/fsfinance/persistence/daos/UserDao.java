@@ -16,33 +16,39 @@
  */
 package at.schrogl.fsfinance.persistence.daos;
 
+import at.schrogl.fsfinance.persistence.entities.User;
 import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import at.schrogl.fsfinance.persistence.entities.User;
-
-public interface IUserDao extends JpaRepository<User, Long> {
+/**
+ * Spring Data JPA-enabled repository for {@link User} entities.
+ * <p>
+ * @author Fritz Schrogl
+ * @since 0.1.0
+ */
+public interface UserDao extends JpaRepository<User, Long> {
 
 	/**
 	 * Finds a {@link User} by his/her username. Query is case sensitive.
-	 * 
+	 * <p>
 	 * @param username
-	 *            Username to search for
-	 * @return The {@link User} entity if found, otherwise <code>null</code>
+	 *                 Username to search for
+	 * @return
+	 *         The {@link User} entity if found, otherwise <code>null</code>
 	 */
 	public User findByUsername(String username);
 
 	/**
 	 * Finds a {@link User} by his/her email address.
-	 * 
+	 * <p>
 	 * @param email
-	 *            Email address to search for
-	 * @return The {@link User} entity if found, otherwise <code>null</code>
+	 *              Email address to search for
+	 * @return
+	 *         The {@link User} entity if found, otherwise <code>null</code>
 	 */
 	public User findByEmail(String email);
 
@@ -50,13 +56,13 @@ public interface IUserDao extends JpaRepository<User, Long> {
 	 * Finds all {@link User}s with the given forename or surname. Query is case
 	 * insensitive. Queries for <code>null</code> attributes are properly
 	 * handled.
-	 * 
+	 * <p>
 	 * @param forename
-	 *            A user's forename to search for
+	 *                 A user's forename to search for
 	 * @param surname
-	 *            A user's surname to search for
-	 * @return List containing all matching {@link User} entities or an empty
-	 *         list
+	 *                 A user's surname to search for
+	 * @return
+	 *         List containing all matching {@link User} entities or an empty list
 	 */
 	public List<User> findByForenameOrSurnameAllIgnoreCase(String forename, String surname);
 
@@ -64,25 +70,32 @@ public interface IUserDao extends JpaRepository<User, Long> {
 	 * Finds all {@link User}s with the given forename or surname. Query is case
 	 * insensitive. Queries for <code>null</code> attributes are properly
 	 * handled. This method supports paging.
-	 * 
+	 * <p>
 	 * @param forename
-	 *            A user's forename to search for
+	 *                 A user's forename to search for
 	 * @param surname
-	 *            A user's surname to search for
+	 *                 A user's surname to search for
 	 * @param pageable
-	 *            Handing a {@link PageRequest} object to the method enables
-	 *            paging. Paging also supports sorting through the {@link Sort}
-	 *            class. Paging requires two database queries, first total
-	 *            amount of rows in the table are counted, second the requested
-	 *            amount of rows is selected.
-	 * @return A certain page containing a list with {@link User} entities or an
-	 *         empty list
+	 *                 Optional. Handing a {@link PageRequest} object to the method enables
+	 *                 paging. Paging also supports sorting through the {@link Sort}
+	 *                 class. Paging requires two database queries, first total
+	 *                 amount of rows in the table are counted, second the requested
+	 *                 amount of rows is selected.
+	 * @return
+	 *         A certain page containing a list with {@link User} entities or an empty list
 	 */
 	public Page<User> findByForenameOrSurnameAllIgnoreCase(String forename, String surname, Pageable pageable);
 
 	/**
 	 * Same as {@link #findByForenameOrSurnameAllIgnoreCase(String, String)} but
 	 * with <b>and</b> instead of <b>or</b>.
+	 * <p>
+	 * @param forename
+	 *                 A user's forename to search for
+	 * @param surname
+	 *                 A user's surname to search for
+	 * @return
+	 *         List containing all matching {@link User} entities or an empty list
 	 */
 	public List<User> findByForenameAndSurnameAllIgnoreCase(String forename, String surname);
 
@@ -90,6 +103,19 @@ public interface IUserDao extends JpaRepository<User, Long> {
 	 * Same as
 	 * {@link #findByForenameOrSurnameAllIgnoreCase(String, String, Pageable)}
 	 * but with <b>and</b> instead of <b>or</b>.
+	 * <p>
+	 * @param forename
+	 *                 A user's forename to search for
+	 * @param surname
+	 *                 A user's surname to search for
+	 * @param pageable
+	 *                 Optional. Handing a {@link PageRequest} object to the method enables
+	 *                 paging. Paging also supports sorting through the {@link Sort}
+	 *                 class. Paging requires two database queries, first total
+	 *                 amount of rows in the table are counted, second the requested
+	 *                 amount of rows is selected.
+	 * @return
+	 *         A certain page containing a list with {@link User} entities or an empty list
 	 */
 	public Page<User> findByForenameAndSurnameAllIgnoreCase(String forename, String surname, Pageable pageable);
 

@@ -3,3 +3,5 @@
 **/.settings/
 **/.metadata/
 **/.classpath
+**/nbactions.xml
+**/nb-configuration.xml

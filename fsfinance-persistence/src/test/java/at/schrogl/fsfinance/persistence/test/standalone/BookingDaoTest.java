@@ -16,35 +16,38 @@
  */
 package at.schrogl.fsfinance.persistence.test.standalone;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import at.schrogl.fsfinance.persistence.daos.BookingDao;
+import at.schrogl.fsfinance.persistence.entities.Booking;
+import at.schrogl.fsfinance.persistence.test.rules.PersistenceInitRule;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
-
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-import at.schrogl.fsfinance.persistence.daos.IBookingDao;
-import at.schrogl.fsfinance.persistence.entities.Booking;
-import at.schrogl.fsfinance.persistence.test.rules.PersistenceInitRule;
-
+/**
+ * Integration test for class {@link BookingDao} usind Spring Data JPA in standalone-mode.
+ * <p>
+ * @author Fritz Schrogl
+ * @since 0.1.0
+ */
 public class BookingDaoTest {
 
-	private IBookingDao dao;
+	private BookingDao dao;
 	private List<Booking> allBookings;
 
 	@ClassRule
-	public static PersistenceInitRule<IBookingDao> pmInit = new PersistenceInitRule<>();
+	public static PersistenceInitRule<BookingDao> pmInit = new PersistenceInitRule<>();
 
 	@Before
 	public void setup() {
-		dao = pmInit.getDaoProxy(IBookingDao.class);
+		dao = pmInit.getDaoProxy(BookingDao.class);
 		pmInit.startTransaction();
 
 		this.allBookings = dao.findAll();

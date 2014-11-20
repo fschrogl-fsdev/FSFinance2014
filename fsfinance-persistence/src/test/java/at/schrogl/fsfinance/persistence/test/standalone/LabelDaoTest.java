@@ -16,32 +16,35 @@
  */
 package at.schrogl.fsfinance.persistence.test.standalone;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import at.schrogl.fsfinance.persistence.daos.LabelDao;
+import at.schrogl.fsfinance.persistence.entities.Label;
+import at.schrogl.fsfinance.persistence.test.rules.PersistenceInitRule;
 import java.util.Collections;
 import java.util.List;
-
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-import at.schrogl.fsfinance.persistence.daos.ILabelDao;
-import at.schrogl.fsfinance.persistence.entities.Label;
-import at.schrogl.fsfinance.persistence.test.rules.PersistenceInitRule;
-
+/**
+ * Integration test for class {@link LabelDao} usind Spring Data JPA in standalone-mode.
+ * <p>
+ * @author Fritz Schrogl
+ * @since 0.1.0
+ */
 public class LabelDaoTest {
 
-	private ILabelDao dao;
+	private LabelDao dao;
 	private List<Label> allLabels;
 
 	@ClassRule
-	public static PersistenceInitRule<ILabelDao> pmInit = new PersistenceInitRule<>();
+	public static PersistenceInitRule<LabelDao> pmInit = new PersistenceInitRule<>();
 
 	@Before
 	public void setup() {
-		dao = pmInit.getDaoProxy(ILabelDao.class);
+		dao = pmInit.getDaoProxy(LabelDao.class);
 		pmInit.startTransaction();
 
 		this.allLabels = dao.findAll();

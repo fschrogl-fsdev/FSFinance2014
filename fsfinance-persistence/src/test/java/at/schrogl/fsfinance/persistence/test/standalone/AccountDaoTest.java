@@ -16,31 +16,34 @@
  */
 package at.schrogl.fsfinance.persistence.test.standalone;
 
-import static org.junit.Assert.assertEquals;
-
+import at.schrogl.fsfinance.persistence.daos.AccountDao;
+import at.schrogl.fsfinance.persistence.entities.Account;
+import at.schrogl.fsfinance.persistence.test.rules.PersistenceInitRule;
 import java.util.Collections;
 import java.util.List;
-
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-import at.schrogl.fsfinance.persistence.daos.IAccountDao;
-import at.schrogl.fsfinance.persistence.entities.Account;
-import at.schrogl.fsfinance.persistence.test.rules.PersistenceInitRule;
-
+/**
+ * Integration test for class {@link AccountDao} usind Spring Data JPA in standalone-mode.
+ * <p>
+ * @author Fritz Schrogl
+ * @since 0.1.0
+ */
 public class AccountDaoTest {
 
-	private IAccountDao dao;
+	private AccountDao dao;
 	private List<Account> allAccounts;
 
 	@ClassRule
-	public static PersistenceInitRule<IAccountDao> pmInit = new PersistenceInitRule<>();
+	public static PersistenceInitRule<AccountDao> pmInit = new PersistenceInitRule<>();
 
 	@Before
 	public void setup() {
-		dao = pmInit.getDaoProxy(IAccountDao.class);
+		dao = pmInit.getDaoProxy(AccountDao.class);
 		pmInit.startTransaction();
 
 		this.allAccounts = dao.findAll();

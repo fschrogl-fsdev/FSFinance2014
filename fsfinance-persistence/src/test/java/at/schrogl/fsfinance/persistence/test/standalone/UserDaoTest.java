@@ -16,34 +16,37 @@
  */
 package at.schrogl.fsfinance.persistence.test.standalone;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
+import at.schrogl.fsfinance.persistence.daos.UserDao;
+import at.schrogl.fsfinance.persistence.entities.User;
+import at.schrogl.fsfinance.persistence.test.rules.PersistenceInitRule;
 import java.util.Collections;
 import java.util.List;
-
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import at.schrogl.fsfinance.persistence.daos.IUserDao;
-import at.schrogl.fsfinance.persistence.entities.User;
-import at.schrogl.fsfinance.persistence.test.rules.PersistenceInitRule;
-
+/**
+ * Integration test for class {@link UserDao} usind Spring Data JPA in standalone-mode.
+ * <p>
+ * @author Fritz Schrogl
+ * @since 0.1.0
+ */
 public class UserDaoTest {
 
-	private IUserDao dao;
+	private UserDao dao;
 	private List<User> allUsers;
 
 	@ClassRule
-	public static PersistenceInitRule<IUserDao> pmInit = new PersistenceInitRule<>();
+	public static PersistenceInitRule<UserDao> pmInit = new PersistenceInitRule<>();
 
 	@Before
 	public void setup() {
-		dao = pmInit.getDaoProxy(IUserDao.class);
+		dao = pmInit.getDaoProxy(UserDao.class);
 		pmInit.startTransaction();
 
 		this.allUsers = dao.findAll();
