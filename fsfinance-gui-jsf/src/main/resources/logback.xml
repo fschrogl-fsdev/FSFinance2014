@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
+
+<!--
+  logback-classic configuration file [PROD]
+  
+  Supported log levels: ALL < TRACE < DEBUG < INFO < WARN < ERROR < OFF
+ -->
+
+<configuration>
+  <!-- Appender Configuration -->
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>D:\\fsfinance.log</file>
+    <encoder>
+      <pattern>%d{ISO8601} [%thread] %-5level %logger - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- CUSTOM logger configuration -->
+  <logger name="at.schrogl.fsfinance" level="INFO" />
+
+  <!-- ROOT logger configuration -->    
+  <root level="WARN">
+	<appender-ref ref="FILE" />
+  </root>
+</configuration>
