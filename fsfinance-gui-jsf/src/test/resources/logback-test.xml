@@ -2,7 +2,7 @@
 <!DOCTYPE configuration>
 
 <!--
-  logback-classic configuration file [DEV]
+  logback-classic configuration file [TEST]
   
   Supported log levels: ALL < TRACE < DEBUG < INFO < WARN < ERROR < OFF 
  -->

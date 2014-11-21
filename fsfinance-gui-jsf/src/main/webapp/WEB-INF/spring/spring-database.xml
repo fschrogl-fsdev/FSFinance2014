@@ -13,7 +13,7 @@
 				   lookup-on-startup="true"
 				   resource-ref="true" />
   
-  <!-- Scan for Repository Interfaces -->
+  <!-- Scan for Spring Data JPA Repository Interfaces -->
   <jpa:repositories base-package="at.schrogl.fsfinance.persistence.daos" />
   
   <!-- Create Spring Beans relevant for persistence layer-->

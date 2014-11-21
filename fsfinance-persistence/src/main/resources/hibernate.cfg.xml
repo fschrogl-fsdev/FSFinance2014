@@ -3,6 +3,7 @@
     "-//Hibernate/Hibernate Configuration DTD//EN"
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
+<!-- Environment: [PROD] -->
 <hibernate-configuration>
 
   <session-factory>

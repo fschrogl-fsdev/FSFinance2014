@@ -7,3 +7,28 @@ as dependencies.
 The frontend technology used is JSF with Apache MyFaces as implementation
 library.
 
+## Installation and Configuration
+
+The Web application is built using Java Server Faces (JSF) and thus needs an
+application server that provides at least a Servlet container (e.g. Tomcat).
+Further a database connection provided through a pre-defined javax.sql.DataSource
+JNDI-reference is needed. It is expected that the application server provides
+a suitable JDBC driver jar.
+
+### Setting up the DataSource
+
+The DataSource is received through JNDI lookup. In Apache Tomcat a JNDI resource
+can be configured in e.g. server.xml or context.xml like this:
+
+<pre>
+<Resource name="jdbc/FSFinanceDB"
+            auth="Container"
+            type="javax.sql.DataSource"
+            username="dbusername"
+            password="dbpassword"
+            driverClassName="org.hsql.jdbcDriver"
+            url="jdbc:HypersonicSQL:database"
+            maxTotal="8"
+            maxIdle="4"/>
+</pre>
+
