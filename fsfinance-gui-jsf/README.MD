@@ -21,7 +21,7 @@ The DataSource is received through JNDI lookup. In Apache Tomcat a JNDI resource
 can be configured in e.g. server.xml or context.xml like this:
 
 <pre>
-<Resource name="jdbc/FSFinanceDB"
+&lt;Resource name="jdbc/FSFinanceDB"
             auth="Container"
             type="javax.sql.DataSource"
             username="dbusername"
@@ -29,6 +29,16 @@ can be configured in e.g. server.xml or context.xml like this:
             driverClassName="org.hsql.jdbcDriver"
             url="jdbc:HypersonicSQL:database"
             maxTotal="8"
-            maxIdle="4"/>
+            maxIdle="4" /&gt;
 </pre>
 
+### Setting up the configuration file's location
+
+The application's configuration file location is also received through JNDI
+lookup. In Apache Tomcat the resource can be configured as follows:
+
+<pre>
+&lt;Environment name="fsfinanceConfig"
+    			value="absolute-path-to-config-file/config/fsfinance-config.DEV.properties"
+    			type="java.lang.String" /&gt;
+</pre>
