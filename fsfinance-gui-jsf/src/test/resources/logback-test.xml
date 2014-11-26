@@ -8,8 +8,7 @@
  -->
 
 <configuration debug="true">
-  <insertFromJNDI env-entry-name="java:comp/env/fsfinanceConfig" as="fsfinanceConfig" />
-  <property file="${fsfinanceConfig}" />
+  <insertFromJNDI env-entry-name="java:comp/env/properties/FSFinanceLogDirectory" as="logdir" />
 
   <!-- CONSOLE Appender -->
   <appender name="STDOUT-ALL" class="ch.qos.logback.core.ConsoleAppender">
@@ -30,7 +29,7 @@
   
   <!-- FILE Appender -->
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-    <file>${logging.file_location}</file>
+    <file>${logdir}/fsfinance-gui.log</file>
     <append>false</append>
     <encoder>
       <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>

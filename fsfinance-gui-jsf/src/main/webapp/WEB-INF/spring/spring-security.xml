@@ -14,8 +14,8 @@
 	<!-- Configure Login Form -->
 	<form-login login-page="/pages/login.xhtml"
 				default-target-url="/pages/restricted/home.xhtml"
-				login-processing-url="/security/login"
-				authentication-failure-url="/pages/login.xhtml?login_error"
+				login-processing-url="${security.loginProcessUrl}"
+				authentication-failure-url="/pages/login.xhtml?${security.loginFailureParm}"
 				always-use-default-target="false"
 				username-parameter="username"
 				password-parameter="password" />

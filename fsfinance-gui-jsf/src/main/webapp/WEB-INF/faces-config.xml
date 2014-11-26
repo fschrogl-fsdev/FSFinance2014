@@ -4,9 +4,12 @@
 			  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 			  version="2.2">
 
-	<application>
+	<application>	
+		<!-- Make Spring Beans resolvable in JSF -->
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+	
+		<!-- Locales supported -->
 		<locale-config>
-			<!-- Locales supported -->
 			<default-locale>en</default-locale>
 			<supported-locale>de</supported-locale>
 		</locale-config>

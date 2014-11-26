@@ -8,12 +8,12 @@
  -->
 
 <configuration>
-  <insertFromJNDI env-entry-name="java:comp/env/fsfinanceConfig" as="fsfinanceConfig" />
-  <property file="${fsfinanceConfig}" />
+  <insertFromJNDI env-entry-name="java:comp/env/properties/FSFinanceLogDirectory" as="logdir" />
 
   <!-- Appender Configuration -->
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-    <file>${logging.file_location}</file>
+    <file>${logdir}/fsfinance-gui.log</file>
+    <append>true</append>
     <encoder>
       <pattern>%d{ISO8601} [%thread] %-5level %logger - %msg%n</pattern>
     </encoder>

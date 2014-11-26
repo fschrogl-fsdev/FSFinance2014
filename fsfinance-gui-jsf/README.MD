@@ -38,7 +38,19 @@ The application's configuration file location is also received through JNDI
 lookup. In Apache Tomcat the resource can be configured as follows:
 
 <pre>
-&lt;Environment name="fsfinanceConfig"
-    			value="absolute-path-to-config-file/config/fsfinance-config.DEV.properties"
+&lt;Environment name="properties/FSFinanceConfigFile"
+    			value="file:///absolute-path-to-config-file/fsfinance-config.DEV.properties"
+    			type="java.lang.String" /&gt;
+</pre>
+
+### Setting up the logging directory
+
+The application's logging directory is also received through JNDI lookup.
+Properties for the config file and logging directory are separated due to
+Spring's and Logback's different syntaxes.
+
+<pre>
+&lt;Environment name="properties/FSFinanceLogDirectory"
+    			value="/absolute-path-to-log-directory/"
     			type="java.lang.String" /&gt;
 </pre>

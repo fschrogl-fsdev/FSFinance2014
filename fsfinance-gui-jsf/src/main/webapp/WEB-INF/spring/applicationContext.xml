@@ -3,9 +3,16 @@
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
 
-  <!-- Init DB, Entities, DAOs -->
+  <!-- Load application properties, etc. -->
+  <import resource="spring-context.xml" />
+  
+  <!-- Load DB, Entities, DAOs -->
   <import resource="spring-database.xml" />
   
-  <!-- Init Spring Security -->
+  <!-- Load Spring Security -->
   <import resource="spring-security.xml" />
+
+  <!-- Load business beans -->
+  <import resource="spring-business.xml" />
+  
 </beans>

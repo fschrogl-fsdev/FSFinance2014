@@ -16,7 +16,7 @@
 		<properties>
 			<!-- Schema Creation -->
 			<!-- Values: none (default)|create|drop-and-create|drop -->
-			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
+			<property name="javax.persistence.schema-generation.database.action" value="none" />
 
 			<!-- Values: metadata (default)|script|metadata-then-script|script-then-metadata -->
 			<property name="javax.persistence.schema-generation.create-source" value="metadata" />

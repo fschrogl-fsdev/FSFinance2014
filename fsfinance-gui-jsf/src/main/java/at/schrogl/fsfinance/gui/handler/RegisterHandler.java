@@ -39,7 +39,7 @@ public class RegisterHandler implements Serializable {
 	private String passwordPlain;
 	private String passwordPlainRepeated;
 
-	@ManagedProperty(value = "#{userManagementBean}")
+	@ManagedProperty("#{userManagement}")
 	private UserManagementBean userManagement;
 
 	// ==============================================================
@@ -50,6 +50,7 @@ public class RegisterHandler implements Serializable {
 		System.out.println(event.getComponent().getClientId());
 		System.out.println(user);
 		System.out.println(passwordPlain + "//" + passwordPlainRepeated);
+		System.out.println("userMgmtBean: " + userManagement);
 	}
 
 	// ==============================================================
