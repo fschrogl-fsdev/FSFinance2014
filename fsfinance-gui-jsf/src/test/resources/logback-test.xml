@@ -37,7 +37,7 @@
   </appender>
 
   <!-- CUSTOM logger configuration -->
-  <logger name="at.schrogl.fsfinance" level="DEBUG">
+  <logger name="at.schrogl.fsfinance" level="DEBUG" additivity="false">
     <appender-ref ref="STDOUT-ALL" />
   </logger>
 

@@ -11,8 +11,5 @@
   
   <!-- Load Spring Security -->
   <import resource="spring-security.xml" />
-
-  <!-- Load business beans -->
-  <import resource="spring-business.xml" />
   
 </beans>

@@ -32,7 +32,7 @@ can be configured in e.g. server.xml or context.xml like this:
             maxIdle="4" /&gt;
 </pre>
 
-### Setting up the configuration file's location
+### Setting up the configuration file's location (optional)
 
 The application's configuration file location is also received through JNDI
 lookup. In Apache Tomcat the resource can be configured as follows:
@@ -42,6 +42,9 @@ lookup. In Apache Tomcat the resource can be configured as follows:
     			value="file:///absolute-path-to-config-file/fsfinance-config.DEV.properties"
     			type="java.lang.String" /&gt;
 </pre>
+
+If the JNDI lookup for the configuration file fails a fallback configuration file with
+sane default settings, is loaded instead.
 
 ### Setting up the logging directory
 

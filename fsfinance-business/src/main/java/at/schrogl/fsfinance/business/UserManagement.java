@@ -18,7 +18,10 @@ package at.schrogl.fsfinance.business;
 
 import java.io.Serializable;
 
-public class UserManagementBean implements Serializable {
+import org.springframework.stereotype.Component;
+
+@Component
+public class UserManagement implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

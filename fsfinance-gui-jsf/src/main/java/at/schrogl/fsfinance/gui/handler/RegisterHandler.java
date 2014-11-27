@@ -26,7 +26,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import at.schrogl.fsfinance.business.UserManagementBean;
+import at.schrogl.fsfinance.business.UserManagement;
 import at.schrogl.fsfinance.persistence.entities.User;
 
 @ManagedBean
@@ -40,7 +40,7 @@ public class RegisterHandler implements Serializable {
 	private String passwordPlainRepeated;
 
 	@ManagedProperty("#{userManagement}")
-	private UserManagementBean userManagement;
+	private UserManagement userManagement;
 
 	// ==============================================================
 	// Action Methods
@@ -83,11 +83,11 @@ public class RegisterHandler implements Serializable {
 		this.passwordPlainRepeated = passwordPlainRepeated;
 	}
 
-	public UserManagementBean getUserManagement() {
+	public UserManagement getUserManagement() {
 		return userManagement;
 	}
 
-	public void setUserManagement(UserManagementBean userManagement) {
+	public void setUserManagement(UserManagement userManagement) {
 		this.userManagement = userManagement;
 	}
 

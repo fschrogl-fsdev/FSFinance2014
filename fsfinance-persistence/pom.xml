@@ -74,6 +74,7 @@
 
   <!-- Dependencies -->
   <dependencies>
+    <!-- Runtime -->
 	<dependency>
 	  <groupId>org.hibernate</groupId>
 	  <artifactId>hibernate-core</artifactId>
@@ -90,6 +91,8 @@
 		<groupId>org.springframework.data</groupId>
 		<artifactId>spring-data-jpa</artifactId>
 	</dependency>
+	
+	<!-- Provided -->
 	<dependency>
 	  <groupId>org.postgresql</groupId>
 	  <artifactId>postgresql</artifactId>
