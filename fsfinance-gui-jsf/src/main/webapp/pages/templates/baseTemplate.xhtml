@@ -13,7 +13,8 @@
   </head>
 
   <body>
-	<ui:debug hotkey="x" rendered="#{initParam['javax.faces.FACELETS_DEVELOPMENT']}"/>
+  	<!-- Open Debug Popup using CTRL+SHIFT+<hotkey> -->
+	<ui:debug hotkey="x" rendered="#{applicationConfig.devModeActive}"/>
 
 	<div id="header">
 	  <ui:insert name="header">
@@ -36,6 +37,8 @@
 		<small>v#{msg.application_version}</small>
 	  </ui:insert>
 	</div>
+
+	<h:messages style="color: red;" rendered="#{applicationConfig.devModeActive}" />
 
   </body>
 </html>

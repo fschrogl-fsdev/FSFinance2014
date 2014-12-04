@@ -22,7 +22,7 @@ public class ApplicationConfig implements Serializable {
 
 	protected final Logger log = LoggerFactory.getLogger(getClass());
 
-	private boolean isDevModeActive;
+	private boolean devModeActive;
 	private String appVersion;
 
 	private PropertySourcesPlaceholderConfigurer propertyPlaceholder;
@@ -42,8 +42,8 @@ public class ApplicationConfig implements Serializable {
 
 		// Determine the configured application mode
 		String appMode = (String) properties.getProperty("app.mode");
-		isDevModeActive = ("DEVELOPMENT".equalsIgnoreCase(appMode));
-		log.info("Application is in mode: {}", (isDevModeActive) ? "DEVELOPMENT" : "PRODUCTION");
+		devModeActive = ("DEVELOPMENT".equalsIgnoreCase(appMode));
+		log.info("Application is in mode: {}", (devModeActive) ? "DEVELOPMENT" : "PRODUCTION");
 
 		/*
 		 * Extract project's version from Messages.properties
@@ -81,7 +81,7 @@ public class ApplicationConfig implements Serializable {
 	}
 
 	public boolean isDevModeActive() {
-		return isDevModeActive;
+		return devModeActive;
 	}
 
 	public String getAppVersion() {

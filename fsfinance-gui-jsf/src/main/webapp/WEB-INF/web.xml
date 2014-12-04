@@ -33,12 +33,7 @@
   <context-param>
 	<description>Project state: Development|UnitTest|SytemTest|Production</description>
 	<param-name>javax.faces.PROJECT_STAGE</param-name>
-	<param-value>Development</param-value>
-  </context-param>
-  <context-param>
-	<description>Enables JSF/MyFaces Debugging Popup in Pages</description>
-	<param-name>javax.faces.FACELETS_DEVELOPMENT</param-name>
-	<param-value>true</param-value>
+	<param-value>Production</param-value>
   </context-param>
   <context-param>
 	<description>
