@@ -1,6 +1,9 @@
 package at.schrogl.fsfinance.business;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 
@@ -42,24 +45,20 @@ public class ApplicationConfig implements Serializable {
 		isDevModeActive = ("DEVELOPMENT".equalsIgnoreCase(appMode));
 		log.info("Application is in mode: {}", (isDevModeActive) ? "DEVELOPMENT" : "PRODUCTION");
 
-		// Extract application version from Maven's pom.properties
+		/*
+		 * Extract project's version from Messages.properties
+		 * 
+		 * Info: Don't want to add JSF as a dependency, therefore don't using FacesContext
+		 * for extracting from Messages.properties.
+		 */
 		appVersion = "UNKNOWN";
-		/* TODO Make this work :)
-		 
-		Resource pomFile = new ClassPathResource("classpath:META-INF/maven/at.schrogl.fsfinance/fsfinance-gui-jsf/pom.properties");
-		Resource pomFile = new FileSystemResource("META-INF/maven/at.schrogl.fsfinance/fsfinance-gui-jsf/pom.properties");
-		
-		
-		if (pomFile.exists() && pomFile.isReadable()) {
-			try (InputStream pomFileIns = new FileInputStream(pomFile.getFile())) {
-				Properties pomProperties = new Properties();
-				pomProperties.load(pomFileIns);
-				appVersion = pomProperties.getProperty("version", appVersion);
-			} catch (IOException ioe) {
-				log.warn("Unable to load application version from pom.properties", ioe);
-			}
+		try (InputStream msgPropsIns = getClass().getResourceAsStream("/localized-messages/Messages.properties")) {
+			Properties msgProperties = new Properties();
+			msgProperties.load(msgPropsIns);
+			appVersion = msgProperties.getProperty("application_version", appVersion);
+		} catch (IOException ioe) {
+			log.warn("Unable to load application version from Messages.properties", ioe);
 		}
-		*/
 		log.info("Application version is {}", appVersion);
 	}
 

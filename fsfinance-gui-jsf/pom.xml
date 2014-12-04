@@ -17,6 +17,31 @@
 	<description>Contains the project's GUI layer and assembles the web application.</description>
 
 	<!-- ====================================================================== -->
+	<!-- BUILD CONFIGURATION -->
+	<!-- ====================================================================== -->
+	
+	<build>
+		<resources>
+			<resource>
+				<!-- Filter ${project.version} in Messages.properties -->
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<!-- WAR Plugin (exclude logback-test.xml from WAR) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven-war-plugin.version}</version>
+				<configuration>
+					<packagingExcludes>**/logback-test.xml</packagingExcludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- ====================================================================== -->
 	<!-- DEPENDENCIES -->
 	<!-- ====================================================================== -->
 
