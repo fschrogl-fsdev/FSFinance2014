@@ -17,16 +17,23 @@
 package at.schrogl.fsfinance.gui.handler;
 
 import java.io.Serializable;
+import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.component.html.HtmlInputSecret;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import at.schrogl.fsfinance.business.UserManagement;
+import at.schrogl.fsfinance.gui.Constants;
 import at.schrogl.fsfinance.persistence.entities.User;
 
 @ManagedBean
@@ -34,10 +41,11 @@ import at.schrogl.fsfinance.persistence.entities.User;
 public class RegisterHandler implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = LoggerFactory.getLogger(RegisterHandler.class);
 
 	private User user = new User();
 	private String passwordPlain;
-	private String passwordPlainRepeated;
+	private HtmlInputSecret passwordPlainRepeated;
 
 	@ManagedProperty("#{userManagement}")
 	private UserManagement userManagement;
@@ -47,10 +55,24 @@ public class RegisterHandler implements Serializable {
 	// ==============================================================
 
 	public void doRegister(ActionEvent event) {
-		System.out.println(event.getComponent().getClientId());
-		System.out.println(user);
-		System.out.println(passwordPlain + "//" + passwordPlainRepeated);
-		System.out.println("userMgmtBean: " + userManagement);
+		// Verify if passwords match
+		if (!passwordPlain.equals(passwordPlainRepeated.getValue())) {
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("Passwords don't match: User={}, pwd={}, pwdRepeated={}", user.getUsername(),
+						passwordPlain, passwordPlainRepeated.getValue());
+			}
+			FacesContext facesCtx = FacesContext.getCurrentInstance();
+			ResourceBundle rb = facesCtx.getApplication().getResourceBundle(facesCtx, Constants.MSG_BUNDLE);
+			String errText = rb.getString("msg_err_passwordsNoMatch");
+			FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
+			FacesContext.getCurrentInstance().addMessage(passwordPlainRepeated.getId(), errorMsg);
+			return;
+		}
+
+		// Register new user
+		User registeredUser = userManagement.register(user, passwordPlain);
+
+		// TODO Create session and redirect newly created user
 	}
 
 	// ==============================================================
@@ -60,26 +82,26 @@ public class RegisterHandler implements Serializable {
 	public User getUser() {
 		return user;
 	}
-	
+
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	@NotNull
 	@Length(min = 8, max = 24)
 	public String getPasswordPlain() {
 		return passwordPlain;
 	}
-	
+
 	public void setPasswordPlain(String passwordPlain) {
 		this.passwordPlain = passwordPlain;
 	}
 
-	public String getPasswordPlainRepeated() {
+	public HtmlInputSecret getPasswordPlainRepeated() {
 		return passwordPlainRepeated;
 	}
-	
-	public void setPasswordPlainRepeated(String passwordPlainRepeated) {
+
+	public void setPasswordPlainRepeated(HtmlInputSecret passwordPlainRepeated) {
 		this.passwordPlainRepeated = passwordPlainRepeated;
 	}
 

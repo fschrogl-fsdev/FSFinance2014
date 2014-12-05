@@ -20,7 +20,7 @@
 			<h:outputLabel for="password" value="#{msg.label_userpassword} [*]" />
 			<h:inputSecret id="password" value="#{registerHandler.passwordPlain}" />
 			<h:outputLabel for="passwordRepeat" value="#{msg.label_userpassword_repeat}" />
-			<h:inputSecret id="passwordRepeat" value="#{registerHandler.passwordPlainRepeated}" />
+			<h:inputSecret id="passwordRepeat" binding="#{registerHandler.passwordPlainRepeated}" />
 			<h:outputLabel for="forename" value="#{msg.label_userforename}" />
 			<h:inputText id="forename" value="#{registerHandler.user.forename}" />
 			<h:outputLabel for="surname" value="#{msg.label_usersurname}" />

@@ -6,10 +6,10 @@ import java.io.Serializable;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.env.PropertySources;
@@ -19,8 +19,7 @@ import org.springframework.stereotype.Component;
 public class ApplicationConfig implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	protected final Logger log = LoggerFactory.getLogger(getClass());
+	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfig.class);
 
 	private boolean devModeActive;
 	private String appVersion;
@@ -34,16 +33,16 @@ public class ApplicationConfig implements Serializable {
 		properties = sources.get("localProperties");
 
 		if (properties == null) {
-			log.error("No localProperties found and fallback properties not configured!");
+			LOGGER.error("No localProperties found and fallback properties not configured!");
 		} else {
 			String configType = (String) properties.getProperty("app.config");
-			log.info("Found localProperties! app.config={}", configType);
+			LOGGER.info("Found localProperties! app.config={}", configType);
 		}
 
 		// Determine the configured application mode
 		String appMode = (String) properties.getProperty("app.mode");
 		devModeActive = ("DEVELOPMENT".equalsIgnoreCase(appMode));
-		log.info("Application is in mode: {}", (devModeActive) ? "DEVELOPMENT" : "PRODUCTION");
+		LOGGER.info("Application is in mode: {}", (devModeActive) ? "DEVELOPMENT" : "PRODUCTION");
 
 		/*
 		 * Extract project's version from Messages.properties
@@ -57,9 +56,9 @@ public class ApplicationConfig implements Serializable {
 			msgProperties.load(msgPropsIns);
 			appVersion = msgProperties.getProperty("application_version", appVersion);
 		} catch (IOException ioe) {
-			log.warn("Unable to load application version from Messages.properties", ioe);
+			LOGGER.warn("Unable to load application version from Messages.properties", ioe);
 		}
-		log.info("Application version is {}", appVersion);
+		LOGGER.info("Application version is {}", appVersion);
 	}
 
 	public String getProperty(String key) {
@@ -75,7 +74,7 @@ public class ApplicationConfig implements Serializable {
 	// Getter and Setter
 	// ==============================================================
 
-	@Autowired(required = true)
+	@Inject
 	public void setProperties(PropertySourcesPlaceholderConfigurer propertyPlaceholder) {
 		this.propertyPlaceholder = propertyPlaceholder;
 	}

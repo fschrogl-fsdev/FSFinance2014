@@ -33,4 +33,18 @@
 	</authentication-provider>
   </authentication-manager>
 
+  <!-- ============================= -->
+  <!-- Spring Security-related Beans -->
+  <!-- ============================= -->
+  
+  <!-- Localization-support for messages issued by Spring Security -->
+  <!-- TODO Setup Spring's LocalContextHolder to make this work -->
+  <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+    <beans:property name="basename" value="classpath:org/springframework/security/messages" />
+  </beans:bean>
+
+	<beans:bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+	  <beans:property name="" />
+	</beans:bean>
+
 </beans:beans>

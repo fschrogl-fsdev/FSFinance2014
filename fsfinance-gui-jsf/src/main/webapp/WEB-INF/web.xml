@@ -70,6 +70,8 @@
 
 
   <!-- Register Filter for Spring Security -->
+  <!-- The order in which filters are defined is important/matters. Spring Security filters
+       should be defined first! -->
   <filter>
 	<filter-name>springSecurityFilterChain</filter-name>
 	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
