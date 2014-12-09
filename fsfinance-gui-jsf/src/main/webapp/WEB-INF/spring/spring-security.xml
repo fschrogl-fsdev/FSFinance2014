@@ -21,7 +21,7 @@
 				password-parameter="password" />
 					
 	<!-- Configure Logout URL -->
-	<logout logout-url="/security/logout"/>
+	<logout logout-url="/security/logout" delete-cookies="JSESSIONID" />
   </http>
 	
   <authentication-manager>
@@ -42,6 +42,9 @@
   <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
     <beans:property name="basename" value="classpath:org/springframework/security/messages" />
   </beans:bean>
+
+  <beans:bean id="pwdEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
 
 	<beans:bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
 	  <beans:property name="" />

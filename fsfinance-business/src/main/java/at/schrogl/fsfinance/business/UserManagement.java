@@ -34,35 +34,35 @@ public class UserManagement implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserManagement.class);
-	
+
 	private DaoAuthenticationProvider authProvider;
 	private PasswordEncoder pwdEncoder;
 	private UserDao userDao;
-	
+
 	public User register(final User newUser, final String passwordPlain) {
 		// TODO Generate salt and encrypt password
-		
+
 		// Create/register user
 		return userDao.save(newUser);
 	}
-	
+
 	// ==============================================================
 	// Getter and Setter
 	// ==============================================================
-	
+
 	@Inject
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
-	
+
 	@Inject
 	public void setAuthProvider(DaoAuthenticationProvider authProvider) {
 		this.authProvider = authProvider;
 	}
-	
+
 	@Inject
 	public void setPwdEncoder(PasswordEncoder pwdEncoder) {
 		this.pwdEncoder = pwdEncoder;
 	}
-	
+
 }
