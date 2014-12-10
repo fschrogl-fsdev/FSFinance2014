@@ -24,19 +24,18 @@
 	<logout logout-url="/security/logout" delete-cookies="JSESSIONID" />
   </http>
 	
-  <authentication-manager>
-	<authentication-provider>
-	  <user-service>
-		<user name="user" password="12init34" authorities="ROLE_USER" />
-		<user name="admin" password="12init34" authorities="ROLE_ADMIN,ROLE_USER" />
-	  </user-service>
+  <!-- Configure Spring Security's authentication infrastructure -->
+  <authentication-manager alias="authenticationManager">
+	<authentication-provider user-service-ref="userDetailServiceCustom">
+	  <password-encoder hash="bcrypt" />
 	</authentication-provider>
   </authentication-manager>
 
-  <!-- ============================= -->
-  <!-- Spring Security-related Beans -->
-  <!-- ============================= -->
-  
+  <!-- Define the custom UserDetailsService Spring Security should use -->
+  <beans:bean id="userDetailServiceCustom" class="at.schrogl.fsfinance.business.security.UserDetailsServiceCustom">
+    <beans:property name="userDao" ref="userDao" />
+  </beans:bean>
+ 
   <!-- Localization-support for messages issued by Spring Security -->
   <!-- TODO Setup Spring's LocalContextHolder to make this work -->
   <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -44,10 +43,5 @@
   </beans:bean>
 
   <beans:bean id="pwdEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-
-
-	<beans:bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-	  <beans:property name="" />
-	</beans:bean>
 
 </beans:beans>

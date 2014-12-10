@@ -22,10 +22,9 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import at.schrogl.fsfinance.business.security.UserDetailsServiceCustom;
 import at.schrogl.fsfinance.persistence.daos.UserDao;
 import at.schrogl.fsfinance.persistence.entities.User;
 
@@ -35,8 +34,7 @@ public class UserManagement implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserManagement.class);
 
-	private DaoAuthenticationProvider authProvider;
-	private PasswordEncoder pwdEncoder;
+	private UserDetailsServiceCustom securityDao;
 	private UserDao userDao;
 
 	public User register(final User newUser, final String passwordPlain) {
@@ -56,13 +54,8 @@ public class UserManagement implements Serializable {
 	}
 
 	@Inject
-	public void setAuthProvider(DaoAuthenticationProvider authProvider) {
-		this.authProvider = authProvider;
-	}
-
-	@Inject
-	public void setPwdEncoder(PasswordEncoder pwdEncoder) {
-		this.pwdEncoder = pwdEncoder;
+	public void setSecurityDao(UserDetailsServiceCustom securityDao) {
+		this.securityDao = securityDao;
 	}
 
 }

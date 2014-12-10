@@ -22,7 +22,10 @@ import java.util.Collections;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,10 +37,14 @@ import at.schrogl.fsfinance.persistence.entities.User;
  * Provides an {@link UserDetailsService}, used by Spring Security for
  * retrieving {@link UserDetails} objects. <code>UserDetails</code> objects
  * provide all credentials necessary to perform authentication requests.
+ * <p>
+ * Beyond that this object is used to encapsulate Spring Security-specifc
+ * methods.
  * 
  * @author Fritz Schrogl
  * @since 0.1.0
  */
+/* Bean definition in spring-security.xml */
 public class UserDetailsServiceCustom implements UserDetailsService, Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -63,13 +70,30 @@ public class UserDetailsServiceCustom implements UserDetailsService, Serializabl
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		LOGGER.debug("Query for user '{}'", username);
 		User reqUser = userDao.findByUsername(username);
 		if (reqUser == null) {
 			throw new UsernameNotFoundException("User '" + username + "' doesn't exist!");
 		} else {
 			Collection<? extends GrantedAuthority> authorities = Collections.emptySet();
+			LOGGER.debug("Loaded {} authorities for user '{}'", authorities.size(), username);
 			return new UserDetailsCustom(reqUser, authorities);
 		}
+	}
+
+	public void loginUser(User user) {
+		UserDetails details = loadUserByUsername(user.getUsername());
+		Authentication auth = new UsernamePasswordAuthenticationToken(details.getUsername(), details.getPassword(),
+				details.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(auth);
+	}
+
+	public String generateSalt(int length) {
+		return null;
+	}
+
+	public String encryptPassword(String plainPassword, String salt) {
+		return null;
 	}
 
 	// ==============================================================
