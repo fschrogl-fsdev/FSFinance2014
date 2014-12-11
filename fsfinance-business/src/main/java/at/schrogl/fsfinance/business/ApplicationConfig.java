@@ -49,10 +49,10 @@ public class ApplicationConfig implements Serializable {
 		properties = sources.get("localProperties");
 
 		if (properties == null) {
-			LOGGER.error("No localProperties found and fallback properties not configured!");
+			LOGGER.error("No user-supplied localProperties found and fallback properties not configured!");
 		} else {
 			String configType = (String) properties.getProperty("app.config");
-			LOGGER.info("Found localProperties! app.config={}", configType);
+			LOGGER.info("Found user-supplied localProperties! app.config={}", configType);
 		}
 
 		// Determine the configured application mode

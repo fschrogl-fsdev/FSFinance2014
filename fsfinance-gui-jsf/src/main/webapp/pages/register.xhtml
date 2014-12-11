@@ -18,9 +18,9 @@
 			<h:outputLabel for="username" value="#{msg.label_username} [*]" />
 			<h:inputText id="username" value="#{registerHandler.user.username}" />
 			<h:outputLabel for="password" value="#{msg.label_userpassword} [*]" />
-			<h:inputSecret id="password" value="#{registerHandler.passwordPlain}" />
+			<h:inputSecret id="password" value="#{registerHandler.rawPassword}" />
 			<h:outputLabel for="passwordRepeat" value="#{msg.label_userpassword_repeat}" />
-			<h:inputSecret id="passwordRepeat" binding="#{registerHandler.passwordPlainRepeated}" />
+			<h:inputSecret id="passwordRepeat" binding="#{registerHandler.rawPasswordRepeated}" />
 			<h:outputLabel for="forename" value="#{msg.label_userforename}" />
 			<h:inputText id="forename" value="#{registerHandler.user.forename}" />
 			<h:outputLabel for="surname" value="#{msg.label_usersurname}" />

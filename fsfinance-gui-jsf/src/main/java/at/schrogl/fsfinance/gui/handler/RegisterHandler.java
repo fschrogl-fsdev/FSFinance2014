@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import at.schrogl.fsfinance.business.UserManagement;
+import at.schrogl.fsfinance.business.exceptions.UserAlreadyExistsException;
 import at.schrogl.fsfinance.gui.Constants;
 import at.schrogl.fsfinance.persistence.entities.User;
 
@@ -44,8 +45,8 @@ public class RegisterHandler implements Serializable {
 	private static final Logger LOGGER = LoggerFactory.getLogger(RegisterHandler.class);
 
 	private User user = new User();
-	private String passwordPlain;
-	private HtmlInputSecret passwordPlainRepeated;
+	private String rawPassword;
+	private HtmlInputSecret rawPasswordRepeated;
 
 	@ManagedProperty("#{userManagement}")
 	private UserManagement userManagement;
@@ -56,23 +57,40 @@ public class RegisterHandler implements Serializable {
 
 	public void doRegister(ActionEvent event) {
 		// Verify if passwords match
-		if (!passwordPlain.equals(passwordPlainRepeated.getValue())) {
+		if (!rawPassword.equals(rawPasswordRepeated.getValue())) {
 			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("Passwords don't match: User={}, pwd={}, pwdRepeated={}", user.getUsername(),
-						passwordPlain, passwordPlainRepeated.getValue());
+				LOGGER.debug("Passwords don't match: User={}, pwd={}, pwdRepeated={}", user.getUsername(), rawPassword,
+						rawPasswordRepeated.getValue());
 			}
-			FacesContext facesCtx = FacesContext.getCurrentInstance();
-			ResourceBundle rb = facesCtx.getApplication().getResourceBundle(facesCtx, Constants.MSG_BUNDLE);
-			String errText = rb.getString("msg_err_passwordsNoMatch");
+			String errText = getBundleMessage("msg_err_passwordsNoMatch");
 			FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
-			FacesContext.getCurrentInstance().addMessage(passwordPlainRepeated.getId(), errorMsg);
+			FacesContext.getCurrentInstance().addMessage(rawPasswordRepeated.getId(), errorMsg);
 			return;
 		}
 
 		// Register new user
-		User registeredUser = userManagement.register(user, passwordPlain);
+		User registeredUser = null;
+		try {
+			registeredUser = userManagement.register(user, rawPassword);
+			LOGGER.debug("Created user {}", registeredUser);
+		} catch (UserAlreadyExistsException uae_ex) {
+			String errText = getBundleMessage("msg_err_userAlreadyExists");
+			FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
+			FacesContext.getCurrentInstance().addMessage(null, errorMsg);
+			return;
+		}
 
 		// TODO Create session and redirect newly created user
+	}
+
+	// ==============================================================
+	// Helper Methods
+	// ==============================================================
+
+	private String getBundleMessage(String msgCode) {
+		FacesContext facesCtx = FacesContext.getCurrentInstance();
+		ResourceBundle rb = facesCtx.getApplication().getResourceBundle(facesCtx, Constants.MSG_BUNDLE);
+		return rb.getString(msgCode);
 	}
 
 	// ==============================================================
@@ -89,20 +107,20 @@ public class RegisterHandler implements Serializable {
 
 	@NotNull
 	@Length(min = 8, max = 24)
-	public String getPasswordPlain() {
-		return passwordPlain;
+	public String getRawPassword() {
+		return rawPassword;
 	}
 
-	public void setPasswordPlain(String passwordPlain) {
-		this.passwordPlain = passwordPlain;
+	public void setRawPassword(String rawPassword) {
+		this.rawPassword = rawPassword;
 	}
 
-	public HtmlInputSecret getPasswordPlainRepeated() {
-		return passwordPlainRepeated;
+	public HtmlInputSecret getRawPasswordRepeated() {
+		return rawPasswordRepeated;
 	}
 
-	public void setPasswordPlainRepeated(HtmlInputSecret passwordPlainRepeated) {
-		this.passwordPlainRepeated = passwordPlainRepeated;
+	public void setRawPasswordRepeated(HtmlInputSecret rawPasswordRepeated) {
+		this.rawPasswordRepeated = rawPasswordRepeated;
 	}
 
 	public UserManagement getUserManagement() {

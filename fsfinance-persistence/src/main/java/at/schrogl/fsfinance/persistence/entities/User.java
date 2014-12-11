@@ -49,10 +49,10 @@ public class User implements Serializable {
 	private Long id;
 	private String username;
 	private String password;
-	private String salt;
 	private String forename;
 	private String surname;
 	private String email;
+	private Boolean enabled;
 
 	// Associations
 	private Set<Account> accounts = new HashSet<Account>();
@@ -64,7 +64,7 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return id + "/" + username;
+		return String.format("USER[%d/%s]", id, username);
 	}
 
 	public void addAccount(Account account) {
@@ -113,17 +113,6 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	@NotNull
-	@Column(name = "SALT", length = 255, nullable = false, updatable = false)
-	public String getSalt() {
-		return salt;
-	}
-
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
-
-	@Length(min = 2, max = 255)
 	@Column(name = "FORENAME", length = 255)
 	public String getForename() {
 		return forename;
@@ -133,7 +122,6 @@ public class User implements Serializable {
 		this.forename = forename;
 	}
 
-	@Length(min = 2, max = 255)
 	@Column(name = "SURNAME", length = 255)
 	public String getSurname() {
 		return surname;
@@ -153,6 +141,16 @@ public class User implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	@NotNull
+	@Column(name = "ENABLED", nullable = false)
+	public Boolean isEnabled() {
+		return enabled;
+	}
+	
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)

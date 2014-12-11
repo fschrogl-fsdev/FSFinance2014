@@ -27,12 +27,18 @@
   <!-- Configure Spring Security's authentication infrastructure -->
   <authentication-manager alias="authenticationManager">
 	<authentication-provider user-service-ref="userDetailServiceCustom">
-	  <password-encoder hash="bcrypt" />
+	  <password-encoder ref="passwordEncoder" />
 	</authentication-provider>
   </authentication-manager>
 
+  <!-- Define password encoder bean to use -->
+  <beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+    <beans:constructor-arg value="${security.pwdEncRounds}" />
+  </beans:bean>
+
   <!-- Define the custom UserDetailsService Spring Security should use -->
   <beans:bean id="userDetailServiceCustom" class="at.schrogl.fsfinance.business.security.UserDetailsServiceCustom">
+    <beans:property name="pwdEncoder" ref="passwordEncoder" />
     <beans:property name="userDao" ref="userDao" />
   </beans:bean>
  
@@ -41,7 +47,5 @@
   <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
     <beans:property name="basename" value="classpath:org/springframework/security/messages" />
   </beans:bean>
-
-  <beans:bean id="pwdEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 </beans:beans>

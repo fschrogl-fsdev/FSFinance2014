@@ -29,6 +29,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import at.schrogl.fsfinance.persistence.daos.UserDao;
 import at.schrogl.fsfinance.persistence.entities.User;
@@ -50,6 +51,7 @@ public class UserDetailsServiceCustom implements UserDetailsService, Serializabl
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserDetailsServiceCustom.class);
 
+	private PasswordEncoder pwdEncoder;
 	private UserDao userDao;
 
 	/**
@@ -70,7 +72,7 @@ public class UserDetailsServiceCustom implements UserDetailsService, Serializabl
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		LOGGER.debug("Query for user '{}'", username);
+		LOGGER.debug("Login-Query for user '{}'", username);
 		User reqUser = userDao.findByUsername(username);
 		if (reqUser == null) {
 			throw new UsernameNotFoundException("User '" + username + "' doesn't exist!");
@@ -88,18 +90,18 @@ public class UserDetailsServiceCustom implements UserDetailsService, Serializabl
 		SecurityContextHolder.getContext().setAuthentication(auth);
 	}
 
-	public String generateSalt(int length) {
-		return null;
-	}
-
-	public String encryptPassword(String plainPassword, String salt) {
-		return null;
+	public String encryptPassword(String rawPassword) {
+		return pwdEncoder.encode(rawPassword);
 	}
 
 	// ==============================================================
 	// Getter and Setter
 	// ==============================================================
 
+	public void setPwdEncoder(PasswordEncoder pwdEncoder) {
+		this.pwdEncoder = pwdEncoder;
+	}
+	
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
