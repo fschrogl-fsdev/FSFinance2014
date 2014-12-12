@@ -16,23 +16,27 @@
  */
 package at.schrogl.fsfinance.persistence.test.standalone;
 
-import at.schrogl.fsfinance.persistence.daos.UserDao;
-import at.schrogl.fsfinance.persistence.entities.User;
-import at.schrogl.fsfinance.persistence.test.rules.PersistenceInitRule;
+import static org.junit.Assert.assertEquals;
+
 import java.util.Collections;
 import java.util.List;
+
 import org.junit.After;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import at.schrogl.fsfinance.persistence.daos.UserDao;
+import at.schrogl.fsfinance.persistence.entities.User;
+import at.schrogl.fsfinance.persistence.test.rules.PersistenceInitRule;
+
 /**
- * Integration test for class {@link UserDao} usind Spring Data JPA in standalone-mode.
+ * Integration test for class {@link UserDao} usind Spring Data JPA in
+ * standalone-mode.
  * <p>
+ * 
  * @author Fritz Schrogl
  * @since 0.1.0
  */
@@ -60,37 +64,57 @@ public class UserDaoTest {
 	}
 
 	@Test
-	public void testFindByUsername() {
+	public void testfindByUsernameIgnoreCase() {
 		// Query every user explicitly
 		for (User expectedUser : allUsers) {
-			User actualUser = dao.findByUsername(expectedUser.getUsername());
+			User actualUser = dao.findByUsernameIgnoreCase(expectedUser.getUsername());
 			assertEquals("assert_1", expectedUser, actualUser);
 		}
 
 		// Empty username is not permitted and should always return no user
-		assertEquals("assert_2", null, dao.findByUsername(null));
+		assertEquals("assert_2", null, dao.findByUsernameIgnoreCase(null));
 
-		// Query is assumed to be case sensitive
-		User actualUser = allUsers.get(0);
-		String usernameUpperCase = actualUser.getUsername().toUpperCase();
-		assertNull("assert_3", dao.findByUsername(usernameUpperCase));
+		// Query is assumed to be case in-sensitive
+		User expectedUser = allUsers.get(0);
+		String usernameUpperCase = expectedUser.getUsername().toUpperCase();
+		assertEquals("assert_3", dao.findByUsernameIgnoreCase(usernameUpperCase), expectedUser);
 	}
 
 	@Test
-	public void testFindByEmail() {
+	public void testfindByEmailIgnoreCase() {
 		// Query every user explicitly
 		for (User expectedUser : allUsers) {
-			User actualUser = dao.findByEmail(expectedUser.getEmail());
+			User actualUser = dao.findByEmailIgnoreCase(expectedUser.getEmail());
 			assertEquals("assert_1", expectedUser, actualUser);
 		}
 
 		// Empty email is not permitted and should always return no user
-		assertEquals("assert_2", null, dao.findByEmail(null));
+		assertEquals("assert_2", null, dao.findByEmailIgnoreCase(null));
 
 		// Query is assumed to be case sensitive
-		User actualUser = allUsers.get(0);
-		String emailUpperCase = actualUser.getEmail().toUpperCase();
-		assertNull("assert_3" + actualUser, dao.findByEmail(emailUpperCase));
+		User expectedUser = allUsers.get(0);
+		String emailUpperCase = expectedUser.getEmail().toUpperCase();
+		assertEquals("assert_3", dao.findByEmailIgnoreCase(emailUpperCase), expectedUser);
+	}
+
+	@Test
+	public void testFindbyUsernameOrEmailAllIgnoreCase() {
+		// Query every user explicitly
+		for (User expectedUser : allUsers) {
+			assertEquals("assert_1", expectedUser, dao.findFirstByUsernameOrEmailAllIgnoreCase(expectedUser.getUsername(), null));
+			assertEquals("assert_2", expectedUser, dao.findFirstByUsernameOrEmailAllIgnoreCase(null, expectedUser.getEmail()));
+			assertEquals("assert_3", expectedUser,
+					dao.findFirstByUsernameOrEmailAllIgnoreCase(expectedUser.getUsername(), expectedUser.getEmail()));
+		}
+		
+		// Empty username or email are not permitted
+		assertEquals("assert_4", null, dao.findFirstByUsernameOrEmailAllIgnoreCase(null, null));
+		
+		// Query is case in-sensitive
+		User expectedUser = allUsers.get(0);
+		String usernameUpperCase = expectedUser.getUsername().toUpperCase();
+		String emailUpperCase = expectedUser.getEmail().toUpperCase();
+		assertEquals("assert_5", expectedUser, dao.findFirstByUsernameOrEmailAllIgnoreCase(usernameUpperCase, emailUpperCase));
 	}
 
 	@Test

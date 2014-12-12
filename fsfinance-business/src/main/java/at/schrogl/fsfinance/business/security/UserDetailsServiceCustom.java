@@ -73,9 +73,10 @@ public class UserDetailsServiceCustom implements UserDetailsService, Serializabl
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		LOGGER.debug("Login-Query for user '{}'", username);
-		User reqUser = userDao.findByUsername(username);
+		User reqUser = userDao.findByUsernameIgnoreCase(username);
 		if (reqUser == null) {
-			throw new UsernameNotFoundException("User '" + username + "' doesn't exist!");
+			String errMsg = String.format("A user named '%s' doesn't exist!", username);
+			throw new UsernameNotFoundException(errMsg);
 		} else {
 			Collection<? extends GrantedAuthority> authorities = Collections.emptySet();
 			LOGGER.debug("Loaded {} authorities for user '{}'", authorities.size(), username);

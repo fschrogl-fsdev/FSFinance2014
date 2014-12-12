@@ -7,16 +7,17 @@
 	                       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
 	                       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.1.xsd">
 
-  <!-- Load application properties -->
+  <!-- Load application property file location from JNDI (and use an embedded default file as fallback) -->
   <jee:jndi-lookup id="fsfinanceConfig"
 				   jndi-name="properties/FSFinanceConfigFile"
   				   default-value="classpath:/config/fsfinance-config.properties" />
    
+  <!-- Source the application property file, so that its content is available within Spring -->
   <bean id="propertyPlaceholder" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
     <property name="locations" ref="fsfinanceConfig" />
   </bean>
 
-  <!-- We use annotations-drive config for business beans -->
+  <!-- Enable use of annotations-drive config for business beans/classes -->
   <context:component-scan base-package="at.schrogl.fsfinance.business" />
 
 </beans>

@@ -46,19 +46,20 @@ public class UserManagement implements Serializable {
 			throw new IllegalArgumentException("Method's arguments must not be null!");
 
 		// Check if user already exists
-		if (userDao.findByUsername(newUser.getUsername()) != null) {
-			LOGGER.warn("Can't create user '{}'. Username already exists", newUser.getUsername());;
-			throw new UserAlreadyExistsException(newUser.getUsername());
+		User existingUser = userDao.findFirstByUsernameOrEmailAllIgnoreCase(newUser.getUsername(), newUser.getEmail());
+		if (existingUser != null) {
+			LOGGER.warn("Can't create user '{}'. User already exists", existingUser);;
+			throw new UserAlreadyExistsException(existingUser, newUser);
 		}
 
-		// Generate hashed password and enable user
-		String hashedPassword = securityDao.encryptPassword(rawPassword);
-		LOGGER.debug("Generated hashed password for user '{}': {}", newUser.getUsername(), hashedPassword);
-		newUser.setPassword(hashedPassword);
-		newUser.setEnabled(Boolean.TRUE);
+		// Generate hashed password
+		newUser.setPassword(securityDao.encryptPassword(rawPassword));
+		LOGGER.debug("Generated hashed password for user '{}': {}", newUser.getUsername(), newUser.getPassword());
 
 		// Persist user
 		LOGGER.debug("Persisting new user '{}'", newUser.getUsername());
+		newUser.setEnabled(Boolean.TRUE);
+		newUser.setEmail(newUser.getEmail().toLowerCase());
 		return userDao.save(newUser);
 	}
 

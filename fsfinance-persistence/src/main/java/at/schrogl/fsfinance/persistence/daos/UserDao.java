@@ -16,13 +16,15 @@
  */
 package at.schrogl.fsfinance.persistence.daos;
 
-import at.schrogl.fsfinance.persistence.entities.User;
 import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import at.schrogl.fsfinance.persistence.entities.User;
 
 /**
  * Spring Data JPA-enabled repository for {@link User} entities.
@@ -33,25 +35,37 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserDao extends JpaRepository<User, Long> {
 
 	/**
-	 * Finds a {@link User} by his/her username. Query is case sensitive.
+	 * Finds a {@link User} by his/her username. Query is case in-sensitive.
 	 * <p>
 	 * @param username
 	 *                 Username to search for
 	 * @return
 	 *         The {@link User} entity if found, otherwise <code>null</code>
 	 */
-	public User findByUsername(String username);
+	public User findByUsernameIgnoreCase(String username);
 
 	/**
-	 * Finds a {@link User} by his/her email address.
+	 * Finds a {@link User} by his/her email address. Query is case in-sensitive.
 	 * <p>
 	 * @param email
 	 *              Email address to search for
 	 * @return
 	 *         The {@link User} entity if found, otherwise <code>null</code>
 	 */
-	public User findByEmail(String email);
+	public User findByEmailIgnoreCase(String email);
 
+	/**
+	 * Finds a {@link User} by his/her username or email address. Query is case-insensitive.
+	 * <p> 
+	 * @param username
+	 * 				   Username to search for
+	 * @param email
+	 * 				Email address to search for
+	 * @return
+	 * 		   The first {@link User} entity if found, otherwise <code>null</code>
+	 */
+	public User findFirstByUsernameOrEmailAllIgnoreCase(String username, String email);
+	
 	/**
 	 * Finds all {@link User}s with the given forename or surname. Query is case
 	 * insensitive. Queries for <code>null</code> attributes are properly

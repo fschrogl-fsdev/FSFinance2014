@@ -142,13 +142,13 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	@NotNull
 	@Column(name = "ENABLED", nullable = false)
 	public Boolean isEnabled() {
 		return enabled;
 	}
-	
+
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}

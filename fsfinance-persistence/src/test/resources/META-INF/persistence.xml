@@ -20,7 +20,7 @@
 
 	  <!-- Connection Properties -->
 	  <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
-	  <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:/fsfinance" />
+	  <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:/fsfinance;sql.ignore_case=false" />
 	  <property name="javax.persistence.jdbc.user" value="sa" />
 	  <property name="javax.persistence.jdbc.password" value="" />
 

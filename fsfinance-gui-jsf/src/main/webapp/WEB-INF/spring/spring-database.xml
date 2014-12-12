@@ -15,10 +15,10 @@
 				   lookup-on-startup="true"
 				   resource-ref="true" />
   
-  <!-- Scan for Spring Data JPA Repository Interfaces -->
+  <!-- Scan for Spring Data JPA Repository Interfaces (and create proxies for them) -->
   <jpa:repositories base-package="at.schrogl.fsfinance.persistence.daos" />
   
-  <!-- Enable annotation-driven transaction management -->
+  <!-- Enable annotation-driven transaction management (supports Spring + JTA annotations) -->
   <tx:annotation-driven transaction-manager="transactionManager" />
   
   <!-- Create Spring Beans relevant for persistence layer-->
@@ -28,11 +28,10 @@
       <property name="dataSource" ref="dataSource" />
     </bean>
     
-    <!-- Initialize a PlattformTransactionManager -->
+    <!-- Initialize a PlattformTransactionManager that supports JPA -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
       <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
   </beans>
-  
   
 </beans>
