@@ -36,14 +36,13 @@
     </encoder>
   </appender>
 
-  <!-- CUSTOM logger configuration -->
-  <logger name="at.schrogl.fsfinance" level="DEBUG" additivity="false">
-    <appender-ref ref="STDOUT-ALL" />
-  </logger>
+  <!-- Custom logger configuration -->
+  <logger name="at.schrogl.fsfinance" level="DEBUG" additivity="true" />
+  <logger name="org.springframework.security" level="DEBUG" additivity="true" />
 
   <!-- ROOT logger configuration -->    
-  <root level="DEBUG">
-    <appender-ref ref="STDOUT-INFO" />
+  <root level="INFO">
+    <appender-ref ref="STDOUT-ALL" />
 	<appender-ref ref="FILE" />
   </root>
 </configuration>

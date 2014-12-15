@@ -17,14 +17,14 @@
 package at.schrogl.fsfinance.business.security;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -78,7 +78,11 @@ public class UserDetailsServiceCustom implements UserDetailsService, Serializabl
 			String errMsg = String.format("A user named '%s' doesn't exist!", username);
 			throw new UsernameNotFoundException(errMsg);
 		} else {
-			Collection<? extends GrantedAuthority> authorities = Collections.emptySet();
+			Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+			
+			// TODO QuickFix Security Authorities/roles
+			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+			
 			LOGGER.debug("Loaded {} authorities for user '{}'", authorities.size(), username);
 			return new UserDetailsCustom(reqUser, authorities);
 		}
@@ -89,6 +93,15 @@ public class UserDetailsServiceCustom implements UserDetailsService, Serializabl
 		Authentication auth = new UsernamePasswordAuthenticationToken(details.getUsername(), details.getPassword(),
 				details.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(auth);
+	}	
+
+	public User getCurrentUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return (auth != null) ? (User) auth.getPrincipal() : null;
+	}
+	
+	public void logoutCurrentUser() {
+		SecurityContextHolder.getContext().setAuthentication(null);
 	}
 
 	public String encryptPassword(String rawPassword) {

@@ -22,4 +22,8 @@ public interface Constants {
 	static final String LOGIN_ERROR_PARAM = "login_error";
 	
 	static final String MSG_BUNDLE = "msg";
+	
+	static final String NAV_OUTCOME_OK = "success";
+	static final String NAV_OUTCOME_FAIL = "failure";
+	static final String NAV_OUTCOME_STAY = null;
 }

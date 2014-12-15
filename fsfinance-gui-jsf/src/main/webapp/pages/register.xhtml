@@ -27,7 +27,7 @@
 			<h:inputText id="surname" value="#{registerHandler.user.surname}" />
 			<h:outputLabel for="email" value="#{msg.label_usermail} [*]" />
 			<h:inputText id="email" value="#{registerHandler.user.email}" />
-			<h:commandButton id="btn-ok" value="#{msg.btn_register}" actionListener="#{registerHandler.doRegister}" />
+			<h:commandButton id="btn-ok" value="#{msg.btn_register}" action="#{registerHandler.doRegister}" />
 			<h:commandButton id="btn-cancel" value="#{msg.btn_cancel}" action="/index.xhtml" immediate="true" />
 		  </h:panelGrid>
 		</h:form>

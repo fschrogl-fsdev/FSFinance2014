@@ -24,7 +24,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.component.html.HtmlInputSecret;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.validation.constraints.NotNull;
 
@@ -55,7 +54,7 @@ public class RegisterHandler implements Serializable {
 	// Action Methods
 	// ==============================================================
 
-	public void doRegister(ActionEvent event) {
+	public String doRegister() {
 		// Verify if passwords match
 		if (!rawPassword.equals(rawPasswordRepeated.getValue())) {
 			if (LOGGER.isDebugEnabled()) {
@@ -65,22 +64,26 @@ public class RegisterHandler implements Serializable {
 			String errText = getBundleMessage("msg_err_passwordsNoMatch");
 			FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
 			FacesContext.getCurrentInstance().addMessage(rawPasswordRepeated.getId(), errorMsg);
-			return;
+			return Constants.NAV_OUTCOME_STAY;
 		}
 
 		// Register new user
 		User registeredUser = null;
 		try {
+			user.setForename(convertEmptyStringToNull(user.getForename()));
+			user.setSurname(convertEmptyStringToNull(user.getSurname()));
 			registeredUser = userManagement.register(user, rawPassword);
 			LOGGER.debug("Created user {}", registeredUser);
 		} catch (UserAlreadyExistsException uae_ex) {
 			String errText = getBundleMessage("msg_err_userAlreadyExists");
 			FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
 			FacesContext.getCurrentInstance().addMessage(null, errorMsg);
-			return;
+			return Constants.NAV_OUTCOME_STAY;
 		}
 
-		// TODO Create session and redirect newly created user
+		// Create session and redirect newly created user
+		User loggedInUser = userManagement.loginUser(registeredUser);
+		return (loggedInUser != null) ? "/restricted/home.xhtml" : "/login.xhtml";
 	}
 
 	// ==============================================================
@@ -91,6 +94,10 @@ public class RegisterHandler implements Serializable {
 		FacesContext facesCtx = FacesContext.getCurrentInstance();
 		ResourceBundle rb = facesCtx.getApplication().getResourceBundle(facesCtx, Constants.MSG_BUNDLE);
 		return rb.getString(msgCode);
+	}
+	
+	private String convertEmptyStringToNull(String value) {
+		return (value != null && value.trim().length() == 0) ? null: value;
 	}
 
 	// ==============================================================

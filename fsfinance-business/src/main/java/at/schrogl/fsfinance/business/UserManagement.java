@@ -63,6 +63,55 @@ public class UserManagement implements Serializable {
 		return userDao.save(newUser);
 	}
 
+	@Transactional(value = TxType.REQUIRED)
+	public User loginUser(User user) {
+		if (user == null)
+			throw new IllegalArgumentException("User must not be null!");
+
+		LOGGER.debug("Trying to login user {}", user);
+		if (userDao.findOne(user.getId()) != null) {
+			LOGGER.info("Loging in user {}", user);
+			securityDao.loginUser(user);
+		} else {
+			LOGGER.warn("Unable to login user {} Loging out current user!", user);
+			securityDao.logoutCurrentUser();
+		}
+		return securityDao.getCurrentUser();
+	}
+
+	@Transactional(TxType.REQUIRED)
+	public User findByUsername(String username) {
+		User foundUser = userDao.findByUsernameIgnoreCase(username);
+		LOGGER.debug("Looking for username '{}', found: {}", username, foundUser);
+		return foundUser;
+	}
+
+	@Transactional(TxType.REQUIRED)
+	public User findByEmail(String email) {
+		User foundUser = userDao.findByEmailIgnoreCase(email);
+		LOGGER.debug("Looking for email '{}', found: {}", email, foundUser);
+		return foundUser;
+	}
+
+	@Transactional(TxType.NOT_SUPPORTED)
+	public User getCurrentUser() {
+		User currentUser = securityDao.getCurrentUser();
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Getting currently logged in user for thread {} is {}", Thread.currentThread(), currentUser);
+		}
+		return currentUser;
+	}
+
+	@Transactional(value = TxType.REQUIRED)
+	public Boolean hasRole(User user, String role) {
+		return Boolean.FALSE;
+	}
+
+	@Transactional(value = TxType.REQUIRED)
+	public Boolean hasRole(User user, String... roles) {
+		return Boolean.FALSE;
+	}
+
 	// ==============================================================
 	// Getter and Setter
 	// ==============================================================
