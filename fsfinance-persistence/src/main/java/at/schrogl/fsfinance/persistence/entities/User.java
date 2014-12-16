@@ -21,8 +21,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,6 +36,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
+
+import at.schrogl.fsfinance.persistence.enums.Roles;
 
 /**
  * This entity class represents an user.
@@ -57,6 +63,7 @@ public class User implements Serializable {
 	// Associations
 	private Set<Account> accounts = new HashSet<Account>();
 	private Set<Label> labels = new HashSet<Label>();
+	private Set<Roles> roles = new HashSet<Roles>();
 
 	// =================================================================
 	// Helper methods
@@ -169,6 +176,18 @@ public class User implements Serializable {
 
 	public void setLabels(Set<Label> labels) {
 		this.labels = labels;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@ElementCollection(targetClass = Roles.class)
+	@CollectionTable(name = "USERS_ROLES")
+	@Column(name = "ROLE", length = 50, nullable = false)
+	public Set<Roles> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Roles> roles) {
+		this.roles = roles;
 	}
 
 }

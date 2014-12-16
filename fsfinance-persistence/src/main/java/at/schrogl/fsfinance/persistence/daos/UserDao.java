@@ -53,7 +53,7 @@ public interface UserDao extends JpaRepository<User, Long> {
 	 *         The {@link User} entity if found, otherwise <code>null</code>
 	 */
 	public User findByEmailIgnoreCase(String email);
-
+	
 	/**
 	 * Finds a {@link User} by his/her username or email address. Query is case-insensitive.
 	 * <p> 
@@ -132,5 +132,5 @@ public interface UserDao extends JpaRepository<User, Long> {
 	 *         A certain page containing a list with {@link User} entities or an empty list
 	 */
 	public Page<User> findByForenameAndSurnameAllIgnoreCase(String forename, String surname, Pageable pageable);
-
+	
 }
