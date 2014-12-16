@@ -16,10 +16,10 @@
  */
 package at.schrogl.fsfinance.persistence.entities;
 
+import at.schrogl.fsfinance.persistence.enums.Authorities;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -33,11 +33,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
-
-import at.schrogl.fsfinance.persistence.enums.Roles;
 
 /**
  * This entity class represents an user.
@@ -63,7 +60,7 @@ public class User implements Serializable {
 	// Associations
 	private Set<Account> accounts = new HashSet<Account>();
 	private Set<Label> labels = new HashSet<Label>();
-	private Set<Roles> roles = new HashSet<Roles>();
+	private Set<Authorities> authorities = new HashSet<Authorities>();
 
 	// =================================================================
 	// Helper methods
@@ -179,15 +176,15 @@ public class User implements Serializable {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@ElementCollection(targetClass = Roles.class)
-	@CollectionTable(name = "USERS_ROLES")
-	@Column(name = "ROLE", length = 50, nullable = false)
-	public Set<Roles> getRoles() {
-		return roles;
+	@ElementCollection(targetClass = Authorities.class)
+	@CollectionTable(name = "USERS_AUTHORITIES")
+	@Column(name = "AUTHORITY", length = 50, nullable = false)
+	public Set<Authorities> getAuthorities() {
+		return authorities;
 	}
 
-	public void setRoles(Set<Roles> roles) {
-		this.roles = roles;
+	public void setAuthorities(Set<Authorities> authorities) {
+		this.authorities = authorities;
 	}
 
 }

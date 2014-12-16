@@ -34,36 +34,34 @@ public interface BookingDao extends JpaRepository<Booking, Long> {
 
 	public List<Booking> findByDate(Date date);
 
-	public Page<Booking> findByDate(Date date, Pageable pageable);
+	public Page<Booking> findByDate(Pageable pageable, Date date);
 
 	public List<Booking> findByDateLessThan(Date date);
 
-	public Page<Booking> findByDateLessThan(Date date, Pageable pageable);
+	public Page<Booking> findByDateLessThan(Pageable pageable, Date date);
 
 	public List<Booking> findByDateGreaterThan(Date date);
 
-	public Page<Booking> findByDateGreaterThan(Date date, Pageable pageable);
+	public Page<Booking> findByDateGreaterThan(Pageable pageable, Date date);
 
 	public List<Booking> findByDateBetween(Date from, Date to);
 
-	public Page<Booking> findByDateBetween(Date from, Date to, Pageable pageable);
+	public Page<Booking> findByDateBetween(Pageable pageable, Date from, Date to);
 
 	public List<Booking> findByAmountLessThan(BigDecimal amount);
 
-	public Page<Booking> findByAmountLessThan(BigDecimal amount, Pageable pageable);
+	public Page<Booking> findByAmountLessThan(Pageable pageable, BigDecimal amount);
 
 	public List<Booking> findByAmountGreaterThan(BigDecimal amount);
 
-	public Page<Booking> findByAmountGreaterThan(BigDecimal amount, Pageable pageable);
+	public Page<Booking> findByAmountGreaterThan(Pageable pageable, BigDecimal amount);
 
 	public List<Booking> findByAmountBetween(BigDecimal from, BigDecimal to);
 
-	public Page<Booking> findByAmountBetween(BigDecimal from, BigDecimal to, Pageable pageable);
+	public Page<Booking> findByAmountBetween(Pageable pageable, BigDecimal from, BigDecimal to);
 
-	public List<Booking> findByDateBetweenAndAmountBetween(Date fromDate, Date toDate, BigDecimal fromAmount,
-			BigDecimal toAmount);
+	public List<Booking> findByDateBetweenAndAmountBetween(Date fromDate, Date toDate, BigDecimal fromAmount, BigDecimal toAmount);
 
-	public Page<Booking> findByDateAndAmountBetween(Date fromDate, Date toDate, BigDecimal fromAmount,
-			BigDecimal toAmount, Pageable pageable);
+	public Page<Booking> findByDateAndAmountBetween(Pageable pageable, Date fromDate, Date toDate, BigDecimal fromAmount, BigDecimal toAmount);
 
 }

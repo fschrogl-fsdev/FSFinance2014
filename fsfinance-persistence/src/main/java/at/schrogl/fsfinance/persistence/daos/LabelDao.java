@@ -51,7 +51,7 @@ public interface LabelDao extends JpaRepository<Label, Long> {
 	 * @return
 	 *         The requested page containing a list with {@link Label}s or an empty list
 	 */
-	public Page<Label> findByName(String name, Pageable pageable);
+	public Page<Label> findByName(Pageable pageable, String name);
 
 	/**
 	 * Finds {@link Label}s by their description. Query is case in-sensitive.
@@ -73,7 +73,7 @@ public interface LabelDao extends JpaRepository<Label, Long> {
 	 * @return
 	 *         A certain page containing a list with {@link Label}s entities or an empty list
 	 */
-	public Page<Label> findByDescriptionIgnoreCase(String description, Pageable pageable);
+	public Page<Label> findByDescriptionIgnoreCase(Pageable pageable, String description);
 
 	/**
 	 * Finds {@link Label}s by their description. Query is case in-sensitive and supports searching for substrings within descriptions.
@@ -95,6 +95,6 @@ public interface LabelDao extends JpaRepository<Label, Long> {
 	 * @return
 	 *         A list of {@link Label}s or an empty list
 	 */
-	public Page<Label> findByDescriptionLikeIgnoreCase(String description, Pageable pageable);
+	public Page<Label> findByDescriptionLikeIgnoreCase(Pageable pageable, String description);
 
 }

@@ -61,6 +61,6 @@ public interface AccountDao extends JpaRepository<Account, Long> {
 	 * @return
 	 *         A certain page containing a list of accounts or an empty list
 	 */
-	public Page<Account> findByDescriptionLikeIgnoreCase(String description, Pageable pageable);
+	public Page<Account> findByDescriptionLikeIgnoreCase(Pageable pageable, String description);
 
 }
