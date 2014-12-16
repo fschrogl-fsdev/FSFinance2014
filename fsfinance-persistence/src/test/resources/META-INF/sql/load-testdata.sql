@@ -2,9 +2,9 @@ INSERT INTO users (id, username, password, forename, surname, email, enabled) VA
 INSERT INTO users (id, username, password, forename, surname, email, enabled) VALUES (2, 'user2', 'password', 'joe2', 'doe', 'joe2@doe.com', true);
 INSERT INTO users (id, username, password, forename, surname, email, enabled) VALUES (3, 'user3', 'password', 'joe3', null, 'joe3@doe.com', false);
 
-INSERT INTO users_roles (user_id, role) VALUES (1, 'ROLE_USER');
-INSERT INTO users_roles (user_id, role) VALUES (1, 'ROLE_ADMIN');
-INSERT INTO users_roles (user_id, role) VALUES (2, 'ROLE_USER');
+INSERT INTO users_authorities (user_id, authority) VALUES (1, 'ROLE_USER');
+INSERT INTO users_authorities (user_id, authority) VALUES (1, 'ROLE_ADMIN');
+INSERT INTO users_authorities (user_id, authority) VALUES (2, 'ROLE_USER');
 
 INSERT INTO accounts (id, name, description, color, id_user) VALUES (1, 'account1', 'description of ac.1', '#abcdef', 1);
 INSERT INTO accounts (id, name, description, color, id_user) VALUES (2, 'account2', 'description of ac.2', '#abcdef', 2);

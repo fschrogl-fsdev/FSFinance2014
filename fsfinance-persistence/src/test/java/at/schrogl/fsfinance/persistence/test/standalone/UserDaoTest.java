@@ -16,21 +16,19 @@
  */
 package at.schrogl.fsfinance.persistence.test.standalone;
 
-import static org.junit.Assert.assertEquals;
-
+import at.schrogl.fsfinance.persistence.daos.UserDao;
+import at.schrogl.fsfinance.persistence.entities.User;
+import at.schrogl.fsfinance.persistence.enums.Authorities;
+import at.schrogl.fsfinance.persistence.test.rules.PersistenceInitRule;
 import java.util.Collections;
 import java.util.List;
-
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-
-import at.schrogl.fsfinance.persistence.daos.UserDao;
-import at.schrogl.fsfinance.persistence.entities.User;
-import at.schrogl.fsfinance.persistence.test.rules.PersistenceInitRule;
 
 /**
  * Integration test for class {@link UserDao} usind Spring Data JPA in
@@ -141,33 +139,42 @@ public class UserDaoTest {
 		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase(null, "DoE");
 		assertEquals("assert_5", 2, actualUsers.size());
 	}
+	
+	@Test
+	public void testFindByRolesIn() {
+		// All users with role ROLE_USER
+		assertEquals("assert_1", 2, dao.findByAuthoritiesIn(Authorities.ROLE_USER).size());
+		
+		// All users with role ROLE_ADMIN
+		assertEquals("assert_1", 1, dao.findByAuthoritiesIn(Authorities.ROLE_ADMIN).size());
+	}
 
 	@Test
 	public void testFindByForenameOrSurnameAllIgnoreCase_Pageable() {
 		Page<User> actualUsers = null;
 
 		// All users with forename 'joe1' *or* surname is null
-		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase("joe1", null, new PageRequest(0, 2));
+		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase(new PageRequest(0, 2), "joe1", null);
 		assertEquals("assert_1a", 2, actualUsers.getTotalElements());
 		assertEquals("assert_1b", 1, actualUsers.getTotalPages());
 
 		// All users with forename is null *or* surname 'doe'
-		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase(null, "doe", new PageRequest(0, 2));
+		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase(new PageRequest(0, 2), null, "doe");
 		assertEquals("assert_2a", 2, actualUsers.getTotalElements());
 		assertEquals("assert_2b", 1, actualUsers.getTotalPages());
 
 		// All users with forname '' *or* surname ''
-		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase("", "", new PageRequest(0, 1));
+		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase(new PageRequest(0, 1), "", "");
 		assertEquals("assert_3a", 0, actualUsers.getTotalElements());
 		assertEquals("assert_3b", 0, actualUsers.getTotalPages());
 
 		// Query should be case insensitive
-		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase("JoE1", null, new PageRequest(0, 1));
+		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase(new PageRequest(0, 1), "JoE1", null);
 		assertEquals("assert_4a", 2, actualUsers.getTotalElements());
 		assertEquals("assert_4b", 2, actualUsers.getTotalPages());
 
 		// Query should be case insensitive
-		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase(null, "DoE", new PageRequest(0, 1));
+		actualUsers = dao.findByForenameOrSurnameAllIgnoreCase(new PageRequest(0, 1), null, "DoE");
 		assertEquals("assert_5a", 2, actualUsers.getTotalElements());
 		assertEquals("assert_5b", 2, actualUsers.getTotalPages());
 	}
@@ -202,27 +209,27 @@ public class UserDaoTest {
 		Page<User> actualUsers = null;
 
 		// All users with forename 'joe3' *and* surname is null
-		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("joe3", null, new PageRequest(0, 2));
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase(new PageRequest(0, 2), "joe3", null);
 		assertEquals("assert_1a", 1, actualUsers.getTotalElements());
 		assertEquals("assert_1b", 1, actualUsers.getTotalPages());
 
 		// All users with forename 'joe2' *and* surname is 'doe'
-		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("joe2", "doe", new PageRequest(0, 10));
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase(new PageRequest(0, 10), "joe2", "doe");
 		assertEquals("assert_2a", 1, actualUsers.getTotalElements());
 		assertEquals("assert_2b", 1, actualUsers.getTotalPages());
 
 		// All users with forename 'joe1' *and* surname is null
-		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("joe1", null, null);
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase(null, "joe1", null);
 		assertEquals("assert_3a", 0, actualUsers.getTotalElements());
 		assertEquals("assert_3b", 1, actualUsers.getTotalPages());
 
 		// Query should be case insensitive
-		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("JoE3", null, null);
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase(null, "JoE3", null);
 		assertEquals("assert_4a", 1, actualUsers.getTotalElements());
 		assertEquals("assert_4b", 1, actualUsers.getTotalPages());
 
 		// Query should be case insensitive
-		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase("JoE2", "DOE", null);
+		actualUsers = dao.findByForenameAndSurnameAllIgnoreCase(null, "JoE2", "DOE");
 		assertEquals("assert_5a", 1, actualUsers.getTotalElements());
 		assertEquals("assert_5b", 1, actualUsers.getTotalPages());
 	}

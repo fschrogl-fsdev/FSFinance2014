@@ -21,13 +21,13 @@ import at.schrogl.fsfinance.persistence.entities.User;
 /**
  * Enumeration of all roles that can be assigned to an {@link User}
  * <p>
- * Roles are used to determine if an user is authorized to access specific
- * resources.
+ Authorities are used to determine if an user is authorized to access specific
+ resources.
  * 
  * @author Fritz Schrogl
  * @since 0.1.0
  */
-public enum Roles {
+public enum Authorities {
 
 	ROLE_USER,
 	ROLE_ADMIN;
