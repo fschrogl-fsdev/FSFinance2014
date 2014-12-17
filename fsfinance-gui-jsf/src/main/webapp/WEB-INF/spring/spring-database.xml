@@ -19,7 +19,10 @@
   <jpa:repositories base-package="at.schrogl.fsfinance.persistence.daos" />
   
   <!-- Enable annotation-driven transaction management (supports Spring + JTA annotations) -->
-  <tx:annotation-driven transaction-manager="transactionManager" />
+  <!-- Info: We have to advise Spring to create proxies based on bean classes not interfaces, otherwise
+             we can't use UserDetailsServiceCustom but only UserDetailsService (which is a Spring Security
+             interface and not our custom implementation of it). -->
+  <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
   
   <!-- Create Spring Beans relevant for persistence layer-->
   <beans>

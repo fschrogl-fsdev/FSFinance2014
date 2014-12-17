@@ -17,6 +17,7 @@
 package at.schrogl.fsfinance.gui.handler;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
@@ -33,7 +34,7 @@ import org.slf4j.LoggerFactory;
 
 import at.schrogl.fsfinance.business.UserManagement;
 import at.schrogl.fsfinance.business.exceptions.UserAlreadyExistsException;
-import at.schrogl.fsfinance.gui.Constants;
+import at.schrogl.fsfinance.gui.PageUrl;
 import at.schrogl.fsfinance.persistence.entities.User;
 
 @ManagedBean
@@ -64,7 +65,7 @@ public class RegisterHandler implements Serializable {
 			String errText = getBundleMessage("msg_err_passwordsNoMatch");
 			FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
 			FacesContext.getCurrentInstance().addMessage(rawPasswordRepeated.getId(), errorMsg);
-			return Constants.NAV_OUTCOME_STAY;
+			return null;
 		}
 
 		// Register new user
@@ -75,25 +76,25 @@ public class RegisterHandler implements Serializable {
 			registeredUser = userManagement.register(user, rawPassword);
 			LOGGER.debug("Created user {}", registeredUser);
 		} catch (UserAlreadyExistsException uae_ex) {
-			String errText = getBundleMessage("msg_err_userAlreadyExists");
+			String errText = getBundleMessage("msg_err_userAlreadyExists", uae_ex.getOffendingProperty());
 			FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
 			FacesContext.getCurrentInstance().addMessage(null, errorMsg);
-			return Constants.NAV_OUTCOME_STAY;
+			return null;
 		}
 
 		// Create session and redirect newly created user
 		User loggedInUser = userManagement.loginUser(registeredUser);
-		return (loggedInUser != null) ? "/pages/restricted/home.xhtml" : "/pages/login.xhtml";
+		return (loggedInUser != null) ? PageUrl.HOME : PageUrl.LOGIN;
 	}
 
 	// ==============================================================
 	// Helper Methods
 	// ==============================================================
 
-	private String getBundleMessage(String msgCode) {
+	private String getBundleMessage(String msgCode, Object...arguments) {
 		FacesContext facesCtx = FacesContext.getCurrentInstance();
-		ResourceBundle rb = facesCtx.getApplication().getResourceBundle(facesCtx, Constants.MSG_BUNDLE);
-		return rb.getString(msgCode);
+		ResourceBundle rb = facesCtx.getApplication().getResourceBundle(facesCtx, PageUrl.msgBundle);
+		return MessageFormat.format(rb.getString(msgCode), arguments);
 	}
 	
 	private String convertEmptyStringToNull(String value) {

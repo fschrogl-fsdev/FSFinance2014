@@ -20,18 +20,16 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.ExternalContext;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import at.schrogl.fsfinance.gui.Constants;
+import at.schrogl.fsfinance.business.ApplicationConfig;
 
 @ManagedBean
 @ViewScoped
@@ -42,6 +40,9 @@ public class LoginHandler implements Serializable {
 	private String username;
 	private String password;
 	private Boolean rememberMe;
+	
+	@ManagedProperty("#{applicationConfig}")
+	private ApplicationConfig appConfig;
 
 	// ==============================================================
 	// Action Methods
@@ -63,11 +64,9 @@ public class LoginHandler implements Serializable {
 		 * Info: For this to work Spring Security's Filter Chain must be configured
 		 * to also accept FORWARD requests (besides default REQUEST requests for logout).
 		 */
-		ExternalContext extCtx = FacesContext.getCurrentInstance().getExternalContext();
-		ServletRequest request = (ServletRequest) extCtx.getRequest();
-		ServletResponse response = (ServletResponse) extCtx.getResponse();
-		request.getRequestDispatcher(Constants.LOGIN_URL).forward(request, response);
-		FacesContext.getCurrentInstance().responseComplete();
+		String dispatchUrl = appConfig.getProperty("security.loginProcessUrl");
+		FacesContext.getCurrentInstance().getExternalContext().dispatch(dispatchUrl);
+		FacesContext.getCurrentInstance().responseComplete();		
 	}
 	
 	/**
@@ -77,8 +76,9 @@ public class LoginHandler implements Serializable {
 	 * @return <code>true</code> if a failure parameters is found, otherwise <code>false</code>
 	 */
 	public boolean isLoginFailure() {
+		String urlParameter = appConfig.getProperty("security.loginFailureParm");
 		return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
-				.containsKey(Constants.LOGIN_ERROR_PARAM);
+				.containsKey(urlParameter);
 	}
 
 	// ==============================================================
@@ -110,6 +110,10 @@ public class LoginHandler implements Serializable {
 	
 	public void setRememberMe(Boolean rememberMe) {
 		this.rememberMe = rememberMe;
+	}
+	
+	public void setAppConfig(ApplicationConfig appConfig) {
+		this.appConfig = appConfig;
 	}
 
 }

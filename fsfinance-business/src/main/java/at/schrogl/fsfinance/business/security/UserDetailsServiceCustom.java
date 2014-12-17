@@ -20,6 +20,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -72,11 +75,12 @@ public class UserDetailsServiceCustom implements UserDetailsService, Serializabl
 	 * @see UserDetailsCustom
 	 */
 	@Override
+	@Transactional(value = TxType.REQUIRED, dontRollbackOn = UsernameNotFoundException.class)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		LOGGER.debug("Login-Query for user '{}'", username);
+		LOGGER.debug("Trying to load user '{}' for Spring Security", username);
 		User reqUser = userDao.findByUsernameIgnoreCase(username);
 		if (reqUser == null) {
-			String errMsg = String.format("A user named '%s' doesn't exist!", username);
+			String errMsg = String.format("A user named '%s' doesn't exist! Unable to load user.", username);
 			LOGGER.info(errMsg);
 			throw new UsernameNotFoundException(errMsg);
 		} else {
@@ -84,29 +88,65 @@ public class UserDetailsServiceCustom implements UserDetailsService, Serializabl
 			for (Authorities role : reqUser.getAuthorities()) {
 				authorities.add(new SimpleGrantedAuthority(role.toString()));
 			}
-			LOGGER.debug("Loaded {} authorities for user '{}'", authorities.size(), username);
-			
+			LOGGER.debug("Loaded {} authorities for user '{}'", authorities.size(), reqUser);
+
 			return new UserDetailsCustom(reqUser, authorities);
 		}
 	}
 
+	/**
+	 * Logs in the given user. The login will be bound to the current
+	 * session/thread.
+	 * 
+	 * @param user
+	 *            The {@link User} that should be logged in
+	 * 
+	 * @throws UsernameNotFoundException
+	 *             If the given user is not persisted, i.e. his/her username
+	 *             doesn't exist
+	 */
+	@Transactional(TxType.REQUIRED)
 	public void loginUser(User user) {
+		user = (user != null) ? user : new User();
 		UserDetails details = loadUserByUsername(user.getUsername());
-		Authentication auth = new UsernamePasswordAuthenticationToken(details, details.getPassword(),
-				details.getAuthorities());
+		Authentication auth = new UsernamePasswordAuthenticationToken(details, details.getPassword(), details.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(auth);
 	}
 
+	/**
+	 * Gets the currently logged in {@link User} with respect to the current
+	 * session/thread.
+	 * 
+	 * @return The logged in user or <code>null</code> if the user isn't logged
+	 *         in
+	 */
+	@Transactional(TxType.SUPPORTS)
 	public User getCurrentUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserDetailsCustom userDetails = (UserDetailsCustom) auth.getPrincipal();
 		return userDetails.getPrincipal();
 	}
 
+	/**
+	 * Terminates the session for the currently logged in {@link User}. If there
+	 * is no currently logged in user this method does nothing.
+	 */
+	@Transactional(TxType.SUPPORTS)
 	public void logoutCurrentUser() {
 		SecurityContextHolder.getContext().setAuthentication(null);
 	}
 
+	/**
+	 * Uses the configured Spring Security <code>PasswordEncoder</code> to
+	 * encrypt the given password/string.
+	 * 
+	 * @param rawPassword
+	 *            The password/string to encrypt
+	 * @return The encrypted password/string. Contains the version of the
+	 *         encryption algorithm used, the number of encryption round, the
+	 *         salt used and the actual encrypted password
+	 */
+	@Transactional(TxType.SUPPORTS)
 	public String encryptPassword(String rawPassword) {
 		return pwdEncoder.encode(rawPassword);
 	}

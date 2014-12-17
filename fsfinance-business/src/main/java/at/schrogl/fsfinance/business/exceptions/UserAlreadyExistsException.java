@@ -34,6 +34,9 @@ public class UserAlreadyExistsException extends Exception {
 	private final User newUser;
 
 	public UserAlreadyExistsException(final User existingUser, final User newUser) {
+		if (existingUser == null || newUser == null)
+			throw new IllegalArgumentException("Arguments must not be null!");
+
 		this.existingUser = existingUser;
 		this.newUser = newUser;
 	}
@@ -44,6 +47,13 @@ public class UserAlreadyExistsException extends Exception {
 
 	public User getNewUser() {
 		return newUser;
+	}
+
+	public String getOffendingProperty() {
+		if (existingUser.getUsername().equalsIgnoreCase(newUser.getUsername()))
+			return existingUser.getUsername();
+		else
+			return existingUser.getEmail();
 	}
 
 	@Override

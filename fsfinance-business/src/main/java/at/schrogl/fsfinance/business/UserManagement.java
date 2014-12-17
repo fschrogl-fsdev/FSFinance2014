@@ -66,6 +66,7 @@ public class UserManagement implements Serializable {
 		// Make user admin if defined in config
 		String adminUsers = appConfig.getProperty("admin.users", "").toLowerCase();
 		if (adminUsers.matches("( |^)" + newUser.getUsername().toLowerCase() + "( |$)")) {
+			LOGGER.info("User '{}' in pre-defined admin list. Adding admin authority!", newUser);
 			newUser.getAuthorities().add(Authorities.ROLE_ADMIN);
 		}
 

@@ -27,7 +27,6 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -180,7 +179,7 @@ public class User implements Serializable {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@ElementCollection(targetClass = Authorities.class, fetch = FetchType.EAGER)
+	@ElementCollection(targetClass = Authorities.class)
 	@CollectionTable(name = "USERS_AUTHORITIES")
 	@Column(name = "AUTHORITY", length = 50, nullable = false)
 	public Set<Authorities> getAuthorities() {
