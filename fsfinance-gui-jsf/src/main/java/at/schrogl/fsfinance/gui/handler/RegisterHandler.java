@@ -83,7 +83,7 @@ public class RegisterHandler implements Serializable {
 
 		// Create session and redirect newly created user
 		User loggedInUser = userManagement.loginUser(registeredUser);
-		return (loggedInUser != null) ? "/restricted/home.xhtml" : "/login.xhtml";
+		return (loggedInUser != null) ? "/pages/restricted/home.xhtml" : "/pages/login.xhtml";
 	}
 
 	// ==============================================================

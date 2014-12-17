@@ -11,12 +11,12 @@
   <insertFromJNDI env-entry-name="java:comp/env/properties/FSFinanceLogDirectory" as="logdir" />
 
   <!-- CONSOLE Appender -->
-  <appender name="STDOUT-ALL" class="ch.qos.logback.core.ConsoleAppender">
+  <appender name="CONSOLE_all" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
       <pattern>%d{HH:mm:ss.SSS} %-5level [%logger{0}] - %msg%n</pattern>
     </encoder>
   </appender>
-  <appender name="STDOUT-INFO" class="ch.qos.logback.core.ConsoleAppender">
+  <appender name="CONSOLE_info" class="ch.qos.logback.core.ConsoleAppender">
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
       <level>INFO</level>
       <onMatch>ACCEPT</onMatch>
@@ -28,8 +28,29 @@
   </appender>
   
   <!-- FILE Appender -->
-  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+  <appender name="FILE_fsfinance" class="ch.qos.logback.core.FileAppender">
     <file>${logdir}/fsfinance-gui.log</file>
+    <append>false</append>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="FILE_all" class="ch.qos.logback.core.FileAppender">
+    <file>${logdir}/fsfinance-all.log</file>
+    <append>false</append>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="FILE_spring" class="ch.qos.logback.core.FileAppender">
+    <file>${logdir}/fsfinance-spring.log</file>
+    <append>false</append>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="FILE_hibernate" class="ch.qos.logback.core.FileAppender">
+    <file>${logdir}/fsfinance-hibernate.log</file>
     <append>false</append>
     <encoder>
       <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
@@ -37,12 +58,24 @@
   </appender>
 
   <!-- Custom logger configuration -->
-  <logger name="at.schrogl.fsfinance" level="DEBUG" additivity="true" />
-  <logger name="org.springframework.security" level="DEBUG" additivity="true" />
+  <logger name="at.schrogl.fsfinance" level="DEBUG" additivity="false">
+    <appender-ref ref="CONSOLE_all" />
+    <appender-ref ref="FILE_fsfinance" />
+    <appender-ref ref="FILE_all" />
+  </logger>
+  <logger name="org.springframework" level="DEBUG" additivity="true">
+    <appender-ref ref="FILE_spring" />
+  </logger>
+  <logger name="org.hibernate" level="DEBUG" additivity="true">
+    <appender-ref ref="FILE_hibernate" />
+  </logger>
+  <logger name="org.hibernate" level="DEBUG" additivity="true">
+    <appender-ref ref="FILE_hibernate" />
+  </logger>
 
   <!-- ROOT logger configuration -->    
   <root level="INFO">
-    <appender-ref ref="STDOUT-ALL" />
-	<appender-ref ref="FILE" />
+    <appender-ref ref="CONSOLE_info" />
+    <appender-ref ref="FILE_all" />
   </root>
 </configuration>

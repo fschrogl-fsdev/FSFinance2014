@@ -16,10 +16,10 @@
  */
 package at.schrogl.fsfinance.persistence.entities;
 
-import at.schrogl.fsfinance.persistence.enums.Authorities;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -27,14 +27,18 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
+
+import at.schrogl.fsfinance.persistence.enums.Authorities;
 
 /**
  * This entity class represents an user.
@@ -176,7 +180,7 @@ public class User implements Serializable {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@ElementCollection(targetClass = Authorities.class)
+	@ElementCollection(targetClass = Authorities.class, fetch = FetchType.EAGER)
 	@CollectionTable(name = "USERS_AUTHORITIES")
 	@Column(name = "AUTHORITY", length = 50, nullable = false)
 	public Set<Authorities> getAuthorities() {

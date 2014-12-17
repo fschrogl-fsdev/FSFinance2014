@@ -33,6 +33,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import at.schrogl.fsfinance.persistence.daos.UserDao;
 import at.schrogl.fsfinance.persistence.entities.User;
+import at.schrogl.fsfinance.persistence.enums.Authorities;
 
 /**
  * Provides an {@link UserDetailsService}, used by Spring Security for
@@ -76,30 +77,32 @@ public class UserDetailsServiceCustom implements UserDetailsService, Serializabl
 		User reqUser = userDao.findByUsernameIgnoreCase(username);
 		if (reqUser == null) {
 			String errMsg = String.format("A user named '%s' doesn't exist!", username);
+			LOGGER.info(errMsg);
 			throw new UsernameNotFoundException(errMsg);
 		} else {
 			Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-			
-			// TODO QuickFix Security Authorities/roles
-			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-			
+			for (Authorities role : reqUser.getAuthorities()) {
+				authorities.add(new SimpleGrantedAuthority(role.toString()));
+			}
 			LOGGER.debug("Loaded {} authorities for user '{}'", authorities.size(), username);
+			
 			return new UserDetailsCustom(reqUser, authorities);
 		}
 	}
 
 	public void loginUser(User user) {
 		UserDetails details = loadUserByUsername(user.getUsername());
-		Authentication auth = new UsernamePasswordAuthenticationToken(details.getUsername(), details.getPassword(),
+		Authentication auth = new UsernamePasswordAuthenticationToken(details, details.getPassword(),
 				details.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(auth);
-	}	
+	}
 
 	public User getCurrentUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		return (auth != null) ? (User) auth.getPrincipal() : null;
+		UserDetailsCustom userDetails = (UserDetailsCustom) auth.getPrincipal();
+		return userDetails.getPrincipal();
 	}
-	
+
 	public void logoutCurrentUser() {
 		SecurityContextHolder.getContext().setAuthentication(null);
 	}
@@ -115,7 +118,7 @@ public class UserDetailsServiceCustom implements UserDetailsService, Serializabl
 	public void setPwdEncoder(PasswordEncoder pwdEncoder) {
 		this.pwdEncoder = pwdEncoder;
 	}
-	
+
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}

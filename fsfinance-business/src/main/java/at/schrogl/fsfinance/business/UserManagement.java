@@ -30,6 +30,7 @@ import at.schrogl.fsfinance.business.exceptions.UserAlreadyExistsException;
 import at.schrogl.fsfinance.business.security.UserDetailsServiceCustom;
 import at.schrogl.fsfinance.persistence.daos.UserDao;
 import at.schrogl.fsfinance.persistence.entities.User;
+import at.schrogl.fsfinance.persistence.enums.Authorities;
 
 @Component
 public class UserManagement implements Serializable {
@@ -39,6 +40,7 @@ public class UserManagement implements Serializable {
 
 	private UserDetailsServiceCustom securityDao;
 	private UserDao userDao;
+	private ApplicationConfig appConfig;
 
 	@Transactional(value = TxType.REQUIRED, dontRollbackOn = UserAlreadyExistsException.class)
 	public User register(final User newUser, final String rawPassword) throws UserAlreadyExistsException {
@@ -56,10 +58,19 @@ public class UserManagement implements Serializable {
 		newUser.setPassword(securityDao.encryptPassword(rawPassword));
 		LOGGER.debug("Generated hashed password for user '{}': {}", newUser.getUsername(), newUser.getPassword());
 
-		// Persist user
-		LOGGER.debug("Persisting new user '{}'", newUser.getUsername());
+		// Set missing properties and authorities
 		newUser.setEnabled(Boolean.TRUE);
 		newUser.setEmail(newUser.getEmail().toLowerCase());
+		newUser.getAuthorities().add(Authorities.ROLE_USER);
+
+		// Make user admin if defined in config
+		String adminUsers = appConfig.getProperty("admin.users", "").toLowerCase();
+		if (adminUsers.matches("( |^)" + newUser.getUsername().toLowerCase() + "( |$)")) {
+			newUser.getAuthorities().add(Authorities.ROLE_ADMIN);
+		}
+
+		// Persist user
+		LOGGER.debug("Persisting new user '{}'", newUser.getUsername());
 		return userDao.save(newUser);
 	}
 
@@ -124,6 +135,11 @@ public class UserManagement implements Serializable {
 	@Inject
 	public void setSecurityDao(UserDetailsServiceCustom securityDao) {
 		this.securityDao = securityDao;
+	}
+
+	@Inject
+	public void setAppConfig(ApplicationConfig appConfig) {
+		this.appConfig = appConfig;
 	}
 
 }
