@@ -1,36 +1,43 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:ui="http://java.sun.com/jsf/facelets"
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
   <ui:composition template="/pages/templates/baseTemplate.xhtml">
 	<head>
 	  <ui:define name="title">Register // #{msg.application_name}</ui:define>
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	</head>
 
 	<body>
 	  <ui:define name="content">
-		<h:form>
-		  <h:panelGrid columns="2">
-			<h:outputLabel for="username" value="#{msg.label_username} [*]" />
-			<h:inputText id="username" value="#{registerHandler.user.username}" />
-			<h:outputLabel for="password" value="#{msg.label_userpassword} [*]" />
-			<h:inputSecret id="password" value="#{registerHandler.rawPassword}" />
-			<h:outputLabel for="passwordRepeat" value="#{msg.label_userpassword_repeat}" />
-			<h:inputSecret id="passwordRepeat" binding="#{registerHandler.rawPasswordRepeated}" />
-			<h:outputLabel for="forename" value="#{msg.label_userforename}" />
-			<h:inputText id="forename" value="#{registerHandler.user.forename}" />
-			<h:outputLabel for="surname" value="#{msg.label_usersurname}" />
-			<h:inputText id="surname" value="#{registerHandler.user.surname}" />
-			<h:outputLabel for="email" value="#{msg.label_usermail} [*]" />
-			<h:inputText id="email" value="#{registerHandler.user.email}" />
-			<h:commandButton id="btn-ok" value="#{msg.btn_register}" action="#{registerHandler.doRegister}" />
-			<h:commandButton id="btn-cancel" value="#{msg.btn_cancel}" action="/index.xhtml" immediate="true" />
-		  </h:panelGrid>
-		</h:form>
+	  <div class="container">
+	    <div class="row">
+	    <div class="col-md-offset-4 col-md-4">
+		<form class="form-signin" role="form" jsf:id="form-register" jsf:prependId="false">
+		  <label jsf:for="input-username">#{msg.label_username} [*]</label>
+		  <input class="form-control" jsf:id="input-username" type="text" jsf:value="#{registerHandler.user.username}" />
+		  <label jsf:for="input-password">#{msg.label_userpassword} [*]</label>
+		  <input jsf:id="input-password" type="password" jsf:value="#{registerHandler.rawPassword}" />
+		  <label jsf:for="input-passwordRepeat">#{msg.label_userpassword_repeat} [*]</label>
+		  <input jsf:id="input-passwordRepeat" type="password" jsf:value="#{registerHandler.rawPasswordRepeated}" />
+		  <label jsf:for="input-forename">#{msg.label_userforename}</label>
+		  <input jsf:id="input-forename" type="text" jsf:value="#{registerHandler.user.forename}" />
+		  <label jsf:for="input-surname">#{msg.label_usersurname}</label>
+		  <input jsf:id="input-surname" type="text" jsf:value="#{registerHandler.user.surname}" />
+		  <label jsf:for="input-email">#{msg.label_usermail} [*]</label>
+		  <input jsf:id="input-email" type="email" jsf:value="#{registerHandler.user.email}" />
+		  <button class="btn btn-danger btn-block" jsf:id="btn-ok" jsf:value="#{msg.btn_register}" jsf:action="#{registerHandler.doRegister}" />
+		  <button jsf:id="btn-cancel" jsf:value="#{msg.btn_cancel}" jsf:action="/index.xhtml" jsf:immediate="true" />
+		</form>
+	    </div>
+	    </div>
+	  </div>
 	  </ui:define>
 	</body>
 
