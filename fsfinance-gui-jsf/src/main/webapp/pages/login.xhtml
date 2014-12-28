@@ -2,29 +2,37 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:jsf="http://xmlns.jcp.org/jsf"
 	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	  xmlns:h="http://xmlns.jcp.org/jsf/html">
 
   <ui:composition template="/pages/templates/baseTemplate.xhtml">
-	<head>
+	<h:head>
 	  <ui:define name="title">Login // #{msg.application_name}</ui:define>
-	</head>
+	</h:head>
 
 	<body>
 	  <ui:define name="content">
-	  	<h:outputLabel style="color: red;" rendered="#{loginHandler.loginFailure}" value="#{msg.msg_err_auth}" />
-		<h:form prependId="false">
-		  <h:panelGrid columns="2">
-			<h:outputLabel for="username" value="#{msg.label_username}" />
-			<h:inputText id="username" value="#{loginHandler.username}" />
-			<h:outputLabel for="password" value="#{msg.label_userpassword}" />
-			<h:inputSecret id="password" value="#{loginHandler.password}" />
-			<h:outputLabel for="rememberMe" value="#{msg.btn_check_rememberMe}">
-				<h:selectBooleanCheckbox id="rememberMe" value="#{loginHandler.rememberMe}" />
-			</h:outputLabel>
-			<h:commandButton id="btn-ok" value="#{msg.btn_login}" actionListener="#{loginHandler.doLogin}" />
-		  </h:panelGrid>
-		</h:form>
+		<div class="container center-block">
+		  <form jsf:id="form-login" jsf:prependId="false" role="form">
+			
+			<div class="form-group">
+			  <label for="input-username" class="control-label">#{msg.label_username}</label>
+			  <input jsf:id="input-username" class="form-control" type="text" jsf:value="#{loginHandler.username}" placeholder="username" />
+			</div>
+			<div class="form-group">
+			  <label for="input-password" class="control-label">#{msg.label_username}</label>
+			  <input jsf:id="input-password" class="form-control" type="password" jsf:value="#{loginHandler.password}" placeholder="password" />
+			</div>
+			<div class="form-group">
+			  <label for="check-rememberme" class="control-label">#{msg.btn_check_rememberMe}</label>
+			  <input jsf:id="input-rememberme" class="form-control" type="checkbox" jsf:value="#{loginHandler.rememberMe}" />
+			</div>
+			
+			<button jsf:id="btn-ok" jsf:actionListener="#{loginHandler.doLogin}">#{msg.btn_login}</button>
+		  </form>
+		</div>
+		
 	  </ui:define>
 	</body>
 

@@ -33,7 +33,7 @@
   <context-param>
 	<description>Project state: Development|UnitTest|SytemTest|Production</description>
 	<param-name>javax.faces.PROJECT_STAGE</param-name>
-	<param-value>Production</param-value>
+	<param-value>Development</param-value>
   </context-param>
   <context-param>
 	<description>
@@ -102,7 +102,7 @@
 
   <!-- Application's entry point -->
   <welcome-file-list>
-	<welcome-file>index.xhtml</welcome-file>
+	<welcome-file>pages/login.xhtml</welcome-file>
   </welcome-file-list>
 
 </web-app>

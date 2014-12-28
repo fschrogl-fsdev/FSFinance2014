@@ -9,35 +9,67 @@
   <ui:composition template="/pages/templates/baseTemplate.xhtml">
 	<head>
 	  <ui:define name="title">Register // #{msg.application_name}</ui:define>
-	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	</head>
 
 	<body>
 	  <ui:define name="content">
-	  <div class="container">
-	    <div class="row">
-	    <div class="col-md-offset-4 col-md-4">
-		<form class="form-signin" role="form" jsf:id="form-register" jsf:prependId="false">
-		  <label jsf:for="input-username">#{msg.label_username} [*]</label>
-		  <input class="form-control" jsf:id="input-username" type="text" jsf:value="#{registerHandler.user.username}" />
-		  <label jsf:for="input-password">#{msg.label_userpassword} [*]</label>
-		  <input jsf:id="input-password" type="password" jsf:value="#{registerHandler.rawPassword}" />
-		  <label jsf:for="input-passwordRepeat">#{msg.label_userpassword_repeat} [*]</label>
-		  <input jsf:id="input-passwordRepeat" type="password" jsf:value="#{registerHandler.rawPasswordRepeated}" />
-		  <label jsf:for="input-forename">#{msg.label_userforename}</label>
-		  <input jsf:id="input-forename" type="text" jsf:value="#{registerHandler.user.forename}" />
-		  <label jsf:for="input-surname">#{msg.label_usersurname}</label>
-		  <input jsf:id="input-surname" type="text" jsf:value="#{registerHandler.user.surname}" />
-		  <label jsf:for="input-email">#{msg.label_usermail} [*]</label>
-		  <input jsf:id="input-email" type="email" jsf:value="#{registerHandler.user.email}" />
-		  <button class="btn btn-danger btn-block" jsf:id="btn-ok" jsf:value="#{msg.btn_register}" jsf:action="#{registerHandler.doRegister}" />
-		  <button jsf:id="btn-cancel" jsf:value="#{msg.btn_cancel}" jsf:action="/index.xhtml" jsf:immediate="true" />
-		</form>
-	    </div>
-	    </div>
-	  </div>
+		<div class="container">
+		  <div class="row">
+			<div class="col-md-offset-3 col-md-6">
+
+			  <form jsf:id="form-register" jsf:prependId="false" role="form">
+				<div class="form-group">
+				  <div class="row">
+					<label for="input-username" class="control-label col-md-4">#{msg.label_username}</label>
+					<h:message for="input-username" errorClass="text-danger col-md-8" infoClass="text-success col-md-8 text-right" />
+				  </div>
+				  <input jsf:id="input-username" class="form-control" type="text" jsf:value="#{registerHandler.user.username}" placeholder="From 3 to 50 characters long. Required." />
+				</div>
+				<div class="form-group">
+				  <div class="row">
+					<label for="input-password" class="control-label col-md-4">#{msg.label_userpassword}</label>
+					<h:message for="input-password" errorClass="text-danger col-md-8 text-right" infoClass="text-success col-md-8 text-right" />
+				  </div>
+				  <input jsf:id="input-password" class="form-control" type="password" jsf:value="#{registerHandler.rawPassword}" placeholder="From 8 to 50 characters long. Required."/>
+				</div>
+				<div class="form-group">
+				  <div class="row">
+					<label for="input-passwordRepeat" class="control-label col-md-4">#{msg.label_userpassword_repeat}</label>
+					<h:message for="input-passwordRepeat" errorClass="text-danger col-md-8 text-right" infoClass="text-success col-md-8 text-right" />
+				  </div>
+				  <input jsf:id="input-passwordRepeat" class="form-control" type="password" jsf:binding="#{registerHandler.rawPasswordRepeated}" />
+				</div>
+				<div class="form-group">
+				  <div class="row">
+					<label for="input-forename" class="control-label col-md-4">#{msg.label_userforename}</label>
+					<h:message for="input-forename" errorClass="text-danger col-md-8 text-right" infoClass="text-success col-md-8 text-right" />
+				  </div>
+				  <input jsf:id="input-forename" class="form-control" type="text" jsf:value="#{registerHandler.user.forename}" placeholder="Optional."/>
+				</div>
+				<div class="form-group">
+				  <div class="row">
+					<label for="input-surname" class="control-label col-md-4">#{msg.label_usersurname}</label>
+					<h:message for="input-surname" errorClass="text-danger col-md-8 text-right" infoClass="text-success col-md-8 text-right" />
+				  </div>
+				  <input jsf:id="input-surname" class="form-control" type="text" jsf:value="#{registerHandler.user.surname}" placeholder="Optional."/>
+				</div>
+				<div class="form-group">
+				  <div class="row">
+					<label for="input-email" class="control-label col-md-4">#{msg.label_usermail}</label>
+					<h:message for="input-email" errorClass="text-danger col-md-8 text-right" infoClass="text-success col-md-8 text-right" />
+				  </div>
+				  <input jsf:id="input-email" class="form-control" type="email" jsf:value="#{registerHandler.user.email}" placeholder="Required."/>
+				</div>
+				<div class="text-center">
+				  <button jsf:id="btn-cancel" jsf:action="/index.xhtml?faces-redirect=true" jsf:immediate="true">#{msg.btn_cancel}</button>
+				  <span />
+				  <button jsf:id="btn-ok" jsf:action="#{registerHandler.doRegister()}">#{msg.btn_register}</button>
+				</div>
+			  </form>
+
+			</div>
+		  </div>
+		</div>
 	  </ui:define>
 	</body>
 
