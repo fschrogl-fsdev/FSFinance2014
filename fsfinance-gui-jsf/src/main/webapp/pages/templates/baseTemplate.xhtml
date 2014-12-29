@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:jsf="http://xmlns.jcp.org/jsf"
 	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	  xmlns:h="http://xmlns.jcp.org/jsf/html"
 	  xmlns:f="http://xmlns.jcp.org/jsf/core">
@@ -28,7 +29,7 @@
 		  <!-- Navbar header -->
 		  <div class="navbar-header">
 			<!-- Hamburger button (mobile view/toggle menu) -->
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#fsfinance-header-menu">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#fsfinance-header-menu" jsf:rendered="#{userManagement.getCurrentUser() != null}">
 			  <span class="sr-only">Toggle navigation</span>
 			  <span class="icon-bar"></span>
 			  <span class="icon-bar"></span>
@@ -38,7 +39,7 @@
 		  </div>
 
 		  <!-- Navbar content -->
-		  <div class="collapse navbar-collapse" id="fsfinance-header-menu">
+		  <div class="collapse navbar-collapse" id="fsfinance-header-menu" jsf:rendered="#{userManagement.getCurrentUser() != null}">
 			<ul class="nav navbar-nav navbar-right">
 			  <li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">logged-in username <span class="caret" /></a>
@@ -56,6 +57,9 @@
 	</ui:insert>
 
 	<!-- =================== SIDEBAR =================== -->
+	<div id="sidebar">
+	  <ui:insert name="sidebar"></ui:insert>
+	</div>
 
 	<!-- =================== CONTENT =================== -->
 	<div id="content">
@@ -73,7 +77,10 @@
 	</div>
 
 	<!-- Catch-all FacesMessages component (debugging) -->
-	<h:messages style="color: red;" rendered="#{applicationConfig.devModeActive}" />
+	<div style="border: 1px red solid; width: 60%; bottom: 20px; left: 1px; position: absolute;" rendered="#{applicationConfig.devModeActive}">
+	  <p>Debug messages:</p>
+	  <h:messages style="color: red;" />
+	</div>
 
   </body>
 </html>

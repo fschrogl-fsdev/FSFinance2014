@@ -102,7 +102,7 @@
 
   <!-- Application's entry point -->
   <welcome-file-list>
-	<welcome-file>pages/login.xhtml</welcome-file>
+	<welcome-file>pages/restricted/home.xhtml</welcome-file>
   </welcome-file-list>
 
 </web-app>

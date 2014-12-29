@@ -21,47 +21,47 @@
 				<div class="form-group">
 				  <div class="row">
 					<label for="input-username" class="control-label col-md-4">#{msg.label_username}</label>
-					<h:message for="input-username" errorClass="text-danger col-md-8" infoClass="text-success col-md-8 text-right" />
+					<h:message for="input-username" errorClass="text-danger text-right col-md-8" infoClass="text-success col-md-8 text-right" />
 				  </div>
 				  <input jsf:id="input-username" class="form-control" type="text" jsf:value="#{registerHandler.user.username}" placeholder="From 3 to 50 characters long. Required." />
 				</div>
 				<div class="form-group">
 				  <div class="row">
 					<label for="input-password" class="control-label col-md-4">#{msg.label_userpassword}</label>
-					<h:message for="input-password" errorClass="text-danger col-md-8 text-right" infoClass="text-success col-md-8 text-right" />
+					<h:message for="input-password" errorClass="text-danger text-right col-md-8" infoClass="text-success col-md-8 text-right" />
 				  </div>
 				  <input jsf:id="input-password" class="form-control" type="password" jsf:value="#{registerHandler.rawPassword}" placeholder="From 8 to 50 characters long. Required."/>
 				</div>
 				<div class="form-group">
 				  <div class="row">
 					<label for="input-passwordRepeat" class="control-label col-md-4">#{msg.label_userpassword_repeat}</label>
-					<h:message for="input-passwordRepeat" errorClass="text-danger col-md-8 text-right" infoClass="text-success col-md-8 text-right" />
+					<h:message for="input-passwordRepeat" errorClass="text-danger text-right col-md-8" infoClass="text-success col-md-8 text-right" />
 				  </div>
 				  <input jsf:id="input-passwordRepeat" class="form-control" type="password" jsf:binding="#{registerHandler.rawPasswordRepeated}" />
 				</div>
 				<div class="form-group">
 				  <div class="row">
 					<label for="input-forename" class="control-label col-md-4">#{msg.label_userforename}</label>
-					<h:message for="input-forename" errorClass="text-danger col-md-8 text-right" infoClass="text-success col-md-8 text-right" />
+					<h:message for="input-forename" errorClass="text-danger text-right col-md-8" infoClass="text-success col-md-8 text-right" />
 				  </div>
 				  <input jsf:id="input-forename" class="form-control" type="text" jsf:value="#{registerHandler.user.forename}" placeholder="Optional."/>
 				</div>
 				<div class="form-group">
 				  <div class="row">
 					<label for="input-surname" class="control-label col-md-4">#{msg.label_usersurname}</label>
-					<h:message for="input-surname" errorClass="text-danger col-md-8 text-right" infoClass="text-success col-md-8 text-right" />
+					<h:message for="input-surname" errorClass="text-danger text-right col-md-8" infoClass="text-success col-md-8 text-right" />
 				  </div>
 				  <input jsf:id="input-surname" class="form-control" type="text" jsf:value="#{registerHandler.user.surname}" placeholder="Optional."/>
 				</div>
 				<div class="form-group">
 				  <div class="row">
 					<label for="input-email" class="control-label col-md-4">#{msg.label_usermail}</label>
-					<h:message for="input-email" errorClass="text-danger col-md-8 text-right" infoClass="text-success col-md-8 text-right" />
+					<h:message for="input-email" errorClass="text-danger text-right col-md-8" infoClass="text-success col-md-8 text-right" />
 				  </div>
 				  <input jsf:id="input-email" class="form-control" type="email" jsf:value="#{registerHandler.user.email}" placeholder="Required."/>
 				</div>
 				<div class="text-center">
-				  <button jsf:id="btn-cancel" jsf:action="/index.xhtml?faces-redirect=true" jsf:immediate="true">#{msg.btn_cancel}</button>
+				  <button jsf:id="btn-cancel" jsf:action="./login.xhtml?faces-redirect=true" jsf:immediate="true">#{msg.btn_cancel}</button>
 				  <span />
 				  <button jsf:id="btn-ok" jsf:action="#{registerHandler.doRegister()}">#{msg.btn_register}</button>
 				</div>

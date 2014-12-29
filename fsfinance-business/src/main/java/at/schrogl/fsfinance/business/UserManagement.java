@@ -109,7 +109,7 @@ public class UserManagement implements Serializable {
 	public User getCurrentUser() {
 		User currentUser = securityDao.getCurrentUser();
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Getting currently logged in user for thread {} is {}", Thread.currentThread(), currentUser);
+			LOGGER.debug("Currently logged in user for {} is {}", Thread.currentThread(), currentUser);
 		}
 		return currentUser;
 	}

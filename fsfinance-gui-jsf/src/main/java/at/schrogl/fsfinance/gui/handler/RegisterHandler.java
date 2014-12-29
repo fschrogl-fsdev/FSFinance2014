@@ -131,10 +131,6 @@ public class RegisterHandler implements Serializable {
 		this.rawPasswordRepeated = rawPasswordRepeated;
 	}
 
-	public UserManagement getUserManagement() {
-		return userManagement;
-	}
-
 	public void setUserManagement(UserManagement userManagement) {
 		this.userManagement = userManagement;
 	}
