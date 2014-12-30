@@ -9,7 +9,7 @@
 
   <!-- Load application property file location from JNDI (and use an embedded default file as fallback) -->
   <jee:jndi-lookup id="fsfinanceConfig"
-				   jndi-name="properties/FSFinanceConfigFile"
+				   jndi-name="fsfinance/ConfigFile"
   				   default-value="classpath:/config/fsfinance-config.properties" />
    
   <!-- Source the application property file, so that its content is available within Spring -->

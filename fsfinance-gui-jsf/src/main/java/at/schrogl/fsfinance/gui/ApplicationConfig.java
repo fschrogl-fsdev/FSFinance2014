@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with FSFinance. If not, see <http://www.gnu.org/licenses/>.
  */
-package at.schrogl.fsfinance.business;
+package at.schrogl.fsfinance.gui;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,24 +22,29 @@ import java.io.Serializable;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
+import javax.faces.application.ProjectStage;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.env.PropertySources;
-import org.springframework.stereotype.Component;
 
-@Component
+@ManagedBean
+@ApplicationScoped
 public class ApplicationConfig implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfig.class);
 
-	private boolean devModeActive;
+	private ProjectStage projectStage;
 	private String appVersion;
 
+	@ManagedProperty("#{propertyPlaceholder}")
 	private PropertySourcesPlaceholderConfigurer propertyPlaceholder;
 	private PropertySource<?> properties;
 
@@ -55,10 +60,9 @@ public class ApplicationConfig implements Serializable {
 			LOGGER.info("Found user-supplied localProperties! app.config={}", configType);
 		}
 
-		// Determine the configured application mode
-		String appMode = (String) properties.getProperty("app.mode");
-		devModeActive = ("DEVELOPMENT".equalsIgnoreCase(appMode));
-		LOGGER.info("Application is in mode: {}", (devModeActive) ? "DEVELOPMENT" : "PRODUCTION");
+		// Determine the configured javax.faces.PROJECT_STAGE
+		projectStage = FacesContext.getCurrentInstance().getApplication().getProjectStage();
+		LOGGER.info("Application PROJECT_STAGE: {}", projectStage);
 
 		/*
 		 * Extract project's version from Messages.properties
@@ -74,7 +78,7 @@ public class ApplicationConfig implements Serializable {
 		} catch (IOException ioe) {
 			LOGGER.warn("Unable to load application version from Messages.properties", ioe);
 		}
-		LOGGER.info("Application version is {}", appVersion);
+		LOGGER.info("Application version: {}", appVersion);
 	}
 
 	public String getProperty(String key) {
@@ -90,17 +94,15 @@ public class ApplicationConfig implements Serializable {
 	// Getter and Setter
 	// ==============================================================
 
-	@Inject
-	public void setProperties(PropertySourcesPlaceholderConfigurer propertyPlaceholder) {
+	public void setPropertyPlaceholder(PropertySourcesPlaceholderConfigurer propertyPlaceholder) {
 		this.propertyPlaceholder = propertyPlaceholder;
 	}
-
+	
 	public boolean isDevModeActive() {
-		return devModeActive;
+		return (ProjectStage.Development == projectStage);
 	}
 
 	public String getAppVersion() {
 		return appVersion;
 	}
-
 }

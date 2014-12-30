@@ -8,7 +8,7 @@
  -->
 
 <configuration debug="true">
-  <insertFromJNDI env-entry-name="java:comp/env/properties/FSFinanceLogDirectory" as="logdir" />
+  <insertFromJNDI env-entry-name="java:comp/env/fsfinance/LogDirectory" as="logdir" />
 
   <!-- CONSOLE Appender -->
   <appender name="CONSOLE_all" class="ch.qos.logback.core.ConsoleAppender">

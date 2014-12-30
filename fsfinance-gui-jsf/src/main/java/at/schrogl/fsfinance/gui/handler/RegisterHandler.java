@@ -31,9 +31,9 @@ import org.hibernate.validator.constraints.Length;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import at.schrogl.fsfinance.business.ApplicationConfig;
 import at.schrogl.fsfinance.business.UserManagement;
 import at.schrogl.fsfinance.business.exceptions.UserAlreadyExistsException;
+import at.schrogl.fsfinance.gui.ApplicationConfig;
 import at.schrogl.fsfinance.gui.PageUrl;
 import at.schrogl.fsfinance.persistence.entities.User;
 

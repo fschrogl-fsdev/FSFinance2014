@@ -38,7 +38,7 @@ The application's configuration file location is also received through JNDI
 lookup. In Apache Tomcat the resource can be configured as follows:
 
 <pre>
-&lt;Environment name="properties/FSFinanceConfigFile"
+&lt;Environment name="fsfinance/ConfigFile"
     			value="file:///absolute-path-to-config-file/fsfinance-config.DEV.properties"
     			type="java.lang.String" /&gt;
 </pre>
@@ -53,7 +53,20 @@ Properties for the config file and logging directory are separated due to
 Spring's and Logback's different syntaxes.
 
 <pre>
-&lt;Environment name="properties/FSFinanceLogDirectory"
+&lt;Environment name="fsfinance/LogDirectory"
     			value="/absolute-path-to-log-directory/"
+    			type="java.lang.String" /&gt;
+</pre>
+
+### Setting JSF's PROJECT_STAGE through JNDI (for Development)
+
+Since JSF 2.0 it is possible to override the *javax.faces.PROJECT_STAGE* value defined
+in the application's *web.xml* file through JNDI. If the JSF implementation finds a
+value under JNDI entry *java:comp/env/jsf/ProjectStage* it is used to set the
+PROJECT_STAGE. In Apache Tomcat this can be defined as follows:
+
+<pre>
+&lt;Environment name="jsf/ProjectStage"
+    			value="Development"
     			type="java.lang.String" /&gt;
 </pre>

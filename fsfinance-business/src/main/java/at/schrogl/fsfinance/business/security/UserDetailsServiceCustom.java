@@ -123,7 +123,7 @@ public class UserDetailsServiceCustom implements UserDetailsService, Serializabl
 	@Transactional(TxType.SUPPORTS)
 	public User getCurrentUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth.getPrincipal() instanceof UserDetailsCustom)
+		if (auth != null && auth.getPrincipal() instanceof UserDetailsCustom)
 			return ((UserDetailsCustom) auth.getPrincipal()).getPrincipal();
 		else
 			return null;

@@ -17,6 +17,7 @@
 package at.schrogl.fsfinance.business;
 
 import java.io.Serializable;
+import java.util.Properties;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -24,6 +25,9 @@ import javax.transaction.Transactional.TxType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.PropertySource;
+import org.springframework.core.env.PropertySources;
 import org.springframework.stereotype.Component;
 
 import at.schrogl.fsfinance.business.exceptions.UserAlreadyExistsException;
@@ -38,9 +42,9 @@ public class UserManagement implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserManagement.class);
 
+	private Properties appConfig;
 	private UserDetailsServiceCustom securityDao;
 	private UserDao userDao;
-	private ApplicationConfig appConfig;
 
 	@Transactional(value = TxType.REQUIRED, dontRollbackOn = UserAlreadyExistsException.class)
 	public User register(final User newUser, final String rawPassword) throws UserAlreadyExistsException {
@@ -129,6 +133,13 @@ public class UserManagement implements Serializable {
 	// ==============================================================
 
 	@Inject
+	public void setPropertyPlaceholder(PropertySourcesPlaceholderConfigurer propertyPlaceholder) {
+		PropertySources sources = propertyPlaceholder.getAppliedPropertySources();
+		PropertySource<?> source = sources.get("localProperties");
+		appConfig = (Properties) source.getSource();
+	}
+	
+	@Inject
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
@@ -136,11 +147,6 @@ public class UserManagement implements Serializable {
 	@Inject
 	public void setSecurityDao(UserDetailsServiceCustom securityDao) {
 		this.securityDao = securityDao;
-	}
-
-	@Inject
-	public void setAppConfig(ApplicationConfig appConfig) {
-		this.appConfig = appConfig;
 	}
 
 }

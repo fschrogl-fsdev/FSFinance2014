@@ -26,14 +26,27 @@
 	<param-value>true</param-value>
   </context-param>
   <context-param>
-	<description>Use NULL values for empty input fields (mandatory for JSR-303 Bean Validation)</description>
+	<description>
+	  Use NULL values for empty input fields (mandatory for JSR-303 Bean Validation).
+	  INFO: When using an application server that uses Apache EL parser (e.g. Tomcat, JBoss,
+	  WebSphere, etc.) this doesn't work (for primitive types), unless the server is
+	  started with the following VM argument set -Dorg.apache.el.parser.COERCE_TO_ZERO=false
+	  see: http://balusc.blogspot.co.at/2011/09/communication-in-jsf-20.html
+	  see: http://stackoverflow.com/questions/5225013/coerce-to-zero-at-runtime
+	</description>
 	<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
 	<param-value>true</param-value>
   </context-param>
   <context-param>
-	<description>Project state: Development|UnitTest|SytemTest|Production</description>
+	<description>
+	  Project state: Development|UnitTest|SytemTest|Production
+	  INFO: The PROJECT_STAGE value can also be configured through JNDI. If
+	  java:comp/env/jsf/ProjectStage is defined (and found) its value is used
+	  instead of the one defined in the web.xml.
+	  see: http://stackoverflow.com/questions/6524901/how-to-configure-jsf-2-0-applications-project-stage-via-jndi-in-tomcat
+	</description>
 	<param-name>javax.faces.PROJECT_STAGE</param-name>
-	<param-value>Development</param-value>
+	<param-value>Production</param-value>
   </context-param>
   <context-param>
 	<description>
@@ -104,5 +117,12 @@
   <welcome-file-list>
 	<welcome-file>pages/restricted/home.xhtml</welcome-file>
   </welcome-file-list>
+
+
+  <!-- Application's error pages -->
+  <error-page>
+    <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+    <location>/pages/login.xhtml?view_expired</location>
+  </error-page>
 
 </web-app>
