@@ -17,12 +17,14 @@
 package at.schrogl.fsfinance.gui;
 
 import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.ProjectStage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;

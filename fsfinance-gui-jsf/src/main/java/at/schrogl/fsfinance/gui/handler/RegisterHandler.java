@@ -16,23 +16,26 @@
  */
 package at.schrogl.fsfinance.gui.handler;
 
-import at.schrogl.fsfinance.business.UserManagement;
-import at.schrogl.fsfinance.business.exceptions.UserAlreadyExistsException;
-import at.schrogl.fsfinance.gui.ApplicationConfig;
-import at.schrogl.fsfinance.gui.PageUrl;
-import at.schrogl.fsfinance.persistence.entities.User;
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Length;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import at.schrogl.fsfinance.business.UserManagement;
+import at.schrogl.fsfinance.business.exceptions.UserAlreadyExistsException;
+import at.schrogl.fsfinance.gui.ApplicationConfig;
+import at.schrogl.fsfinance.gui.PageUrl;
+import at.schrogl.fsfinance.persistence.entities.User;
 
 @ManagedBean
 @ViewScoped
@@ -40,9 +43,10 @@ public class RegisterHandler implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(RegisterHandler.class);
-	
+
 	private static final String htmlIdUsername = "input-username";
 	private static final String htmlIdPasswordRepeated = "input-passwordRepeat";
+	private static final String htmlIdEmail = "input-email";
 
 	private User user = new User();
 	private String rawPassword;
@@ -50,7 +54,7 @@ public class RegisterHandler implements Serializable {
 
 	@ManagedProperty("#{applicationConfig}")
 	private ApplicationConfig applicationConfig;
-	
+
 	@ManagedProperty("#{userManagement}")
 	private UserManagement userManagement;
 
@@ -76,13 +80,11 @@ public class RegisterHandler implements Serializable {
 				}
 			}
 		}
-		
+
 		// Verify if passwords match
 		if (!rawPassword.equals(rawPasswordRepeated)) {
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("{} :: Passwords don't match: pwd={}, pwdRepeated={}", user, rawPassword, rawPasswordRepeated);
-				LOGGER.debug("{} :: Registration canceled! User not persisted to database.", user);
-			}
+			LOGGER.debug("{} :: Passwords don't match: pwd={}, pwdRepeated={}", user, rawPassword, rawPasswordRepeated);
+			LOGGER.info("{} :: Registration canceled! User not persisted to database.", user);
 			String errText = getBundleMessage("msg_err_passwordsNoMatch");
 			FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
 			FacesContext.getCurrentInstance().addMessage(htmlIdPasswordRepeated, errorMsg);
@@ -99,9 +101,20 @@ public class RegisterHandler implements Serializable {
 			LOGGER.info("{} :: Registration successful! User persisted to database.", registeredUser);
 		} catch (UserAlreadyExistsException uae_ex) {
 			LOGGER.info("{} :: User already exists! Aborting registration.", user);
-			String errText = getBundleMessage("msg_err_userAlreadyExists", uae_ex.getOffendingProperty());
-			FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
-			FacesContext.getCurrentInstance().addMessage(htmlIdUsername, errorMsg);
+			if (uae_ex.getExistingUser().getUsername().equalsIgnoreCase(user.getUsername())) {
+				String componentLabel = getBundleMessage("label_username");
+				String errText = getBundleMessage("msg_err_userAlreadyExists", componentLabel,
+						uae_ex.getOffendingProperty());
+				FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
+				FacesContext.getCurrentInstance().addMessage(htmlIdUsername, errorMsg);
+			}
+			if (uae_ex.getExistingUser().getEmail().equalsIgnoreCase(user.getEmail())) {
+				String componentLabel = getBundleMessage("label_usermail");
+				String errText = getBundleMessage("msg_err_userAlreadyExists", componentLabel,
+						uae_ex.getOffendingProperty());
+				FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
+				FacesContext.getCurrentInstance().addMessage(htmlIdEmail, errorMsg);
+			}
 			return null;
 		}
 
@@ -147,15 +160,15 @@ public class RegisterHandler implements Serializable {
 	public void setRawPassword(String rawPassword) {
 		this.rawPassword = rawPassword;
 	}
-	
+
 	public String getRawPasswordRepeated() {
 		return rawPasswordRepeated;
 	}
-	
+
 	public void setRawPasswordRepeated(String rawPasswordRepeated) {
 		this.rawPasswordRepeated = rawPasswordRepeated;
 	}
-	
+
 	public void setApplicationConfig(ApplicationConfig applicationConfig) {
 		this.applicationConfig = applicationConfig;
 	}

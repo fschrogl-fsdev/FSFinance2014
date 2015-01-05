@@ -13,7 +13,7 @@
   <!-- CONSOLE Appender -->
   <appender name="CONSOLE_all" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>%d{HH:mm:ss.SSS} %-5level [%logger{0}] - %msg%n</pattern>
+      <pattern>%highlight(%d{HH:mm:ss.SSS} %-5level [%logger{0}] - %msg%n)</pattern>
     </encoder>
   </appender>
   <appender name="CONSOLE_info" class="ch.qos.logback.core.ConsoleAppender">
@@ -23,7 +23,7 @@
       <onMismatch>DENY</onMismatch>
     </filter>
     <encoder>
-      <pattern>%d{HH:mm:ss.SSS} %-5level [%logger{0}] - %msg%n</pattern>
+      <pattern>%highlight(%d{HH:mm:ss.SSS} %-5level [%logger{0}] - %msg%n)</pattern>
     </encoder>
   </appender>
   

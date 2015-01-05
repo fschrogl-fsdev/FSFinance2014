@@ -16,9 +16,9 @@
  */
 package at.schrogl.fsfinance.gui.handler;
 
-import at.schrogl.fsfinance.gui.ApplicationConfig;
 import java.io.IOException;
 import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -26,7 +26,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.ServletException;
 import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Length;
+
+import at.schrogl.fsfinance.gui.ApplicationConfig;
 
 @ManagedBean
 @ViewScoped

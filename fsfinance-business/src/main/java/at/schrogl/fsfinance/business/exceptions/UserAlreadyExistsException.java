@@ -51,9 +51,9 @@ public class UserAlreadyExistsException extends Exception {
 
 	public String getOffendingProperty() {
 		if (existingUser.getUsername().equalsIgnoreCase(newUser.getUsername()))
-			return existingUser.getUsername();
+			return newUser.getUsername();
 		else
-			return existingUser.getEmail();
+			return newUser.getEmail();
 	}
 
 	@Override
