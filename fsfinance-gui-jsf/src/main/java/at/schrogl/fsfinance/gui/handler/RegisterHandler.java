@@ -16,26 +16,23 @@
  */
 package at.schrogl.fsfinance.gui.handler;
 
-import java.io.Serializable;
-import java.text.MessageFormat;
-import java.util.ResourceBundle;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Length;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import at.schrogl.fsfinance.business.UserManagement;
 import at.schrogl.fsfinance.business.exceptions.UserAlreadyExistsException;
 import at.schrogl.fsfinance.gui.ApplicationConfig;
 import at.schrogl.fsfinance.gui.PageUrl;
 import at.schrogl.fsfinance.persistence.entities.User;
+import java.io.Serializable;
+import java.text.MessageFormat;
+import java.util.ResourceBundle;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ManagedBean
 @ViewScoped
@@ -84,7 +81,7 @@ public class RegisterHandler implements Serializable {
 		if (!rawPassword.equals(rawPasswordRepeated)) {
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("{} :: Passwords don't match: pwd={}, pwdRepeated={}", user, rawPassword, rawPasswordRepeated);
-				LOGGER.debug("Registration canceled. {} NOT registered successfully!", user);
+				LOGGER.debug("{} :: Registration canceled! User not persisted to database.", user);
 			}
 			String errText = getBundleMessage("msg_err_passwordsNoMatch");
 			FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
@@ -97,6 +94,7 @@ public class RegisterHandler implements Serializable {
 		try {
 			user.setForename(convertEmptyStringToNull(user.getForename()));
 			user.setSurname(convertEmptyStringToNull(user.getSurname()));
+			user.setEmail(user.getEmail().trim().toLowerCase());
 			registeredUser = userManagement.register(user, rawPassword);
 			LOGGER.info("{} :: Registration successful! User persisted to database.", registeredUser);
 		} catch (UserAlreadyExistsException uae_ex) {
@@ -124,7 +122,8 @@ public class RegisterHandler implements Serializable {
 	}
 
 	private String convertEmptyStringToNull(String value) {
-		return (value != null && value.trim().length() == 0) ? null : value;
+		value = (value != null) ? value.trim() : null;
+		return (value != null && value.length() > 0) ? value : null;
 	}
 
 	// ==============================================================

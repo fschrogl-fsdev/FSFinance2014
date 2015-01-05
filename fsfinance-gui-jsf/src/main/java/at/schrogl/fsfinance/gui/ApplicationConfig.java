@@ -16,18 +16,13 @@
  */
 package at.schrogl.fsfinance.gui;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.util.Properties;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.ProjectStage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -42,6 +37,8 @@ public class ApplicationConfig implements Serializable {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfig.class);
 
 	private ProjectStage projectStage;
+
+	@ManagedProperty("#{msg.application_version}")
 	private String appVersion;
 
 	@ManagedProperty("#{propertyPlaceholder}")
@@ -64,20 +61,7 @@ public class ApplicationConfig implements Serializable {
 		projectStage = FacesContext.getCurrentInstance().getApplication().getProjectStage();
 		LOGGER.info("Application PROJECT_STAGE: {}", projectStage);
 
-		/*
-		 * Extract project's version from Messages.properties
-		 * 
-		 * Info: Don't want to add JSF as a dependency, therefore don't using FacesContext
-		 * for extracting from Messages.properties.
-		 */
-		appVersion = "UNKNOWN";
-		try (InputStream msgPropsIns = getClass().getResourceAsStream("/localized-messages/Messages.properties")) {
-			Properties msgProperties = new Properties();
-			msgProperties.load(msgPropsIns);
-			appVersion = msgProperties.getProperty("application_version", appVersion);
-		} catch (IOException ioe) {
-			LOGGER.warn("Unable to load application version from Messages.properties", ioe);
-		}
+		// Extract project's version from Messages.properties
 		LOGGER.info("Application version: {}", appVersion);
 	}
 
@@ -93,13 +77,17 @@ public class ApplicationConfig implements Serializable {
 	// ==============================================================
 	// Getter and Setter
 	// ==============================================================
-
+	
 	public void setPropertyPlaceholder(PropertySourcesPlaceholderConfigurer propertyPlaceholder) {
 		this.propertyPlaceholder = propertyPlaceholder;
 	}
-	
+
 	public boolean isDevModeActive() {
 		return (ProjectStage.Development == projectStage);
+	}
+
+	public void setAppVersion(String appVersion) {
+		this.appVersion = appVersion;
 	}
 
 	public String getAppVersion() {

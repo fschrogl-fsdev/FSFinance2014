@@ -16,25 +16,22 @@
  */
 package at.schrogl.fsfinance.business;
 
+import at.schrogl.fsfinance.business.exceptions.UserAlreadyExistsException;
+import at.schrogl.fsfinance.business.security.UserDetailsServiceCustom;
+import at.schrogl.fsfinance.persistence.daos.UserDao;
+import at.schrogl.fsfinance.persistence.entities.User;
+import at.schrogl.fsfinance.persistence.enums.Authorities;
 import java.io.Serializable;
 import java.util.Properties;
-
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.env.PropertySources;
 import org.springframework.stereotype.Component;
-
-import at.schrogl.fsfinance.business.exceptions.UserAlreadyExistsException;
-import at.schrogl.fsfinance.business.security.UserDetailsServiceCustom;
-import at.schrogl.fsfinance.persistence.daos.UserDao;
-import at.schrogl.fsfinance.persistence.entities.User;
-import at.schrogl.fsfinance.persistence.enums.Authorities;
 
 @Component
 public class UserManagement implements Serializable {
@@ -54,7 +51,7 @@ public class UserManagement implements Serializable {
 		// Check if user already exists
 		User existingUser = userDao.findFirstByUsernameOrEmailAllIgnoreCase(newUser.getUsername(), newUser.getEmail());
 		if (existingUser != null) {
-			LOGGER.warn("Can't create user '{}'. User already exists", existingUser);;
+			LOGGER.warn("Can't create user '{}'. User already exists", existingUser);
 			throw new UserAlreadyExistsException(existingUser, newUser);
 		}
 
@@ -64,13 +61,11 @@ public class UserManagement implements Serializable {
 
 		// Set missing properties and authorities
 		newUser.setEnabled(Boolean.TRUE);
-		newUser.setEmail(newUser.getEmail().toLowerCase());
 		newUser.getAuthorities().add(Authorities.ROLE_USER);
 
-		// Make user admin if defined in config
-		String adminUsers = appConfig.getProperty("users.admin", "").toLowerCase();
-		if (adminUsers.matches("( |^)" + newUser.getUsername().toLowerCase() + "( |$)")) {
-			LOGGER.info("User '{}' in pre-defined admin list. Adding admin authority!", newUser);
+		// Make user admin if its the first user in database
+		if (userDao.count() == 0L) {
+			LOGGER.info("User '{}' is first user to be registered. Adding admin authority!", newUser);
 			newUser.getAuthorities().add(Authorities.ROLE_ADMIN);
 		}
 
@@ -111,21 +106,7 @@ public class UserManagement implements Serializable {
 
 	@Transactional(TxType.NOT_SUPPORTED)
 	public User getCurrentUser() {
-		User currentUser = securityDao.getCurrentUser();
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Currently logged in user for {} is {}", Thread.currentThread(), currentUser);
-		}
-		return currentUser;
-	}
-
-	@Transactional(value = TxType.REQUIRED)
-	public Boolean hasRole(User user, String role) {
-		return Boolean.FALSE;
-	}
-
-	@Transactional(value = TxType.REQUIRED)
-	public Boolean hasRole(User user, String... roles) {
-		return Boolean.FALSE;
+		return securityDao.getCurrentUser();
 	}
 
 	// ==============================================================
