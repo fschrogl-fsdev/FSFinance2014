@@ -4,7 +4,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:jsf="http://xmlns.jcp.org/jsf"
 	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	  xmlns:h="http://xmlns.jcp.org/jsf/html">
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <f:metadata>
+    <f:viewParam name="loginError" value="#{loginError}" />
+  </f:metadata>
 
   <ui:composition template="/pages/templates/baseTemplate.xhtml">
 	<h:head>
@@ -16,21 +21,28 @@
 		<div class="container">
 		  <div class="row">
 		    <div class="col-md-offset-3 col-md-6">
-		  
+		    
+		      <!-- Show panel on login failure -->
+		      <div class="alert alert-danger alert-dismissible" role="alert" jsf:rendered="#{loginError != null}">
+		        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+		        #{msg.text_loginError}
+		      </div>
+		    
+		      <!-- Login form -->
 		      <form jsf:id="form-login" jsf:prependId="false" role="form">
 			    <div class="form-group">
 			      <div class="row">
 			        <label for="username" class="control-label col-md-4">#{msg.label_username}</label>
 			        <h:message for="username" errorClass="text-danger text-right col-md-8" infoClass="text-success col-md-8 text-right" />
 			      </div>
-			      <input jsf:id="username" class="form-control" type="text" jsf:value="#{loginHandler.username}" placeholder="username" />
+			      <input jsf:id="username" class="form-control" type="text" jsf:value="#{loginHandler.username}" placeholder="#{msg.placeholder_required}" />
 			    </div>
 			    <div class="form-group">
 			      <div class="row">
-			        <label for="password" class="control-label col-md-4">#{msg.label_username}</label>
+			        <label for="password" class="control-label col-md-4">#{msg.label_userpassword}</label>
 			        <h:message for="password" errorClass="text-danger text-right col-md-8" infoClass="text-success col-md-8 text-right" />
 			      </div>
-			      <input jsf:id="password" class="form-control" type="password" jsf:value="#{loginHandler.password}" placeholder="password" />
+			      <input jsf:id="password" class="form-control" type="password" jsf:value="#{loginHandler.password}" placeholder="#{msg.placeholder_required}" />
 			    </div>
 			    <div class="checkbox">
 			      <label><input type="checkbox"> #{msg.label_rememberMe}</input></label>
@@ -42,8 +54,8 @@
 		      </form>
 		      
 		      <hr />
-		      <p><h:link>Password forgotten?</h:link></p>
-		      <p><h:link outcome="register.xhtml">Register a new account?</h:link></p>
+		      <p><h:link>#{msg.text_passwordRecovery}</h:link></p>
+		      <p><h:link outcome="register.xhtml">#{msg.text_registerNewAccount}</h:link></p>
 		    
 		    </div>
 		  </div>

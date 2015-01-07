@@ -68,18 +68,6 @@ public class LoginHandler implements Serializable {
 		FacesContext.getCurrentInstance().getExternalContext().dispatch(dispatchUrl);
 		FacesContext.getCurrentInstance().responseComplete();		
 	}
-	
-	/**
-	 * Checks the HTTP request for failure parameters from Spring Security, to determine if
-	 * a previous login attempt failed.
-	 * 
-	 * @return <code>true</code> if a failure parameters is found, otherwise <code>false</code>
-	 */
-	public boolean isLoginFailure() {
-		String urlParameter = appConfig.getProperty("security.loginFailureParm");
-		return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
-				.containsKey(urlParameter);
-	}
 
 	// ==============================================================
 	// Getter and Setter
