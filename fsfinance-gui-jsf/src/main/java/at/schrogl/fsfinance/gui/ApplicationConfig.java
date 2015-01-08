@@ -17,6 +17,7 @@
 package at.schrogl.fsfinance.gui;
 
 import java.io.Serializable;
+import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.ProjectStage;
@@ -42,21 +43,19 @@ public class ApplicationConfig implements Serializable {
 
 	@ManagedProperty("#{msg.application_version}")
 	private String appVersion;
-
+	
 	@ManagedProperty("#{propertyPlaceholder}")
-	private PropertySourcesPlaceholderConfigurer propertyPlaceholder;
-	private PropertySource<?> properties;
+	private transient PropertySourcesPlaceholderConfigurer propertyPlaceholder;
+	private Properties properties;
 
 	@PostConstruct
 	public void initialize() {
-		PropertySources sources = propertyPlaceholder.getAppliedPropertySources();
-		properties = sources.get("localProperties");
-
+		// Check if application properties file was configured/found
 		if (properties == null) {
-			LOGGER.error("No user-supplied localProperties found and fallback properties not configured!");
+			LOGGER.error("No application properties file found! Application won't function properly!");
 		} else {
 			String configType = (String) properties.getProperty("app.config");
-			LOGGER.info("Found user-supplied localProperties! app.config={}", configType);
+			LOGGER.info("Found application properties! app.config={}", configType);
 		}
 
 		// Determine the configured javax.faces.PROJECT_STAGE
@@ -72,8 +71,7 @@ public class ApplicationConfig implements Serializable {
 	}
 
 	public String getProperty(String key, String defaultValue) {
-		Object property = properties.getProperty(key);
-		return (property != null) ? property.toString() : defaultValue;
+		return (String) properties.getProperty(key, defaultValue);
 	}
 
 	// ==============================================================
@@ -81,6 +79,9 @@ public class ApplicationConfig implements Serializable {
 	// ==============================================================
 	
 	public void setPropertyPlaceholder(PropertySourcesPlaceholderConfigurer propertyPlaceholder) {
+		PropertySources sources = propertyPlaceholder.getAppliedPropertySources();
+		PropertySource<?> source = (sources != null) ? sources.get("localProperties") : null;
+		this.properties = (source != null) ? (Properties) source.getSource() : new Properties();
 		this.propertyPlaceholder = propertyPlaceholder;
 	}
 

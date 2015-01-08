@@ -41,11 +41,21 @@
     <beans:property name="pwdEncoder" ref="passwordEncoder" />
     <beans:property name="userDao" ref="userDao" />
   </beans:bean>
+  
+  <!-- Enable Spring Security Logging Bean -->
+  <!-- INFO: Automatically receives all AuthenticationEvent messages issued by Spring Security and
+       logs them through Apache Commons Logging. All log messages are logged with severity 'WARN'.
+       The reason for the last security exception can be retrieved using the SpringEL expression
+       ${SPRING_SECURITY_LAST_EXCEPTION.message} -->
+  <beans:bean id="loggerListener" class="org.springframework.security.authentication.event.LoggerListener" />
  
   <!-- Localization-support for messages issued by Spring Security -->
-  <!-- TODO Setup Spring's LocalContextHolder to make this work -->
+  <!-- INFO: If enabled Spring Security will use the localized message bundles found at the given classpath
+       entry to generate logging messages (defaults to en_US) -->
+  <!-- 
   <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
     <beans:property name="basename" value="classpath:org/springframework/security/messages" />
   </beans:bean>
+   -->
 
 </beans:beans>
