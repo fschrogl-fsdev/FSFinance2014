@@ -13,6 +13,10 @@
 	<link rel="icon" type="image/x-icon" href="favicon.ico" />
 	<link rel="icon" type="image/png" sizes="360x360" href="#{resource['favicon.png']}" />
 	<link rel="stylesheet" type="text/css" href="#{resource['bootstrap:css/bootstrap.min.css']}" />
+    <!--
+      <link rel="stylesheet" type="text/css" href="#{resource['bootstrap:css/bootstrap-theme.min.css']}" />
+    -->
+    <link rel="stylesheet" type="text/css" href="#{resource['font-awesome:css/font-awesome.min.css']}" />
 	<script src="#{resource['jquery:jquery.min.js']}"></script>
 	<script src="#{resource['bootstrap:js/bootstrap.min.js']}"></script>
 	<title><ui:insert name="title">#{msg.application_name}</ui:insert></title>
@@ -43,13 +47,13 @@
 		  <div class="collapse navbar-collapse" id="fsfinance-header-menu" jsf:rendered="#{userManagement.getCurrentUser() != null}">
 			<ul class="nav navbar-nav navbar-right">
 			  <li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">#{homeHandler.userDisplayName} <span class="caret" /></a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user fa-fw" /> #{homeHandler.userDisplayName} <span class="caret" /></a>
 				<ul class="dropdown-menu">
-				  <li><h:link outcome="/pages/restricted/settings.xhtml">#{msg.label_settings}</h:link></li>
-				  <li jsf:rendered="#{homeHandler.hasRole('ROLE_ADMIN')}"><h:link outcome="/pages/restricted/admin/adminSettings.xhtml">#{msg.label_admin}</h:link></li>
+				  <li><h:link outcome="/pages/restricted/settings.xhtml"><span class="fa fa-wrench fa-fw" /> #{msg.label_settings}</h:link></li>
+				  <li jsf:rendered="#{homeHandler.hasRole('ROLE_ADMIN')}"><h:link outcome="/pages/restricted/admin/adminSettings.xhtml"><span class="fa fa-cog fa-fw" /> #{msg.label_admin}</h:link></li>
 				</ul>
 			  </li>
-			  <li><a href="#{request.contextPath}/security/logout">#{msg.label_logout}</a></li>
+			  <li><a href="#{request.contextPath}/security/logout"><span class="fa fa-power-off fa-fw" /> #{msg.label_logout}</a></li>
 			</ul>
 		  </div>
 
