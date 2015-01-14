@@ -47,7 +47,8 @@
        logs them through Apache Commons Logging. All log messages are logged with severity 'WARN'.
        The reason for the last security exception can be retrieved using the SpringEL expression
        ${SPRING_SECURITY_LAST_EXCEPTION.message} -->
-  <beans:bean id="loggerListener" class="org.springframework.security.authentication.event.LoggerListener" />
+  <!-- <beans:bean id="loggerListener" class="org.springframework.security.authentication.event.LoggerListener" /> -->
+  <beans:bean id="loggerListener" class="at.schrogl.fsfinance.business.security.AuthenticationLoggerListenerCustom" />
  
   <!-- Localization-support for messages issued by Spring Security -->
   <!-- INFO: If enabled Spring Security will use the localized message bundles found at the given classpath
