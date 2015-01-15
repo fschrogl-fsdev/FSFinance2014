@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:jsf="http://xmlns.jcp.org/jsf"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <f:metadata>
+    <f:viewParam name="error" value="#{errorCode}" />
+  </f:metadata>
+
+  <ui:composition template="/pages/templates/baseTemplate.xhtml">
+	<ui:define name="title">Error // #{msg.application_name}</ui:define>
+
+	  <ui:define name="content">
+		<div class="container">
+		  <div class="row">
+		    <div class="col-md-offset-2 col-md-8">
+		    
+		      <H1>Error #{errorCode}</H1>
+		      <p jsf:rendered="#{errorCode == null}">#{msg.msg_err}</p>
+		      <p jsf:rendered="#{errorCode != null}">#{applicationConfig.getMsg('msg_err_'.concat(errorCode))}</p>
+		      
+		      <br/>
+		      
+		      <p><h:link outcome="/pages/restricted/home.xhtml">#{msg.text_toHome}</h:link></p>
+		    
+		    </div>
+		  </div>
+		</div>
+	  </ui:define>
+
+  </ui:composition>
+</html>

@@ -13,7 +13,7 @@
 
   <session-config>
 	<!-- Session timeout in minutes -->
-	<session-timeout>10</session-timeout>
+	<session-timeout>1</session-timeout>
   </session-config>
 
 
@@ -120,7 +120,15 @@
   <!-- Application's error pages -->
   <error-page>
     <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-    <location>/pages/login.xhtml?view_expired</location>
+    <location>/pages/error.xhtml?error=viewExpired</location>
+  </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/pages/error.xhtml?error=404</location>
+  </error-page>
+  <error-page>
+    <error-code>403</error-code>
+    <location>/pages/error.xhtml?error=403</location>
   </error-page>
 
 </web-app>

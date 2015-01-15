@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.validation.constraints.NotNull;
 
@@ -38,7 +38,7 @@ import at.schrogl.fsfinance.gui.PageUrl;
 import at.schrogl.fsfinance.persistence.entities.User;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class RegisterHandler implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -57,7 +57,7 @@ public class RegisterHandler implements Serializable {
 
 	@ManagedProperty("#{userManagement}")
 	private UserManagement userManagement;
-
+	
 	// ==============================================================
 	// Action Methods
 	// ==============================================================

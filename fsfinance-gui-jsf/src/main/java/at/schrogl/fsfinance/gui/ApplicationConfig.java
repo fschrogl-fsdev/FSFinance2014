@@ -18,6 +18,7 @@ package at.schrogl.fsfinance.gui;
 
 import java.io.Serializable;
 import java.util.Properties;
+import java.util.PropertyResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.ProjectStage;
@@ -40,9 +41,10 @@ public class ApplicationConfig implements Serializable {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfig.class);
 
 	private ProjectStage projectStage;
-
-	@ManagedProperty("#{msg.application_version}")
 	private String appVersion;
+	
+	@ManagedProperty("#{msg}")
+	private PropertyResourceBundle msg;
 	
 	@ManagedProperty("#{propertyPlaceholder}")
 	private transient PropertySourcesPlaceholderConfigurer propertyPlaceholder;
@@ -63,6 +65,8 @@ public class ApplicationConfig implements Serializable {
 		LOGGER.info("Application PROJECT_STAGE: {}", projectStage);
 
 		// Extract project's version from Messages.properties
+		appVersion = msg.getString("application_version");
+		appVersion = (appVersion == null) ? "<undefined>" : appVersion;
 		LOGGER.info("Application version: {}", appVersion);
 	}
 
@@ -72,6 +76,15 @@ public class ApplicationConfig implements Serializable {
 
 	public String getProperty(String key, String defaultValue) {
 		return (String) properties.getProperty(key, defaultValue);
+	}
+	
+	public String getMsg(String key) {
+		return (msg.containsKey(key) ? msg.getString(key) : null);
+	}
+	
+	public String getMsg(String key, String defaultValue) {
+		String value = msg.containsKey(key) ? msg.getString(key) : null;
+		return (value != null) ? value : defaultValue;
 	}
 
 	// ==============================================================
@@ -84,13 +97,13 @@ public class ApplicationConfig implements Serializable {
 		this.properties = (source != null) ? (Properties) source.getSource() : new Properties();
 		this.propertyPlaceholder = propertyPlaceholder;
 	}
+	
+	public void setMsg(PropertyResourceBundle msg) {
+		this.msg = msg;
+	}
 
 	public boolean isDevModeActive() {
 		return (ProjectStage.Development == projectStage);
-	}
-
-	public void setAppVersion(String appVersion) {
-		this.appVersion = appVersion;
 	}
 
 	public String getAppVersion() {

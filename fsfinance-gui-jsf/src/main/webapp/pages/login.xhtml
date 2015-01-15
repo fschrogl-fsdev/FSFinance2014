@@ -7,7 +7,7 @@
 	  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
   <f:metadata>
-    <f:viewParam name="loginError" value="#{loginError}" />
+    <f:viewParam name="error" value="#{errorCode}" />
   </f:metadata>
 
   <ui:composition template="/pages/templates/baseTemplate.xhtml">
@@ -19,9 +19,9 @@
 		    <div class="col-md-offset-3 col-md-6">
 		    
 		      <!-- Show panel on login failure -->
-		      <div class="alert alert-danger alert-dismissible" role="alert" jsf:rendered="#{loginError != null}">
+		      <div class="alert alert-danger alert-dismissible" role="alert" jsf:rendered="#{errorCode != null}">
 		        <button type="button" class="close" data-dismiss="alert"><span class="fa fa-close fa-fw" /></button>
-		        #{msg.text_loginError}
+		        #{applicationConfig.getMsg('msg_err_'.concat(errorCode))}
 		      </div>
 		    
 		      <!-- Login form -->

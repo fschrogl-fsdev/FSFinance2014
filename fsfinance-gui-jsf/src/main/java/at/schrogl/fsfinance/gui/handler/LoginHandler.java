@@ -19,23 +19,28 @@ package at.schrogl.fsfinance.gui.handler;
 import java.io.IOException;
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.ServletException;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import at.schrogl.fsfinance.gui.ApplicationConfig;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class LoginHandler implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoginHandler.class);
 
 	private String username;
 	private String password;
@@ -44,6 +49,16 @@ public class LoginHandler implements Serializable {
 	@ManagedProperty("#{applicationConfig}")
 	private ApplicationConfig appConfig;
 
+	@PostConstruct
+	public void init() {
+		LOGGER.error("INIT - {}", hashCode());
+	}
+	
+	@PreDestroy
+	public void kill() {
+		LOGGER.error("DEST - {}", hashCode());
+	}
+	
 	// ==============================================================
 	// Action Methods
 	// ==============================================================
