@@ -17,6 +17,7 @@
 package at.schrogl.fsfinance.gui;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.Properties;
 import java.util.PropertyResourceBundle;
 
@@ -42,10 +43,10 @@ public class ApplicationConfig implements Serializable {
 
 	private ProjectStage projectStage;
 	private String appVersion;
-	
+
 	@ManagedProperty("#{msg}")
-	private PropertyResourceBundle msg;
-	
+	private PropertyResourceBundle msgBundle;
+
 	@ManagedProperty("#{propertyPlaceholder}")
 	private transient PropertySourcesPlaceholderConfigurer propertyPlaceholder;
 	private Properties properties;
@@ -65,8 +66,10 @@ public class ApplicationConfig implements Serializable {
 		LOGGER.info("Application PROJECT_STAGE: {}", projectStage);
 
 		// Extract project's version from Messages.properties
-		appVersion = msg.getString("application_version");
-		appVersion = (appVersion == null) ? "<undefined>" : appVersion;
+		if (msgBundle.containsKey("application_version"))
+			appVersion = msgBundle.getString("application_version");
+		else
+			appVersion = "<undefined>";
 		LOGGER.info("Application version: {}", appVersion);
 	}
 
@@ -77,29 +80,25 @@ public class ApplicationConfig implements Serializable {
 	public String getProperty(String key, String defaultValue) {
 		return (String) properties.getProperty(key, defaultValue);
 	}
-	
-	public String getMsg(String key) {
-		return (msg.containsKey(key) ? msg.getString(key) : null);
-	}
-	
-	public String getMsg(String key, String defaultValue) {
-		String value = msg.containsKey(key) ? msg.getString(key) : null;
-		return (value != null) ? value : defaultValue;
+
+	public String getBundleMessage(String msgCode, Object... arguments) {
+		String rawMessage = (msgBundle.containsKey(msgCode)) ? msgBundle.getString(msgCode) : "";
+		return MessageFormat.format(rawMessage, arguments);
 	}
 
 	// ==============================================================
 	// Getter and Setter
 	// ==============================================================
-	
+
 	public void setPropertyPlaceholder(PropertySourcesPlaceholderConfigurer propertyPlaceholder) {
 		PropertySources sources = propertyPlaceholder.getAppliedPropertySources();
 		PropertySource<?> source = (sources != null) ? sources.get("localProperties") : null;
 		this.properties = (source != null) ? (Properties) source.getSource() : new Properties();
 		this.propertyPlaceholder = propertyPlaceholder;
 	}
-	
-	public void setMsg(PropertyResourceBundle msg) {
-		this.msg = msg;
+
+	public void setMsgBundle(PropertyResourceBundle msgBundle) {
+		this.msgBundle = msgBundle;
 	}
 
 	public boolean isDevModeActive() {

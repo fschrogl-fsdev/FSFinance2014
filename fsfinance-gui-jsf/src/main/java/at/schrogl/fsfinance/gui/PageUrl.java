@@ -17,8 +17,6 @@
 package at.schrogl.fsfinance.gui;
 
 public interface PageUrl {
-
-	static final String msgBundle = "msg";
 	
 	static final String INDEX = "/index.xthml";
 	static final String HOME = "/pages/restricted/home.xhtml";

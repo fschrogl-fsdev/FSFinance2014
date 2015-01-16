@@ -20,7 +20,7 @@
 		    
 		      <H1>Error #{errorCode}</H1>
 		      <p jsf:rendered="#{errorCode == null}">#{msg.msg_err}</p>
-		      <p jsf:rendered="#{errorCode != null}">#{applicationConfig.getMsg('msg_err_'.concat(errorCode))}</p>
+		      <p jsf:rendered="#{errorCode != null}">#{msg['msg_err_'.concat(errorCode)]}</p>
 		      
 		      <br/>
 		      

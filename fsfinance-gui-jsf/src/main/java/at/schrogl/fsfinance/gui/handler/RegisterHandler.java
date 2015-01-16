@@ -17,8 +17,6 @@
 package at.schrogl.fsfinance.gui.handler;
 
 import java.io.Serializable;
-import java.text.MessageFormat;
-import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -57,7 +55,7 @@ public class RegisterHandler implements Serializable {
 
 	@ManagedProperty("#{userManagement}")
 	private UserManagement userManagement;
-	
+
 	// ==============================================================
 	// Action Methods
 	// ==============================================================
@@ -73,7 +71,7 @@ public class RegisterHandler implements Serializable {
 				if (whitelistChars.indexOf(c) < 0) {
 					LOGGER.debug("{} :: Invalid char '{}' in username", user, c);
 					LOGGER.info("{} :: Username contains invalid char(s)! Aborting registration.", user);
-					String errText = getBundleMessage("msg_err_usernameBadChar", c);
+					String errText = applicationConfig.getBundleMessage("msg_err_usernameBadChar", c);
 					FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
 					FacesContext.getCurrentInstance().addMessage(htmlIdUsername, errorMsg);
 					return null;
@@ -85,7 +83,7 @@ public class RegisterHandler implements Serializable {
 		if (!rawPassword.equals(rawPasswordRepeated)) {
 			LOGGER.debug("{} :: Passwords don't match: pwd={}, pwdRepeated={}", user, rawPassword, rawPasswordRepeated);
 			LOGGER.info("{} :: Registration canceled! User not persisted to database.", user);
-			String errText = getBundleMessage("msg_err_passwordsNoMatch");
+			String errText = applicationConfig.getBundleMessage("msg_err_passwordsNoMatch");
 			FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
 			FacesContext.getCurrentInstance().addMessage(htmlIdPasswordRepeated, errorMsg);
 			return null;
@@ -102,15 +100,15 @@ public class RegisterHandler implements Serializable {
 		} catch (UserAlreadyExistsException uae_ex) {
 			LOGGER.info("{} :: User already exists! Aborting registration.", user);
 			if (uae_ex.getExistingUser().getUsername().equalsIgnoreCase(user.getUsername())) {
-				String componentLabel = getBundleMessage("label_username");
-				String errText = getBundleMessage("msg_err_userAlreadyExists", componentLabel,
+				String componentLabel = applicationConfig.getBundleMessage("label_username");
+				String errText = applicationConfig.getBundleMessage("msg_err_userAlreadyExists", componentLabel,
 						uae_ex.getOffendingProperty());
 				FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
 				FacesContext.getCurrentInstance().addMessage(htmlIdUsername, errorMsg);
 			}
 			if (uae_ex.getExistingUser().getEmail().equalsIgnoreCase(user.getEmail())) {
-				String componentLabel = getBundleMessage("label_usermail");
-				String errText = getBundleMessage("msg_err_userAlreadyExists", componentLabel,
+				String componentLabel = applicationConfig.getBundleMessage("label_usermail");
+				String errText = applicationConfig.getBundleMessage("msg_err_userAlreadyExists", componentLabel,
 						uae_ex.getOffendingProperty());
 				FacesMessage errorMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errText, errText);
 				FacesContext.getCurrentInstance().addMessage(htmlIdEmail, errorMsg);
@@ -127,12 +125,6 @@ public class RegisterHandler implements Serializable {
 	// ==============================================================
 	// Helper Methods
 	// ==============================================================
-
-	private String getBundleMessage(String msgCode, Object... arguments) {
-		FacesContext facesCtx = FacesContext.getCurrentInstance();
-		ResourceBundle rb = facesCtx.getApplication().getResourceBundle(facesCtx, PageUrl.msgBundle);
-		return MessageFormat.format(rb.getString(msgCode), arguments);
-	}
 
 	private String convertEmptyStringToNull(String value) {
 		value = (value != null) ? value.trim() : null;

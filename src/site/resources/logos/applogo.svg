@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="256"
+   height="256"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="favicon.svg"
+   inkscape:export-filename="/home/maerowinger/Development/workspaces/eclipse44/FSFinance/fsfinance-gui-jsf/src/main/webapp/resources/favicon/favicon256.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3863"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#fac904;stop-opacity:1;"
+         offset="0"
+         id="stop3865" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3845">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop3847" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop3849" />
+    </linearGradient>
+    <filter
+       inkscape:collect="always"
+       id="filter3829"
+       x="-0.73149781"
+       width="2.4629956"
+       y="-0.7249956"
+       height="2.4499912">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.2429551"
+         id="feGaussianBlur3831" />
+    </filter>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3845"
+       id="radialGradient3851"
+       cx="103.32694"
+       cy="96.618608"
+       fx="103.32694"
+       fy="96.618608"
+       r="78.95595"
+       gradientTransform="matrix(1,0,0,1.0089118,0,-0.86104715)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3863"
+       id="linearGradient3867"
+       x1="24.370987"
+       y1="96.618608"
+       x2="182.28289"
+       y2="96.618608"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.1289062"
+     inkscape:cx="128"
+     inkscape:cy="128"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer3"
+     showgrid="true"
+     inkscape:window-width="1680"
+     inkscape:window-height="1005"
+     inkscape:window-x="-2"
+     inkscape:window-y="-1"
+     inkscape:window-maximized="1"
+     inkscape:snap-grids="false"
+     showborder="true"
+     inkscape:showpageshadow="false"
+     showguides="true"
+     inkscape:snap-to-guides="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3004"
+       empspacing="1"
+       visible="false"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       dotted="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Rahmen"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-796.36218)"
+     style="display:inline">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect3006"
+       width="255"
+       height="255"
+       x="0"
+       y="1"
+       transform="translate(0,796.36218)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="BrandLogo"
+     style="display:inline">
+    <g
+       id="g3795"
+       transform="translate(70,75)">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3791"
+         d="m 185,181 c -100,0 -100,0 -100,0 l 25,-25 75,0 z"
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <flowRoot
+         transform="translate(-69.71875,-71.466233)"
+         style="font-size:11px;font-style:italic;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Italic"
+         id="flowRoot3777"
+         xml:space="preserve"><flowRegion
+           id="flowRegion3779"><rect
+             style="writing-mode:lr-tb"
+             y="227.52"
+             x="174.72"
+             height="27.84"
+             width="79.68"
+             id="rect3781" /></flowRegion><flowPara
+           style="font-size:20px;font-weight:bold;line-height:125%;letter-spacing:0.75px;writing-mode:lr-tb;-inkscape-font-specification:Sans Bold Italic"
+           id="flowPara3783"><flowSpan
+             id="flowSpan3785"
+             style="fill:#008000">FS</flowSpan><flowSpan
+             id="flowSpan3793"
+             style="fill:#ffffff">Dev</flowSpan></flowPara></flowRoot>    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="AppLogo"
+     style="display:inline">
+    <text
+       xml:space="preserve"
+       style="font-size:234.54693604px;font-style:italic;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#c8ab37;fill-opacity:1;stroke:#000000;stroke-opacity:1;font-family:Sans;-inkscape-font-specification:Sans Italic"
+       x="67.091682"
+       y="188.90244"
+       id="text3833"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3835"
+         x="67.091682"
+         y="188.90244"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#c8ab37;fill-opacity:1;stroke:#000000;stroke-opacity:1;font-family:Standard Symbols L;-inkscape-font-specification:Standard Symbols L Bold">€</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3869"
+       style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Impact;-inkscape-font-specification:Impact Bold"
+       transform="matrix(0,-4.1099869,4.1099869,0,-585.6201,275.50281)"><flowRegion
+         id="flowRegion3871"><rect
+           id="rect3873"
+           width="39.630466"
+           height="15.980022"
+           x="22.372034"
+           y="145.41823"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Impact;-inkscape-font-specification:Impact Bold" /></flowRegion><flowPara
+         id="flowPara3875"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Impact;-inkscape-font-specification:Impact Bold">Finance</flowPara></flowRoot>  </g>
+</svg>
