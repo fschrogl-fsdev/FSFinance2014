@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+  <!-- INTERFACE -->
+  <cc:interface>
+    <cc:attribute name="usePills" type="boolean" default="false"
+                  shortDescription="Use pills instead of tabs for navigation." />
+    <cc:attribute name="tabnames" required="true" />
+  </cc:interface>
+
+
+  <!-- IMPLEMENTATION -->
+  <cc:implementation>
+    <ul class="nav nav-tabs" role="navigation">
+      <ui:repeat var="tab" value="#{tabnames.tabnames}">
+        <li role="presentation" class="active"><a href="#">#{tab}</a></li>    
+      </ui:repeat>
+    </ul>
+  </cc:implementation>
+
+</html>

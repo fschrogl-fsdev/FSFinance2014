@@ -55,6 +55,15 @@ public class UserDetailsServiceCustom implements UserDetailsService, Serializabl
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserDetailsServiceCustom.class);
 
+	/*
+	 * XXX PasswordEncoder does not implement Serializable, hence this class can not be serialized.
+	 * This is/might be a problem if the user's session gets persisted, since this class is, through
+	 * class UserManagement, is injected into class HomeHandler, which is part of a user's session.
+	 * 
+	 * Maybe this should be fixed somehow. For now enable <Manager pathname="" /> in Tomcat's
+	 * context.xml to disable persistent sessions.
+	 */
+	
 	private PasswordEncoder pwdEncoder;
 	private UserDao userDao;
 
