@@ -13,9 +13,15 @@
 
 	<ui:define name="content">
 	  <div class="container">
-	    <fsf:tabbed-navigation tabnames="#{settingsHandler}" />
-	  </div>
-	</ui:define>
+	    <fsf:tabbed-navigation id="tabbed-navigation" usePills="false"
+	                           tabnames="#{settingsHandler.tabnames}"
+	                           extComp="reRenderExternalComponent">
 
+	    </fsf:tabbed-navigation>
+	  </div>
+	
+	<h:outputText id="reRenderExternalComponent" value="#{settingsHandler.activeTab}"/>
+
+	</ui:define>
   </ui:composition>
 </html>

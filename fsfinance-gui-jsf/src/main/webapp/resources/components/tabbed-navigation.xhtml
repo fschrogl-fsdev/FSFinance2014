@@ -2,24 +2,47 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
 
   <!-- INTERFACE -->
   <cc:interface>
-    <cc:attribute name="usePills" type="boolean" default="false"
+    <cc:attribute name="usePills" type="java.lang.Boolean" default="false" required="false"
                   shortDescription="Use pills instead of tabs for navigation." />
-    <cc:attribute name="tabnames" required="true" />
+    <cc:attribute name="tabnames" type="java.lang.String[]" required="true"
+                  shortDescription="Enumeration of the tab names to display." />
+    <cc:attribute name="extComp" />
   </cc:interface>
 
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <ul class="nav nav-tabs" role="navigation">
-      <ui:repeat var="tab" value="#{tabnames.tabnames}">
-        <li role="presentation" class="active"><a href="#">#{tab}</a></li>    
+    <div id="#{cc.clientId}">
+    <h:form id="form">
+  
+    <!-- Use tabs for navigation -->
+    <ul class="nav nav-tabs" role="navigation" jsf:rendered="#{cc.attrs.usePills == false}">
+      <ui:repeat var="tab" value="#{cc.attrs.tabnames}">
+        <li role="presentation" class="">
+          <h:commandLink value="#{tab}" action="#{settingsHandler.setActiveTab(tab)}">
+          	    <f:ajax render="@form #{cc.attrs.extComp}" />
+          </h:commandLink>
+        </li>    
       </ui:repeat>
     </ul>
+    
+    <!-- Use pills for navigation -->
+    <ul class="nav nav-pills" role="navigation" jsf:rendered="#{cc.attrs.usePills == true}">
+      <ui:repeat var="tab" value="#{cc.attrs.tabnames}">
+        <li role="presentation" class=""><a href="#">#{tab}</a></li>    
+      </ui:repeat>
+    </ul>
+    
+    </h:form>
+    </div>
   </cc:implementation>
 
 </html>
