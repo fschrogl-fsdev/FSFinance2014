@@ -18,6 +18,7 @@ package at.schrogl.fsfinance.gui;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.Properties;
 import java.util.PropertyResourceBundle;
 
@@ -84,6 +85,10 @@ public class ApplicationConfig implements Serializable {
 	public String getBundleMessage(String msgCode, Object... arguments) {
 		String rawMessage = (msgBundle.containsKey(msgCode)) ? msgBundle.getString(msgCode) : "";
 		return MessageFormat.format(rawMessage, arguments);
+	}
+	
+	public Date getCurrentTime() {
+		return new Date(System.currentTimeMillis());
 	}
 
 	// ==============================================================

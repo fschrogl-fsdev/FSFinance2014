@@ -13,14 +13,29 @@
 
 	<ui:define name="content">
 	  <div class="container">
-	    <fsf:tabbed-navigation id="tabbed-navigation" usePills="false"
-	                           tabnames="#{settingsHandler.tabnames}"
-	                           extComp="reRenderExternalComponent">
-
-	    </fsf:tabbed-navigation>
-	  </div>
-	
-	<h:outputText id="reRenderExternalComponent" value="#{settingsHandler.activeTab}"/>
+	    <fsf:tabbed-navigation id="tabbed-navigation"
+	    					   usePills="false"
+	                           tabs="#{settingsHandler.tabs}"
+                               bean="#{settingsHandler}"
+                               activeTabProperty="activeTab"
+                               renderIds="tabsContent">
+        </fsf:tabbed-navigation>
+	  
+        <div jsf:id="tabsContent" class="container">
+          <div id="tab0-profile" jsf:rendered="#{settingsHandler.activeTab == settingsHandler.tabs[0]}">
+            profile-tab
+          </div>
+          <div id="tab1-account" jsf:rendered="#{settingsHandler.activeTab == settingsHandler.tabs[1]}">
+            account-tab
+          </div>
+          <div id="tab2-labels" jsf:rendered="#{settingsHandler.activeTab == settingsHandler.tabs[2]}">
+            labels-tab
+          </div>
+          <div id="tab3-deleteProfile" jsf:rendered="#{settingsHandler.activeTab == settingsHandler.tabs[3]}">
+            delete profile-tab
+          </div>
+        </div>
+      </div>
 
 	</ui:define>
   </ui:composition>

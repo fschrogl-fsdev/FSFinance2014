@@ -5,16 +5,20 @@
       xmlns:cc="http://java.sun.com/jsf/composite"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:jsf="http://xmlns.jcp.org/jsf">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
   <!-- INTERFACE -->
   <cc:interface>
     <cc:attribute name="usePills" type="java.lang.Boolean" default="false" required="false"
                   shortDescription="Use pills instead of tabs for navigation." />
-    <cc:attribute name="tabnames" type="java.lang.String[]" required="true"
-                  shortDescription="Enumeration of the tab names to display." />
-    <cc:attribute name="extComp" />
+    <cc:attribute name="tabs" type="java.lang.List" required="true"
+                  shortDescription="List of tabnames to display." />
+    <cc:attribute name="bean" type="java.lang.Object" required="true"
+                  shortDescription="Bean from which to get/set the active tab"/>
+    <cc:attribute name="activeTabProperty" type="java.lang.String" required="true"
+                  shortDescription="Name of the bean property holding the active tab." />
+    <cc:attribute name="renderIds" type="java.lang.String" required="false"
+                  shortDescription="Component id(s) that should be re-rendered on Ajax event." />
   </cc:interface>
 
 
@@ -23,21 +27,14 @@
     <div id="#{cc.clientId}">
     <h:form id="form">
   
-    <!-- Use tabs for navigation -->
-    <ul class="nav nav-tabs" role="navigation" jsf:rendered="#{cc.attrs.usePills == false}">
-      <ui:repeat var="tab" value="#{cc.attrs.tabnames}">
-        <li role="presentation" class="">
-          <h:commandLink value="#{tab}" action="#{settingsHandler.setActiveTab(tab)}">
-          	    <f:ajax render="@form #{cc.attrs.extComp}" />
+    <ul id="nav-list" class="nav #{(cc.attrs.usePills) ? 'nav-pills' : 'nav-tabs'}">
+      <ui:repeat var="tab" value="#{cc.attrs.tabs}">
+        <li class="#{(cc.attrs.bean[cc.attrs.activeTabProperty] == tab) ? 'active' : ''}">
+          <h:commandLink value="#{msg[tab]}">
+            <f:setPropertyActionListener target="#{cc.attrs.bean[cc.attrs.activeTabProperty]}" value="#{tab}" />
+            <f:ajax event="click" render="@form #{cc.attrs.renderIds}" />
           </h:commandLink>
         </li>    
-      </ui:repeat>
-    </ul>
-    
-    <!-- Use pills for navigation -->
-    <ul class="nav nav-pills" role="navigation" jsf:rendered="#{cc.attrs.usePills == true}">
-      <ui:repeat var="tab" value="#{cc.attrs.tabnames}">
-        <li role="presentation" class=""><a href="#">#{tab}</a></li>    
       </ui:repeat>
     </ul>
     

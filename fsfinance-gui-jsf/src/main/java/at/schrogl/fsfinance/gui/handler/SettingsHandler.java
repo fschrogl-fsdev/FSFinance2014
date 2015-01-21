@@ -17,6 +17,8 @@
 package at.schrogl.fsfinance.gui.handler;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -34,26 +36,12 @@ public class SettingsHandler implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = LoggerFactory.getLogger(SettingsHandler.class);
 
-	private static final String[] tabnames = { "Profile", "Accounts", "Labels", "Delete Profile" };
-	
-	private String activeTab = null; 
+	private static final List<String> tabs = Arrays.asList("label_tab_profile", "label_tab_accounts", "label_tab_labels",
+			"label_tab_deleteProfile");
+	private String activeTab = SettingsHandler.tabs.get(0);
 
 	@ManagedProperty("#{applicationConfig}")
 	private ApplicationConfig appConfig;
-	
-	public String[] getTabnames() {
-		return tabnames;
-	}
-	
-	public String setActiveTab(String activeTab) {
-		this.activeTab = activeTab;
-		LOGGER.debug(activeTab);
-		return null;
-	}
-	
-	public String getActiveTab() {
-		return activeTab;
-	}
 
 	// ==============================================================
 	// Getter and Setter
@@ -61,5 +49,17 @@ public class SettingsHandler implements Serializable {
 
 	public void setAppConfig(ApplicationConfig appConfig) {
 		this.appConfig = appConfig;
+	}
+
+	public List<String> getTabs() {
+		return SettingsHandler.tabs;
+	}
+
+	public String getActiveTab() {
+		return activeTab;
+	}
+
+	public void setActiveTab(String activeTab) {
+		this.activeTab = activeTab;
 	}
 }
