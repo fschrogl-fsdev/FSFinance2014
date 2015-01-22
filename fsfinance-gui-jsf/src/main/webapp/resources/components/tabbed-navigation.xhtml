@@ -24,7 +24,7 @@
 
   <!-- IMPLEMENTATION -->
   <cc:implementation>
-    <div id="#{cc.clientId}">
+    <nav id="#{cc.clientId}">
     <h:form id="form">
   
     <ul id="nav-list" class="nav #{(cc.attrs.usePills) ? 'nav-pills' : 'nav-tabs'}">
@@ -32,14 +32,14 @@
         <li class="#{(cc.attrs.bean[cc.attrs.activeTabProperty] == tab) ? 'active' : ''}">
           <h:commandLink value="#{msg[tab]}">
             <f:setPropertyActionListener target="#{cc.attrs.bean[cc.attrs.activeTabProperty]}" value="#{tab}" />
-            <f:ajax event="click" render="@form #{cc.attrs.renderIds}" />
+            <f:ajax event="click" render="@form #{cc.attrs.renderIds}" disabled="#{(cc.attrs.bean[cc.attrs.activeTabProperty] == tab)}" />
           </h:commandLink>
         </li>    
       </ui:repeat>
     </ul>
     
     </h:form>
-    </div>
+    </nav>
   </cc:implementation>
 
 </html>

@@ -13,25 +13,50 @@
 
 	<ui:define name="content">
 	  <div class="container">
-	    <fsf:tabbed-navigation id="tabbed-navigation"
-	    					   usePills="false"
-	                           tabs="#{settingsHandler.tabs}"
-                               bean="#{settingsHandler}"
-                               activeTabProperty="activeTab"
-                               renderIds="tabsContent">
-        </fsf:tabbed-navigation>
+	    <fsf:tabbed-navigation id="tabbed-navigation" usePills="false"
+	                           tabs="#{settingsHandler.tabs}" bean="#{settingsHandler}"
+                               activeTabProperty="activeTab" renderIds="tabsContent" />        
+        <br/>
 	  
         <div jsf:id="tabsContent" class="container">
-          <div id="tab0-profile" jsf:rendered="#{settingsHandler.activeTab == settingsHandler.tabs[0]}">
+          <div id="tab0" jsf:rendered="#{settingsHandler.activeTab == settingsHandler.tabs[0]}">
             profile-tab
           </div>
-          <div id="tab1-account" jsf:rendered="#{settingsHandler.activeTab == settingsHandler.tabs[1]}">
-            account-tab
+          
+          <!-- Tab: Accounts -->
+          <div id="tab1" jsf:rendered="#{settingsHandler.activeTab == settingsHandler.tabs[1]}">
+            <p>Below listed are all accounts registered to your profile. Use the table/buttons to manage your accounts.</p>
+            <table class="table table-striped table-responsive">
+              <thead>
+                <tr><th>#</th><th>Name</th><th>Description</th><th>Color</th><th/><th/></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>Acc.1</td><td>My first account</td><td>green</td><td><span class="fa fa-edit text-center" style="width: 3em;" /></td><td><span class="fa fa-remove text-center" style="width: 3em;" /></td></tr>
+                <tr><td>2</td><td>Acc.2</td><td>My second account</td><td>blue</td><td><span class="fa fa-edit text-center" style="width: 3em;" /></td><td><span class="fa fa-remove text-center" style="width: 3em;" /></td></tr>
+                <tr><td>3</td><td>Acc.3</td><td>My third account. This is a very long description of this account to test how the table handles long text in one of its cells.</td><td>red</td><td><span class="fa fa-edit text-center" style="width: 3em;" /></td><td><span class="fa fa-remove text-center" style="width: 3em;" /></td></tr>
+              </tbody>
+            </table>
+            <div>
+              <button type="button">Add account</button>
+              <button type="button">Merge accounts</button>
+              <nav class="pull-right">
+                <ul class="pagination pagination-sm">
+                  <li class="disabled"><a href="#"><span class="fa fa-arrow-left" /></a></li>
+                  <li class="active"><a href="#">1</a></li>
+                  <li><a>...</a></li>
+                  <li><a href="#">2</a></li>
+                  <li><a href="#"><span class="fa fa-arrow-right" /></a></li>
+                </ul>
+              </nav>
+            </div>
           </div>
-          <div id="tab2-labels" jsf:rendered="#{settingsHandler.activeTab == settingsHandler.tabs[2]}">
+          
+          <!-- Tab: Labels -->
+          <div id="tab2" jsf:rendered="#{settingsHandler.activeTab == settingsHandler.tabs[2]}">
             labels-tab
           </div>
-          <div id="tab3-deleteProfile" jsf:rendered="#{settingsHandler.activeTab == settingsHandler.tabs[3]}">
+          
+          <div id="tab3" jsf:rendered="#{settingsHandler.activeTab == settingsHandler.tabs[3]}">
             delete profile-tab
           </div>
         </div>
