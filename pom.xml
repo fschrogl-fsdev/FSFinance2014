@@ -10,32 +10,17 @@
 	<!-- GENERAL PROJECT INFORMATION -->
 	<!-- ====================================================================== -->
 
-	<!-- Project Configuration -->
-	<groupId>at.schrogl.fsfinance</groupId>
-	<artifactId>fsfinance</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
-	<name>FSFinance POM</name>
-
 	<description>
 	FSFinance Webapp is an web application written in Java. Its core features are
     inspired by Android applications like 'Financius' and 'Ausgaben Manager'.
 	</description>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.7</java.version>
-		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-		<maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
-		<maven-project-info-reports-plugin.version>2.7</maven-project-info-reports-plugin.version>
-		<maven-license-plugin.version>2.6</maven-license-plugin.version>
-		<maven-release-plugin.version>2.5</maven-release-plugin.version>
-		<maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
-		<maven-deploy-plugin.version>2.8.1</maven-deploy-plugin.version>
-		<maven-source-plugin.version>2.3</maven-source-plugin.version>
-		<maven-war-plugin.version>2.5</maven-war-plugin.version>
-		<maven-jar-plugin.version>2.5</maven-jar-plugin.version>
-	</properties>
+	<!-- Project Configuration -->
+	<groupId>at.schrogl.fsfinance</groupId>
+	<artifactId>fsfinance</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>FSFinance WebApp POM</name>
 
 	<!-- Sub-Projects -->
 	<modules>
@@ -43,6 +28,28 @@
 		<module>fsfinance-business</module>
 		<module>fsfinance-gui-jsf</module>
 	</modules>
+  
+	<properties>
+        <!-- Build Properties -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<compiler.version.source>1.7</compiler.version.source>
+        <compiler.version.target>1.7</compiler.version.target>
+    
+        <!-- Maven Plugin Versions -->
+        <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
+		<version.maven-javadoc-plugin>2.9.1</version.maven-javadoc-plugin>
+		<version.maven-project-info-reports-plugin>2.7</version.maven-project-info-reports-plugin>
+		<version.maven-license-plugin>2.6</version.maven-license-plugin>
+		<version.maven-release-plugin>2.5</version.maven-release-plugin>
+		<version.maven-javadoc-plugin>2.9.1</version.maven-javadoc-plugin>
+		<version.maven-deploy-plugin>2.8.1</version.maven-deploy-plugin>
+		<version.maven-source-plugin>2.3</version.maven-source-plugin>
+		<version.maven-war-plugin>2.5</version.maven-war-plugin>
+		<version.maven-jar-plugin>2.5</version.maven-jar-plugin>
+		<version.maven-changes-plugin>2.11</version.maven-changes-plugin>
+		<version.maven-antrun-plugin>1.7</version.maven-antrun-plugin>
+	</properties>
+
 
 	<!-- Source Control Management -->
 	<scm>
@@ -60,9 +67,15 @@
 		<site>
 			<id>atom-apache</id>
 			<name>ATOM Javadoc Release</name>
-			<url>file:///srv/http/git.schrogl.at/sites/fsfinance/${project.version}/</url>
+			<url>file:///srv/http/git.schrogl.at/sites/fsfinance-webapp/${project.version}/</url>
 		</site>
 	</distributionManagement>
+	
+	<!-- Issue Management -->
+	<issueManagement>
+		<system>Mantis</system>
+		<url>https://git.schrogl.at/mantisbt/</url>
+	</issueManagement>
 
 	<!-- ====================================================================== -->
 	<!-- BUILD CONFIGURATION -->
@@ -74,10 +87,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven-compiler-plugin.version}</version>
+				<version>${version.maven-compiler-plugin}</version>
 				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
+					<source>${compiler.version.source}</source>
+					<target>${compiler.version.target}</target>
 				</configuration>
 			</plugin>
 
@@ -85,7 +98,7 @@
 			<plugin>
 				<groupId>com.mycila</groupId>
 				<artifactId>license-maven-plugin</artifactId>
-				<version>${maven-license-plugin.version}</version>
+				<version>${version.maven-license-plugin}</version>
 				<configuration>
 					<header>${project.basedir}/HEADING</header>
 					<keywords>
@@ -111,9 +124,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>${maven-javadoc-plugin.version}</version>
+				<version>${version.maven-javadoc-plugin}</version>
 				<configuration>
 					<quiet>true</quiet>
+					<failOnError>false</failOnError>
 				</configuration>
 			</plugin>
 
@@ -121,21 +135,21 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
-				<version>${maven-deploy-plugin.version}</version>
+				<version>${version.maven-deploy-plugin}</version>
 			</plugin>
 
 			<!-- Source Plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>${maven-source-plugin.version}</version>
+				<version>${version.maven-source-plugin}</version>
 			</plugin>
 			
 			<!-- WAR Plugin (add version to MANIFEST.MF) -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>${maven-war-plugin.version}</version>
+				<version>${version.maven-war-plugin}</version>
 				<configuration>
 					<archive>
 						<index>true</index>
@@ -151,7 +165,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>${maven-jar-plugin.version}</version>
+				<version>${version.maven-jar-plugin}</version>
 				<configuration>
 					<archive>
 						<index>true</index>
@@ -178,7 +192,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-release-plugin</artifactId>
-						<version>${maven-release-plugin.version}</version>
+						<version>${version.maven-release-plugin}</version>
 						<configuration>
 							<tagNameFormat>v@{project.version}</tagNameFormat>
 							<username>${scm.username}</username>
@@ -319,14 +333,39 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>${maven-javadoc-plugin.version}</version>
+				<version>${version.maven-javadoc-plugin}</version>
 			</plugin>
 
+			<!-- Javadoc Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${version.maven-javadoc-plugin}</version>
+				<configuration>
+					<quiet>true</quiet>
+					<failOnError>false</failOnError>
+				</configuration>
+			</plugin>
+			
+			<!-- Changes Plugin -->
+			<plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-changes-plugin</artifactId>
+        		<version>${version.maven-changes-plugin}</version>
+        		<reportSets>
+        			<reportSet>
+        				<reports>
+        					<report>changes-report</report>
+        				</reports>
+        			</reportSet>
+        		</reportSets>
+        	</plugin>
+        	
 			<!-- Report Plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>${maven-project-info-reports-plugin.version}</version>
+				<version>${version.maven-project-info-reports-plugin}</version>
 				<configuration>
 					<webAccessUrl>http://git.schrogl.at</webAccessUrl>
 				</configuration>
@@ -342,16 +381,6 @@
 						</reports>
 					</reportSet>
 				</reportSets>
-			</plugin>
-
-			<!-- Javadoc Plugin -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>${maven-javadoc-plugin.version}</version>
-				<configuration>
-					<quiet>true</quiet>
-				</configuration>
 			</plugin>
 		</plugins>
 	</reporting>

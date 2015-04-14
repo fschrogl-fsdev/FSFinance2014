@@ -72,6 +72,7 @@ public class AuthenticationLoggerListenerCustom implements ApplicationListener<A
 	 * Enable/Disable logging of other event (categories).
 	 * 
 	 * @param logOtherEvents
+	 * 			Enables/disables logging of other events (categories). Defaults to <code>false</code>.
 	 */
 	public void setLogOtherEvents(boolean logOtherEvents) {
 		this.logOtherEvents = logOtherEvents;

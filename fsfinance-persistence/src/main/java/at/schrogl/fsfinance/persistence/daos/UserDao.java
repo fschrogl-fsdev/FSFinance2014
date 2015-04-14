@@ -139,8 +139,7 @@ public interface UserDao extends JpaRepository<User, Long> {
 	public List<User> findByForenameAndSurnameAllIgnoreCase(String forename, String surname);
 
 	/**
-	 * Same as
-	 * {@link #findByForenameOrSurnameAllIgnoreCase(String, String, Pageable)}
+	 * Same as {@link #findByForenameAndSurnameAllIgnoreCase(Pageable, String, String)}
 	 * but with <b>and</b> instead of <b>or</b>.
 	 * <p>
 	 * @param forename
