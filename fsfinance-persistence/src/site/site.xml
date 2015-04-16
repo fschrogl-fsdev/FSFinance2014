@@ -22,13 +22,11 @@
 			<item name="GIT Repository" href="https://git.schrogl.at/gitblit" target="_blank" />
 		</links>
 
-		<menu name="Project Documentation">
-			<item name="Introduction" href="introduction.html" />
-			<item name="UI Mockups" href="uimockups.html" />
-			<item name="Domainmodel" href="domainmodel.html" />
-		</menu>
-
 		<menu name="Project Reports" ref="reports" />
+
+		<menu name="Parent Project">
+			<item name="Back to Parent Project" href="../index.html" />
+		</menu>
 
 	</body>
 </project>
